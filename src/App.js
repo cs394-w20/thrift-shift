@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from '@material-ui/core';
 import TopAppBar from './components/TopAppBar'
+import ItemForm from './components/ItemForm'
 import { firebaseInit, updateUserState } from './utils/FirebaseAuthUtils'
 import './App.css';
 
@@ -17,6 +18,7 @@ const App = () => {
   return (
     <Container disableGutters>
       <TopAppBar user={user}/>
+      <ItemForm />
     </Container>
   );
 }

@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.MuiDialog-paperWidthSm {
+  width: 25%;
+  min-width: 340px;
+}
+
+.MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-formControl.MuiInput-formControl {
+  width: 100%;
+}
+
+.MuiTextField-root {
+  width: 100%;
+}
