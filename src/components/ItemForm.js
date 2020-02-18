@@ -38,17 +38,17 @@ const ItemForm = () => {
 
     const handleChange = prop => event => {
         setValues({ ...values, [prop]: event.target.value });
-        console.log(values);
     };
 
     const handleImageUpload = (pictureFiles, pictureDataURLs) => {
+        const uuidv4 = require('uuid/v4');
+        const imageId = uuidv4();
+        setValues({ ...values, imageId: imageId });
         setImage(pictureFiles[0]);
     };
 
     const addItem = () => {
-        const uuidv4 = require('uuid/v4');
-        const imageId = uuidv4();
-        const uploadTask = storageRef.child(`product_images/${imageId}`).put(image);
+        const uploadTask = storageRef.child(`product_images/${values.imageId}`).put(image);
 
         uploadTask.on(
             "state_changed",
@@ -66,15 +66,18 @@ const ItemForm = () => {
             }
         );
 
-        const newProductKey = databaseRef.child('Products').push().key;
-        const updates = {};
+        const productId = databaseRef.child('Products').push().key;
+        const updateProduct = {};
+        const updateUser = {};
         const product = {
             name: values.name,
             price: values.price,
-            imageId: imageId
+            imageId: values.imageId
         };
-        updates['/Products/' + newProductKey] = product;
-        database.ref().update(updates);
+        updateProduct['/Products/' + productId] = product;
+        updateUser['/Users/UserID/Products/' + productId] = true;
+        database.ref().update(updateProduct);
+        database.ref().update(updateUser);
     };
 
     return(
@@ -99,7 +102,6 @@ const ItemForm = () => {
                                     onChange={handleImageUpload}
                                     accept="image/*"
                                     maxFileSize={5242880}
-                                    singleImage={true}
                                     withPreview={true}
                                 />
                         </ListItem>
