@@ -49,3 +49,7 @@
 .MuiTextField-root {
   width: 100%;
 }
+
+.progress {
+  border-radius: 0 !important;
+}

@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import * as firebase from "firebase";
 import 'firebase/database';
 import "firebase/auth";
 
@@ -18,7 +18,7 @@ const firebaseConfig = {
 };
 
 // Initialize firebase
-const firebaseInit = () =>{
+if (!firebase.apps.length) {
     console.log("[Message] Initialize firebase app")
     firebase.initializeApp(firebaseConfig);
 }
@@ -44,4 +44,15 @@ const signInWithGoogle = () => {
     firebase.auth().signInWithPopup(provider);
 }
 
-export {firebaseInit, getUser, signOut, signInWithGoogle, updateUserState}
+// Get a reference to the storage service, which is used to create references in your storage bucket
+const storage = firebase.storage();
+// Create a storage reference from our storage service
+const storageRef = storage.ref();
+
+// Get a reference to the database service
+const database = firebase.database();
+// Create a database reference from our database service
+const databaseRef = database.ref();
+
+
+export { getUser, signOut, signInWithGoogle, updateUserState, storage, storageRef, database, databaseRef }

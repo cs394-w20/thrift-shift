@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { updateUserState } from './utils/FirebaseAuthUtils'
 import { Container } from '@material-ui/core';
-import TopAppBar from './components/TopAppBar'
-import ItemForm from './components/ItemForm'
-import { firebaseInit, updateUserState } from './utils/FirebaseAuthUtils'
+import TopAppBar from './components/TopAppBar';
+import ItemForm from './components/ItemForm';
+import ProductCard from './components/ProductCard';
 import './App.css';
-
-firebaseInit()
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -14,7 +13,7 @@ const App = () => {
   useEffect(() => {
 		updateUserState(setUser);
   }, []);
-  
+
   return (
     <Container disableGutters>
       <TopAppBar user={user}/>
