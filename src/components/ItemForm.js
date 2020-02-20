@@ -34,8 +34,19 @@ const ItemForm = () => {
     };
 
     const handleClose = () => {
+        initialState();
 		setOpen(false);
     };
+
+    const initialState = () => {
+        setProgress(0);
+        setValues({
+            name: '',
+            price: '',
+            imageId: '',
+            description: ''
+        })
+    }
 
     const handleChange = prop => event => {
         setValues({ ...values, [prop]: event.target.value });
@@ -127,7 +138,7 @@ const ItemForm = () => {
                     </List>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => { setOpen(false) }}>Cancel</Button>
+                    <Button onClick={() => { handleClose() }}>Cancel</Button>
                     <Button variant="contained" color="secondary" onClick={() => {addItem()}}>Submit</Button>
                 </DialogActions>
             </Dialog>
