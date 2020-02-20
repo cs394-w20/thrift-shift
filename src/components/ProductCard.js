@@ -28,7 +28,7 @@ const ProductCard = ({ productID }) => {
   useEffect(() => {
     if (productID) {
       const productDb = database.ref("Products/" + productID);
-      productDb.once(
+      productDb.on(
         "value",
         snapshot => {
           setProductObj(snapshot.val());

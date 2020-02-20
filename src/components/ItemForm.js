@@ -23,7 +23,8 @@ const ItemForm = () => {
     const [values, setValues] = useState({
         name: '',
         price: '',
-        imageId: ''
+        imageId: '',
+        description: ''
     });
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
@@ -72,7 +73,8 @@ const ItemForm = () => {
         const product = {
             name: values.name,
             price: values.price,
-            imageId: values.imageId
+            imageId: values.imageId,
+            description: values.description
         };
         updateProduct['/Products/' + productId] = product;
         updateUser['/Users/UserID/Products/' + productId] = true;
@@ -98,7 +100,7 @@ const ItemForm = () => {
                         <ListItem>
                                 <ImageUploader
                                     withIcon={true}
-                                    buttonText='Choose images'
+                                    buttonText='Choose image'
                                     onChange={handleImageUpload}
                                     accept="image/*"
                                     maxFileSize={5242880}
@@ -115,6 +117,9 @@ const ItemForm = () => {
                                     labelWidth={60}
                                 />
                         </FormControl>
+                        </ListItem>
+                        <ListItem>
+                            <TextField label="Description" value={values.description} variant="outlined" onChange={handleChange('description')} />
                         </ListItem>
                     </List>
                 </DialogContent>
