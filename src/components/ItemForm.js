@@ -59,6 +59,7 @@ const ItemForm = () => {
                 );
                 setProgress(progress);
                 if (progress === 100) {
+                    UpdateDatabase();
                     handleClose();
                 }
             },
@@ -66,7 +67,9 @@ const ItemForm = () => {
                 console.log(error);
             }
         );
+    };
 
+    const UpdateDatabase = () => {
         const productId = databaseRef.child('Products').push().key;
         const updateProduct = {};
         const updateUser = {};
@@ -80,7 +83,7 @@ const ItemForm = () => {
         updateUser['/Users/UserID/Products/' + productId] = true;
         database.ref().update(updateProduct);
         database.ref().update(updateUser);
-    };
+    }
 
     return(
         <div style={{textAlign: "center"}}>
