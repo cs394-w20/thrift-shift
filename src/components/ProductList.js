@@ -5,7 +5,7 @@ import { Grid, Container } from "@material-ui/core";
 
 const ProductList = ({ productIds }) => {
   console.log(productIds)
-  if (productIds) {
+  if (productIds && productIds.length > 0) {
     return (
       <Container>
         <div style={{height:'10px'}}></div>
@@ -23,7 +23,14 @@ const ProductList = ({ productIds }) => {
       </Container>
     );
   } else {
-    return null;
+    return (
+      <div style={{textAlign:'center',height:'100vh', width:'100vw',alignItems:'center'}}>
+        <img src='bookshelf.png' style={{height:'200px',left:'50%',top:'50%'}}></img>
+        <br />
+        There is nothing here<br />
+        Add an item to start
+      </div>
+    );
   }
 };
 export default ProductList;

@@ -20,7 +20,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ImageUploader from 'react-images-upload';
 import AddIcon from '@material-ui/icons/Add'
 import { addProduct } from '../utils/FirebaseDbUtils'
-import { uploadProductImage } from '../utils/FirebaseStorageUtils';
+import { uploadLQImage } from '../utils/FirebaseStorageUtils';
 import { getUser } from '../utils/FirebaseAuthUtils'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import '../App.css';
@@ -90,6 +90,7 @@ const ItemForm = () => {
 	};
 
 	const handleImageUpload = (pictureFiles, pictureDataURLs) => {
+		console.log(pictureFiles)
 		const uuidv4 = require('uuid/v4');
 		const imageId = uuidv4();
 		setProduct({ ...product, imageId: imageId });
@@ -97,14 +98,15 @@ const ItemForm = () => {
 	};
 
 	const addItem = () => {
-		uploadProductImage(image, product.imageId, setProgress, setOpen, () => { addProduct(getUser().uid, product) })
+		uploadLQImage(image, product.imageId, setProgress, setOpen, () => { addProduct(getUser().uid, product) })
 	};
 
 	return (
 		<div>
 			<div className={classes.root}>
-				<Fab onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
+				<Fab variant="extended" onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
 					<AddIcon />
+					Add Item
 				</Fab>
 			</div>
 			<Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' fullScreen={fullScreen} TransitionComponent={fullScreen ? SlideTransition : FadeTransition}>
@@ -134,7 +136,8 @@ const ItemForm = () => {
 								buttonText='Choose image'
 								onChange={handleImageUpload}
 								accept="image/*"
-								maxFileSize={5242880}
+								maxFileSize={20971520}
+								label="Upload image to show your item"
 								withPreview={true}
 							/>
 						</ListItem>
