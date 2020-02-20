@@ -54,7 +54,7 @@ const uploadLQImage = (image, productId, setProgress, setOpen, addProduct) => {
     console.log(img.width)
     var originWidth = img.width;
     var originHeight = img.height;
-    var maxWidth = 400, maxHeight = 400;
+    var maxWidth = 600, maxHeight = 600;
     var targetWidth = originWidth, targetHeight = originHeight;
     if (originWidth > maxWidth || originHeight > maxHeight) {
       if (originWidth / originHeight > maxWidth / maxHeight) {
