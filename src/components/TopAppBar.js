@@ -43,9 +43,6 @@ const TopAppBar = (props) => {
 									: <Button onClick={signInWithGoogle}></Button>
 								}
 							</Grid>
-							<Grid item >
-								<ControlPointIcon fontSize="large"/>
-							</Grid>
 						</Grid>
 					</Toolbar>
 				</AppBar>

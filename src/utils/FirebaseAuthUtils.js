@@ -1,5 +1,4 @@
-import * as firebase from "firebase";
-import 'firebase/database';
+import firebase from "firebase";
 import "firebase/auth";
 
 /**
@@ -44,15 +43,4 @@ const signInWithGoogle = () => {
     firebase.auth().signInWithPopup(provider);
 }
 
-// Get a reference to the storage service, which is used to create references in your storage bucket
-const storage = firebase.storage();
-// Create a storage reference from our storage service
-const storageRef = storage.ref();
-
-// Get a reference to the database service
-const database = firebase.database();
-// Create a database reference from our database service
-const databaseRef = database.ref();
-
-
-export { getUser, signOut, signInWithGoogle, updateUserState, storage, storageRef, database, databaseRef }
+export { getUser, signOut, signInWithGoogle, updateUserState}

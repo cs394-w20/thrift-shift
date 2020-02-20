@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import "rbx/index.css";
 import { Image } from "rbx";
 import { Card, Grid, CardContent, Typography } from "@material-ui/core";
+import { getProductInfo } from '../utils/FirebaseDbUtils'
 import firebase from "firebase/app";
 import "firebase/storage";
-import { database } from "../utils/FirebaseAuthUtils";
 
 const getProductImage = (image_id, setImageURL) => {
   // Get image reference
@@ -21,28 +21,21 @@ const getProductImage = (image_id, setImageURL) => {
     });
 };
 
-const ProductCard = ({ productID }) => {
+const ProductCard = ({ productId }) => {
   const [imageURL, setImageURL] = useState(null);
-  const [productObj, setProductObj] = useState(null);
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    if (productID) {
-      const productDb = database.ref("Products/" + productID);
-      productDb.once(
-        "value",
-        snapshot => {
-          setProductObj(snapshot.val());
-        },
-        error => alert(error)
-      );
+    if (productId) {
+      getProductInfo(productId, setProduct)
     }
-  }, [productID]);
+  }, []);
 
-  if (!imageURL && productObj) {
-    getProductImage(productObj.imageId, setImageURL);
+  if (!imageURL && product) {
+    getProductImage(product.imageId, setImageURL);
   }
 
-  if (productObj && imageURL) {
+  if (product && imageURL) {
     return (
       <Card>
         <CardContent>
@@ -52,7 +45,7 @@ const ProductCard = ({ productID }) => {
             </Grid>
             <Grid item xs={6}>
               <Typography gutterBottom variant="h5" component="h2">
-                {productObj.name}
+                {product.name}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -62,7 +55,7 @@ const ProductCard = ({ productID }) => {
                 component="h2"
                 align="right"
               >
-                ${productObj.price}
+                ${product.price}
               </Typography>
             </Grid>
           </Grid>

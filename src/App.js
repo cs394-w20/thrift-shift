@@ -3,34 +3,30 @@ import { Container } from "@material-ui/core";
 import TopAppBar from "./components/TopAppBar";
 import ItemForm from "./components/ItemForm";
 import ProductList from "./components/ProductList";
-import { updateUserState, database } from "./utils/FirebaseAuthUtils";
+import { updateUserState } from "./utils/FirebaseAuthUtils";
+import { getUserProductsInfo } from "./utils/FirebaseDbUtils"
 import "./App.css";
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [productIDs, setProductIDs] = useState(null);
+  const [productIds, setProductIds] = useState(null);
 
   // Change user state when the user successfully logged in
   useEffect(() => {
     updateUserState(setUser);
-  }, []);
+  }, [user]);
 
   useEffect(() => {
-    const getProductInfo = snapshot => {
-      if (snapshot.val()) {
-        let productIdArr = Object.keys(snapshot.val());
-        setProductIDs(productIdArr);
-      }
-    };
-    const userProductDb = database.ref("Users/UserID/Products");
-    userProductDb.on("value", getProductInfo, error => alert(error));
-  }, []);
-
+    if(user){
+      getUserProductsInfo(user.uid, setProductIds)
+    }
+  }, [user]);
+  
   return (
     <Container disableGutters>
       <TopAppBar user={user} />
       <ItemForm />
-      <ProductList productIDs={productIDs} />
+      <ProductList productIds={productIds} />
     </Container>
   );
 };

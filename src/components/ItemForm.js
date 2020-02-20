@@ -11,16 +11,40 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
-    TextField
+    TextField,
+    Fab
 } from '@material-ui/core';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { makeStyles } from '@material-ui/core/styles';
 import ImageUploader from 'react-images-upload';
-import { storageRef, database, databaseRef } from '../utils/FirebaseAuthUtils';
+import AddIcon from '@material-ui/icons/Add'
+import { addProduct } from '../utils/FirebaseDbUtils'
+import { uploadProductImage } from '../utils/FirebaseStorageUtils';
+import { getUser } from '../utils/FirebaseAuthUtils'
 import '../App.css';
 
+const useStyles = makeStyles(theme => ({
+	root: {
+		'& > *': {
+			margin: theme.spacing(1),
+		},
+	},
+	extendedIcon: {
+		marginRight: theme.spacing(1),
+	},
+	fab: {
+		margin: 0,
+		top: 'auto',
+		right: 20,
+		bottom: 20,
+		left: 'auto',
+		position: 'fixed'
+	}
+}));
+
 const ItemForm = () => {
+    const classes = useStyles();
     const [open, setOpen] = useState(false);
-    const [values, setValues] = useState({
+    const [product, setProduct] = useState({
         name: '',
         price: '',
         imageId: ''
@@ -37,63 +61,35 @@ const ItemForm = () => {
     };
 
     const handleChange = prop => event => {
-        setValues({ ...values, [prop]: event.target.value });
+        setProduct({ ...product, [prop]: event.target.value });
     };
 
     const handleImageUpload = (pictureFiles, pictureDataURLs) => {
         const uuidv4 = require('uuid/v4');
         const imageId = uuidv4();
-        setValues({ ...values, imageId: imageId });
+        setProduct({ ...product, imageId: imageId });
         setImage(pictureFiles[0]);
     };
 
     const addItem = () => {
-        const uploadTask = storageRef.child(`product_images/${values.imageId}`).put(image);
-
-        uploadTask.on(
-            "state_changed",
-            snapshot => {
-                const progress = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                );
-                setProgress(progress);
-                if (progress === 100) {
-                    handleClose();
-                }
-            },
-            error => {
-                console.log(error);
-            }
-        );
-
-        const productId = databaseRef.child('Products').push().key;
-        const updateProduct = {};
-        const updateUser = {};
-        const product = {
-            name: values.name,
-            price: values.price,
-            imageId: values.imageId
-        };
-        updateProduct['/Products/' + productId] = product;
-        updateUser['/Users/UserID/Products/' + productId] = true;
-        database.ref().update(updateProduct);
-        database.ref().update(updateUser);
+        addProduct(getUser().uid, product)
+        uploadProductImage(image, product.imageId, setProgress)
     };
 
     return(
-        <div style={{textAlign: "center"}}>
-            <AddCircleOutlineIcon style={{color: "gray", fontSize: 50, marginTop: "100px"}}/>
-            <br/>
-            <Button size='small' color='primary' onClick={handleClickOpen} variant="contained">
-                Add an item
-            </Button>
+        <div>
+            <div className={classes.root}>
+			<Fab onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
+				<AddIcon />
+			</Fab>
+		    </div>
             <Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' >
                 <progress value={progress} max="100" className="progress" />
                 <DialogTitle id='alert-dialog-title'>Add an Item to Sell</DialogTitle>
                 <DialogContent>
                     <List>
                         <ListItem>
-                            <TextField label="Item Name" value={values.name} variant="outlined" onChange={handleChange('name')} />
+                            <TextField label="Item Name" value={product.name} variant="outlined" onChange={handleChange('name')} />
                         </ListItem>
                         <ListItem>
                                 <ImageUploader
@@ -109,7 +105,7 @@ const ItemForm = () => {
                         <FormControl fullWidth variant="outlined">
                             <InputLabel>Price</InputLabel>
                                 <OutlinedInput
-                                    value={values.price}
+                                    value={product.price}
                                     onChange={handleChange('price')}
                                     startAdornment={<InputAdornment position="start">$</InputAdornment>}
                                     labelWidth={60}

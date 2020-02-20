@@ -1,21 +1,25 @@
 import React from "react";
 import "rbx/index.css";
 import ProductCard from "./ProductCard";
-import { Grid } from "@material-ui/core";
+import { Grid, Container } from "@material-ui/core";
 
-const ProductList = ({ productIDs }) => {
-
-  if (productIDs) {
+const ProductList = ({ productIds }) => {
+  console.log(productIds)
+  if (productIds) {
     return (
-      <Grid container spacing={10} justify="center">
-        {productIDs.map(productID => {
-          return (
-            <Grid key={productID} item xs={12} md={6}>
-              <ProductCard productID={productID} />
-            </Grid>
-          );
-        })}
-      </Grid>
+      <Container>
+        <Grid container spacing={2} justify="center">
+          {
+            productIds.map(productId => {
+              return (
+                <Grid key={productId} item xs={6} md={3}>
+                  <ProductCard productId={productId} />
+                </Grid>
+              );
+            })
+          }
+        </Grid>
+      </Container>
     );
   } else {
     return null;
