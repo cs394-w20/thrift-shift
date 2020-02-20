@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "rbx/index.css";
-import { Image } from "rbx";
-import { Card, Grid, CardContent, Typography } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import { Card, Grid, CardContent, Typography, CardMedia, CardActionArea } from "@material-ui/core";
 import { getProductInfo } from '../utils/FirebaseDbUtils'
 import firebase from "firebase/app";
 import "firebase/storage";
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+});
 
 const getProductImage = (image_id, setImageURL) => {
   // Get image reference
@@ -22,6 +31,7 @@ const getProductImage = (image_id, setImageURL) => {
 };
 
 const ProductCard = ({ productId }) => {
+  const classes = useStyles();
   const [imageURL, setImageURL] = useState(null);
   const [product, setProduct] = useState(null);
 
@@ -38,28 +48,30 @@ const ProductCard = ({ productId }) => {
   if (product && imageURL) {
     return (
       <Card>
-        <CardContent>
-          <Grid container spacing={2}>
+        <CardActionArea>
+          <CardMedia className={classes.media} image={imageURL} title="item"/>
+          <CardContent>
+          <Grid container>
             <Grid item xs={12}>
-              <Image src={imageURL} />
-            </Grid>
-            <Grid item xs={6}>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography gutterBottom variant="subtitle2">
                 {product.name}
               </Typography>
             </Grid>
+            <Grid item xs={6}></Grid>
             <Grid item xs={6}>
               <Typography
                 gutterBottom
-                variant="h5"
+                variant="body2"
                 component="h2"
                 align="right"
+                color="secondary"
               >
                 ${product.price}
               </Typography>
             </Grid>
           </Grid>
         </CardContent>
+        </CardActionArea>
       </Card>
     );
   } else {

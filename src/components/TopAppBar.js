@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Typography, useScrollTrigger, CssBaseline, Avatar, Button, Grid } from '@material-ui/core';
 import { signInWithGoogle } from '../utils/FirebaseAuthUtils';
 import LogoutPopover from './LogoutPopover';
-import ControlPointIcon from '@material-ui/icons/ControlPoint';
 
 const ElevationScroll = props => {
 	const { children, window } = props;
@@ -40,7 +39,7 @@ const TopAppBar = (props) => {
 							<Grid item >
 								{
 									props.user ? <LogoutPopover><Avatar src={props.user.photoURL} /></LogoutPopover>
-									: <Button onClick={signInWithGoogle}></Button>
+									: <Button onClick={signInWithGoogle}>Sign In</Button>
 								}
 							</Grid>
 						</Grid>

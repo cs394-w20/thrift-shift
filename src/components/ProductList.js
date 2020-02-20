@@ -8,7 +8,8 @@ const ProductList = ({ productIds }) => {
   if (productIds) {
     return (
       <Container>
-        <Grid container spacing={2} justify="center">
+        <div style={{height:'10px'}}></div>
+        <Grid container spacing={2}>
           {
             productIds.map(productId => {
               return (

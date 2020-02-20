@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
 import {
-    Button,
-    ListItem,
-    List,
-    InputLabel,
-    FormControl,
-    DialogActions,
-    OutlinedInput,
-    InputAdornment,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    TextField,
-    Fab
+	Button,
+	ListItem,
+	List,
+	InputLabel,
+	FormControl,
+	DialogActions,
+	OutlinedInput,
+	InputAdornment,
+	Dialog,
+	DialogContent,
+	DialogTitle,
+	TextField,
+	Fab,
+	Slide,
+	Fade
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ImageUploader from 'react-images-upload';
 import AddIcon from '@material-ui/icons/Add'
 import { addProduct } from '../utils/FirebaseDbUtils'
 import { uploadProductImage } from '../utils/FirebaseStorageUtils';
 import { getUser } from '../utils/FirebaseAuthUtils'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import '../App.css';
 
 const useStyles = makeStyles(theme => ({
@@ -41,86 +44,109 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
+const SlideTransition = React.forwardRef((props, ref) => {
+	return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const FadeTransition = React.forwardRef((props, ref) => {
+	return <Fade ref={ref} {...props} />
+})
+
 const ItemForm = () => {
-    const classes = useStyles();
-    const [open, setOpen] = useState(false);
-    const [product, setProduct] = useState({
-        name: '',
-        price: '',
-        imageId: ''
-    });
-    const [image, setImage] = useState(null);
-    const [progress, setProgress] = useState(0);
+	const classes = useStyles();
+	const theme = useTheme();
+	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+	const [open, setOpen] = useState(false);
+	const [product, setProduct] = useState({
+		name: '',
+		price: '',
+		imageId: '',
+		description: ''
+	});
+	const [image, setImage] = useState(null);
+	const [progress, setProgress] = useState(0);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
 
-    const handleClose = () => {
+	const handleClose = () => {
+		initialState();
 		setOpen(false);
-    };
+	};
 
-    const handleChange = prop => event => {
-        setProduct({ ...product, [prop]: event.target.value });
-    };
+	const initialState = () => {
+		setProgress(0);
+		setProduct({
+			name: '',
+			price: '',
+			imageId: '',
+			description: ''
+		})
+	}
 
-    const handleImageUpload = (pictureFiles, pictureDataURLs) => {
-        const uuidv4 = require('uuid/v4');
-        const imageId = uuidv4();
-        setProduct({ ...product, imageId: imageId });
-        setImage(pictureFiles[0]);
-    };
+	const handleChange = prop => event => {
+		setProduct({ ...product, [prop]: event.target.value });
+	};
 
-    const addItem = () => {
-        addProduct(getUser().uid, product)
-        uploadProductImage(image, product.imageId, setProgress)
-    };
+	const handleImageUpload = (pictureFiles, pictureDataURLs) => {
+		const uuidv4 = require('uuid/v4');
+		const imageId = uuidv4();
+		setProduct({ ...product, imageId: imageId });
+		setImage(pictureFiles[0]);
+	};
 
-    return(
-        <div>
-            <div className={classes.root}>
-			<Fab onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
-				<AddIcon />
-			</Fab>
-		    </div>
-            <Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' >
-                <progress value={progress} max="100" className="progress" />
-                <DialogTitle id='alert-dialog-title'>Add an Item to Sell</DialogTitle>
-                <DialogContent>
-                    <List>
-                        <ListItem>
-                            <TextField label="Item Name" value={product.name} variant="outlined" onChange={handleChange('name')} />
-                        </ListItem>
-                        <ListItem>
-                                <ImageUploader
-                                    withIcon={true}
-                                    buttonText='Choose images'
-                                    onChange={handleImageUpload}
-                                    accept="image/*"
-                                    maxFileSize={5242880}
-                                    withPreview={true}
-                                />
-                        </ListItem>
-                        <ListItem>
-                        <FormControl fullWidth variant="outlined">
-                            <InputLabel>Price</InputLabel>
-                                <OutlinedInput
-                                    value={product.price}
-                                    onChange={handleChange('price')}
-                                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                    labelWidth={60}
-                                />
-                        </FormControl>
-                        </ListItem>
-                    </List>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => { setOpen(false) }}>Cancel</Button>
-                    <Button variant="contained" color="secondary" onClick={() => {addItem()}}>Submit</Button>
-                </DialogActions>
-            </Dialog>
-        </div>
-    )
+	const addItem = () => {
+		uploadProductImage(image, product.imageId, setProgress, setOpen, () => { addProduct(getUser().uid, product) })
+	};
+
+	return (
+		<div>
+			<div className={classes.root}>
+				<Fab onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
+					<AddIcon />
+				</Fab>
+			</div>
+			<Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' fullScreen={fullScreen} TransitionComponent={fullScreen ? SlideTransition : FadeTransition}>
+				<DialogTitle id='alert-dialog-title'>Add an Item to Sell</DialogTitle>
+				<DialogContent>
+					<List>
+						<ListItem>
+							<TextField label="Item Name" value={product.name} variant="outlined" onChange={handleChange('name')} />
+						</ListItem>
+						<ListItem>
+							<FormControl fullWidth variant="outlined">
+								<InputLabel>Price</InputLabel>
+								<OutlinedInput
+									value={product.price}
+									onChange={handleChange('price')}
+									startAdornment={<InputAdornment position="start">$</InputAdornment>}
+									labelWidth={60}
+								/>
+							</FormControl>
+						</ListItem>
+						<ListItem>
+							<TextField multiline label="Description" value={product.description} variant="outlined" onChange={handleChange('description')} />
+						</ListItem>
+						<ListItem>
+							<ImageUploader
+								withIcon={true}
+								buttonText='Choose image'
+								onChange={handleImageUpload}
+								accept="image/*"
+								maxFileSize={5242880}
+								withPreview={true}
+							/>
+						</ListItem>
+					</List>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={() => { handleClose() }}>Cancel</Button>
+					<Button variant="contained" color="secondary" onClick={() => { addItem() }}>Submit</Button>
+				</DialogActions>
+			</Dialog>
+		</div>
+	)
 }
 
 export default ItemForm
