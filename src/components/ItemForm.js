@@ -120,7 +120,7 @@ const ItemForm = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => { setOpen(false) }}>Cancel</Button>
-                    <Button variant="contained" color="secondary" onClick={() => {addItem()}}>Submmit</Button>
+                    <Button variant="contained" color="secondary" onClick={() => {addItem()}}>Submit</Button>
                 </DialogActions>
             </Dialog>
         </div>
