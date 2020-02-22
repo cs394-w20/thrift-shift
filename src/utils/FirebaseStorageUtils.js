@@ -18,7 +18,7 @@ const getProductImage = (image_id, setImageURL) => {
       });
   };
 
-const uploadProductImage = (image, productId, setProgress) => {
+const uploadProductImage = (image, productId, setProgress, setOpen, addProduct) => {
   const uploadTask = st.ref().child(`product_images/${productId}`).put(image);
   uploadTask.on(
     "state_changed",
@@ -30,6 +30,10 @@ const uploadProductImage = (image, productId, setProgress) => {
     },
     error => {
         console.log(error);
+    },
+    () => {
+      setOpen(false)
+      addProduct()
     }
 );
 }
