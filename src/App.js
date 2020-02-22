@@ -12,8 +12,9 @@ const App = () => {
   // Change user state when the user successfully logged in
   useEffect(() => {
 		updateUserState(setUser);
+    console.log("test");
   }, []);
-  
+
   return (
     <Container disableGutters>
       <TopAppBar user={user}/>
