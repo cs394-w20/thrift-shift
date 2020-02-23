@@ -11,7 +11,7 @@ import "./App.css";
 const App = () => {
   const [user, setUser] = useState(null);
   const [productIds, setProductIds] = useState(null);
-  const [userRole, setUserRole] = useState(null);
+  const [userRole, setUserRole] = useState('');
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -31,42 +31,40 @@ const App = () => {
       <Button variant="contained" color="primary" style = {{marginTop: '5px', marginBottom: '5px', width: '50%',  marginLeft: '25%'}} onClick = {() => {addRole(user.uid, "buyer"); getRole(user.uid, setUserRole); handleClose()}}>
         Buyer
       </Button>
-      </Dialog> 
+      </Dialog>
     )
   }
 
-    // Change user state when the user successfully logged in
+  // Change user state when the user successfully logged in
   useEffect(() => {
     updateUserState(setUser);
   }, [user]);
 
   useEffect(() => {
     if(user){
-
-      //getRole(user.uid,setUserRole)
-      setOpen(true)
-      
+      getRole(user.uid,setUserRole);
     }
   }, [user]);
 
   useEffect(() => {
-    if(userRole){
-      console.log(userRole)
-      if(userRole === "buyer"){
-        console.log("buyer")
-        getAllProductInfo(setProductIds)
-        console.log(productIds)
-      }
-      if(userRole === "seller"){
-        console.log("In Here")
-        getUserProductsInfo(user.uid, setProductIds)
-      }
-
+    if (user && !userRole) {
+      setOpen(true);
+    } else {
+      setOpen(false);
     }
   }, [userRole]);
 
-  
-  
+  useEffect(() => {
+    if(userRole){
+      if(userRole === "buyer"){
+        getAllProductInfo(setProductIds)
+      }
+      if(userRole === "seller"){
+        getUserProductsInfo(user.uid, setProductIds)
+      }
+    }
+  }, [userRole]);
+
   return (
     <Container disableGutters>
       <ChooseRole user={user}/>
