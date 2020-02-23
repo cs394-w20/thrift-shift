@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container,Dialog, DialogTitle} from "@material-ui/core";
+import { Container,Dialog, DialogTitle, Button} from "@material-ui/core";
 import TopAppBar from "./components/TopAppBar";
 import ItemForm from "./components/ItemForm";
 import ProductList from "./components/ProductList";
@@ -19,14 +19,20 @@ const App = () => {
     setOpen(false)
   };
 
-  const chooseRole = () => {
-    setOpen(true)
+  const chooseRole = (user) => {
+    
     render (
       <Dialog
         open = {open}
         onClose={handleClose}
       >
-      <DialogTitle id="simple-dialog-title">Choose Your Role</DialogTitle>
+      <DialogTitle id="simple-dialog-title" style = {{textAlign: 'center'}}>Choose Your Role</DialogTitle>
+      <Button variant="contained" color="primary" style = {{width: '50%', marginLeft: '25%'}} onClick = {() => {addRole(user.uid, "seller"); getRole(user.uid, setUserRole); handleClose()}}>
+        Seller
+      </Button>
+      <Button variant="contained" color="primary" style = {{marginTop: '5px', marginBottom: '5px', width: '50%',  marginLeft: '25%'}} onClick = {() => {addRole(user.uid, "buyer"); getRole(user.uid, setUserRole); handleClose()}}>
+        Buyer
+      </Button>
       </Dialog>
         
     )
@@ -34,8 +40,15 @@ const App = () => {
 
   useEffect(() => {
     if (user && userRole === null) {
-      console.log("Empty");
-      chooseRole();
+      console.log("UserRole" + userRole);
+      chooseRole(user);
+     // console.log(userRole)
+    }
+    if(userRole != null){
+      
+      console.log("MY USER"+userRole)
+      console.log("IN HERE")
+
     }
   }, [userRole, open, user])
   
@@ -47,8 +60,9 @@ const App = () => {
 
   useEffect(() => {
     if(user){
-      
-      getRole(user.uid,setUserRole)
+
+      //getRole(user.uid,setUserRole)
+      setOpen(true)
       getUserProductsInfo(user.uid, setProductIds)
     }
   }, [user]);
