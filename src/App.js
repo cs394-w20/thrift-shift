@@ -12,7 +12,6 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [productIds, setProductIds] = useState(null);
   const [userRole, setUserRole] = useState(null);
-  const [allProductId, setAllProductId] = useState(null);
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -46,9 +45,27 @@ const App = () => {
 
       //getRole(user.uid,setUserRole)
       setOpen(true)
-      getUserProductsInfo(user.uid, setProductIds)
+      
     }
   }, [user]);
+
+  useEffect(() => {
+    if(userRole){
+      console.log(userRole)
+      if(userRole === "buyer"){
+        console.log("buyer")
+        getAllProductInfo(setProductIds)
+        console.log(productIds)
+      }
+      if(userRole === "seller"){
+        console.log("In Here")
+        getUserProductsInfo(user.uid, setProductIds)
+      }
+
+    }
+  }, [userRole]);
+
+  
   
   return (
     <Container disableGutters>
