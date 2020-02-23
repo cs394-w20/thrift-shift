@@ -5,23 +5,22 @@ import ItemForm from "./components/ItemForm";
 import ProductList from "./components/ProductList";
 import { updateUserState } from "./utils/FirebaseAuthUtils";
 import { getUserProductsInfo, getAllProductInfo, addRole, getRole} from "./utils/FirebaseDbUtils"
-
 import "./App.css";
-import { render } from "@testing-library/react";
+
 
 const App = () => {
   const [user, setUser] = useState(null);
   const [productIds, setProductIds] = useState(null);
   const [userRole, setUserRole] = useState(null);
   const [allProductId, setAllProductId] = useState(null);
-  const[open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const handleClose = () => {
     setOpen(false)
   };
 
-  const chooseRole = (user) => {
-    
-    render (
+  const ChooseRole = ({user}) => {
+    return (
       <Dialog
         open = {open}
         onClose={handleClose}
@@ -33,27 +32,11 @@ const App = () => {
       <Button variant="contained" color="primary" style = {{marginTop: '5px', marginBottom: '5px', width: '50%',  marginLeft: '25%'}} onClick = {() => {addRole(user.uid, "buyer"); getRole(user.uid, setUserRole); handleClose()}}>
         Buyer
       </Button>
-      </Dialog>
-        
+      </Dialog> 
     )
   }
 
-  useEffect(() => {
-    if (user && userRole === null) {
-      console.log("UserRole" + userRole);
-      chooseRole(user);
-     // console.log(userRole)
-    }
-    if(userRole != null){
-      
-      console.log("MY USER"+userRole)
-      console.log("IN HERE")
-
-    }
-  }, [userRole, open, user])
-  
-
-  // Change user state when the user successfully logged in
+    // Change user state when the user successfully logged in
   useEffect(() => {
     updateUserState(setUser);
   }, [user]);
@@ -69,6 +52,7 @@ const App = () => {
   
   return (
     <Container disableGutters>
+      <ChooseRole user={user}/>
       <TopAppBar user={user} />
       <ItemForm />
       <ProductList productIds={productIds} />
