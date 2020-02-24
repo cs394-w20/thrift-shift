@@ -69,7 +69,7 @@ const App = () => {
     <Container disableGutters>
       <ChooseRole user={user}/>
       <TopAppBar user={user} />
-      <ItemForm />
+      <ItemForm userRole={userRole} />
       <ProductList productIds={productIds} />
     </Container>
   );
