@@ -40,7 +40,8 @@ const useStyles = makeStyles(theme => ({
 		right: 20,
 		bottom: 20,
 		left: 'auto',
-		position: 'fixed'
+        position: 'fixed',
+        zIndex: 1,
 	}
 }));
 
@@ -104,8 +105,9 @@ const ItemForm = () => {
 	return (
 		<div>
 			<div className={classes.root}>
-				<Fab onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
-					<AddIcon />
+				<Fab variant="extended" onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
+					<AddIcon className={classes.extendedIcon}/>
+                    Add an item
 				</Fab>
 			</div>
 			<Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' fullScreen={fullScreen} TransitionComponent={fullScreen ? SlideTransition : FadeTransition}>
