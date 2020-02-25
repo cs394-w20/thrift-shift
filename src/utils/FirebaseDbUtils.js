@@ -38,4 +38,39 @@ const addProduct = (usedId, product) =>{
     return productId
 }
 
-export {getUserProductsInfo, getProductInfo, addProduct}
+const getRole = (usedId, setUserRole) => {
+
+    const productDb = db.ref("Users/"+usedId+"/role");
+    productDb.once(
+        "value",
+        snapshot => {
+            setUserRole(snapshot.val());
+        },
+        error => alert(error)
+    );
+
+}
+
+const addRole = (usedId, role) => {
+    const updateUser = {};
+    updateUser[`/Users/${usedId}/role`] = role;
+    db.ref().update(updateUser);
+    
+}
+
+const getAllProductInfo = (setAllProductId) => {
+
+    const getProductInfo = snapshot => {
+        if (snapshot.val()) {
+          let allproductIdArr = Object.keys(snapshot.val());
+          setAllProductId(allproductIdArr);
+        }
+
+    }
+    const ProductDb = db.ref("Products");
+    ProductDb.on("value", getProductInfo, error => alert(error)); 
+}
+
+
+
+export {getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole}

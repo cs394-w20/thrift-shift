@@ -90,7 +90,6 @@ const ItemForm = () => {
 	};
 
 	const handleImageUpload = (pictureFiles, pictureDataURLs) => {
-		console.log(pictureFiles)
 		const uuidv4 = require('uuid/v4');
 		const imageId = uuidv4();
 		setProduct({ ...product, imageId: imageId });
