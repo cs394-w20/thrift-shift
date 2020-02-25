@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "rbx/index.css";
 import ProductCard from "./ProductCard";
-import { Grid, Container, Slide } from "@material-ui/core";
-import ProductDescriptionCard from './ProductDescriptionCard'
+import { Grid, Container, Slide, Button } from "@material-ui/core";
+import ProductDescriptionCard from './ProductDescriptionCard';
+import MakeBidDialog from "./MakeBidDialog";
 
-const ProductList = ({ productIds }) => {
+const ProductList = ({ productIds, user, userRole }) => {
   console.log(productIds);
-  const [showDetailpage, setShowDetailPage] = useState(true);
+  const [showDetailpage, setShowDetailPage] = useState(false);
   const [selectProductId, setSelectProductId] = useState(null);
 
   const handleSelectProduct = (productId) => {
@@ -33,9 +34,11 @@ const ProductList = ({ productIds }) => {
         <Slide direction="right" in={showDetailpage} mountOnEnter unmountOnExit>
           <div>
             <ProductDescriptionCard
-              productId = "-M0YcPi3AThWJbpteAtj"
+              productId = {selectProductId}
               open = {showDetailpage}
               setOpen = {setShowDetailPage}
+              user = {user}
+              userRole = {userRole}
             />
           </div>
         </Slide>

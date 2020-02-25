@@ -70,7 +70,7 @@ const App = () => {
       <ChooseRole user={user}/>
       <TopAppBar user={user} />
       <ItemForm userRole={userRole} />
-      <ProductList productIds={productIds} />
+      <ProductList productIds={productIds} user={user} userRole={userRole} />
     </Container>
   );
 };
