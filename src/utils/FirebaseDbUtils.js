@@ -18,7 +18,7 @@ const getUserProductsInfo = (userId, setProductIds) => {
 
 const getProductInfo = (productId, setProduct) => {
     const productDb = db.ref("Products/" + productId);
-    productDb.once(
+    productDb.on(
         "value",
         snapshot => {
             setProduct(snapshot.val());
@@ -35,6 +35,32 @@ const addProduct = (usedId, product) =>{
     updateUser[`/Users/${usedId}/Products/` + productId] = true;
     db.ref().update(updateProduct);
     db.ref().update(updateUser);
+    return productId
+}
+
+const addBid = (userId, productId, product, bidAmount) => {
+    const bidId = db.ref().child(`/Products/${productId}/bid/`).push().key;
+    var updateProduct = {};
+    updateProduct[`/Products/${productId}/bid/${bidId}`] = {
+        buyerId: userId,
+        price: bidAmount,
+        time: Date.now()
+    };
+
+    var highestBidAmount = null;
+    if (!product.bid || bidAmount > product.bid.highestBid) {
+        highestBidAmount = bidAmount;
+    } else {
+        highestBidAmount = product.bid.highestBid;
+    }
+    console.log('new highest bid', highestBidAmount);
+
+    updateProduct[`/Products/${productId}/bid/highestBid`] = highestBidAmount;
+    db.ref().update(updateProduct);
+
+    // const updateUser = {};
+    // updateUser[`/Users/${usedId}/Products/` + productId] = true;
+    // db.ref().update(updateUser);
     return productId
 }
 
@@ -73,4 +99,4 @@ const getAllProductInfo = (setAllProductId) => {
 
 
 
-export {getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole}
+export {getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid}

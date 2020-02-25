@@ -5,8 +5,7 @@ const st = firebase.storage();
 
 const getProductImage = (image_id, setImageURL) => {
     // Get image reference
-    const imageRef = firebase.storage().ref("product_images/" + image_id);
-
+    const imageRef = firebase.storage().ref(`product_images/${image_id}`);
     // Get the download URL
     imageRef
       .getDownloadURL()
