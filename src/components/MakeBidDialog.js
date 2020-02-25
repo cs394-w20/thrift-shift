@@ -12,16 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import "../App.css";
 import { getProductInfo, addBid } from "../utils/FirebaseDbUtils";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1)
-    }
-  }
-}));
-
 const MakeBidDialog = ({ user, userRole }) => {
-  const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [product, setProduct] = useState(null);
   const [bidAmount, setBidAmount] = useState(0);
@@ -35,7 +26,7 @@ const MakeBidDialog = ({ user, userRole }) => {
 
   const handleClickOpen = () => {
     if (product) {
-      if (product.bid) {
+      if (product.bid && bidAmount == 0) {
         setBidAmount(product.bid.highestBid);
       } else if (bidAmount == 0) {
         setBidAmount(product.price);
@@ -64,11 +55,10 @@ const MakeBidDialog = ({ user, userRole }) => {
     return (
       <div>
         <Button
-          variant="extended"
+          variant="contained"
           onClick={handleClickOpen}
           color="secondary"
           aria-label="edit"
-          className={classes.root}
         >
           Make Bid
         </Button>
