@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Typography, useScrollTrigger, CssBaseline, Avatar, Button, Grid } from '@material-ui/core';
-import { signInWithGoogle } from '../utils/FirebaseAuthUtils'
-import LogoutPopover from './LogoutPopover'
+import { signInWithGoogle } from '../utils/FirebaseAuthUtils';
+import LogoutPopover from './LogoutPopover';
 
 const ElevationScroll = props => {
 	const { children, window } = props;
@@ -36,10 +36,10 @@ const TopAppBar = (props) => {
 									Thrift Shift
 								</Typography>
 							</Grid>
-							<Grid item>
+							<Grid item >
 								{
 									props.user ? <LogoutPopover><Avatar src={props.user.photoURL} /></LogoutPopover>
-									: <Button onClick={signInWithGoogle}>Sign in</Button>
+									: <Button onClick={signInWithGoogle}>Sign In</Button>
 								}
 							</Grid>
 						</Grid>

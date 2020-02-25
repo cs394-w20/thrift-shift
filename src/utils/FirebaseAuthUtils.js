@@ -1,5 +1,4 @@
-import firebase from 'firebase/app';
-import 'firebase/database';
+import firebase from "firebase";
 import "firebase/auth";
 
 /**
@@ -18,7 +17,7 @@ const firebaseConfig = {
 };
 
 // Initialize firebase
-const firebaseInit = () =>{
+if (!firebase.apps.length) {
     console.log("[Message] Initialize firebase app")
     firebase.initializeApp(firebaseConfig);
 }
@@ -42,6 +41,7 @@ const signOut = () => {
 const signInWithGoogle = () => {
     let provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider);
+    
 }
 
-export {firebaseInit, getUser, signOut, signInWithGoogle, updateUserState}
+export { getUser, signOut, signInWithGoogle, updateUserState}
