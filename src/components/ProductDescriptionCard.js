@@ -56,18 +56,6 @@ const ProductDescriptionCard = ({ productId, open, setOpen, user, userRole }) =>
     setOpen(false);
   };
 
-  const handleClickOpen = () => {
-  //   if (product) {
-  //     if (product.bid && bidAmount == 0) {
-  //       setBidAmount(product.bid.highestBid);
-  //     } else if (bidAmount == 0) {
-  //       setBidAmount(product.price);
-  //     }
-  //   }
-
-  //   setBidOpen(true);
-  };
-
   if(imageURL && product){
     return(
       <Grid
