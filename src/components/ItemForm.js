@@ -40,7 +40,8 @@ const useStyles = makeStyles(theme => ({
 		right: 20,
 		bottom: 20,
 		left: 'auto',
-		position: 'fixed'
+        position: 'fixed',
+        zIndex: 1,
 	}
 }));
 
@@ -52,7 +53,7 @@ const FadeTransition = React.forwardRef((props, ref) => {
 	return <Fade ref={ref} {...props} />
 })
 
-const ItemForm = () => {
+const ItemForm = ({userRole}) => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -102,11 +103,13 @@ const ItemForm = () => {
 
 	return (
 		<div>
-			<div className={classes.root}>
-				<Fab onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
-					<AddIcon />
+			{userRole=='seller'?
+			(<div className={classes.root}>
+				<Fab variant="extended" onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
+					<AddIcon className={classes.extendedIcon}/>
+                    Add an item
 				</Fab>
-			</div>
+			</div>):null}
 			<Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' fullScreen={fullScreen} TransitionComponent={fullScreen ? SlideTransition : FadeTransition}>
 				<DialogTitle id='alert-dialog-title'>Add an Item to Sell</DialogTitle>
 				<DialogContent>
