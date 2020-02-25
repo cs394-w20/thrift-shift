@@ -3,8 +3,7 @@ import "rbx/index.css";
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, Grid, CardContent, Typography, CardMedia, CardActionArea } from "@material-ui/core";
 import { getProductInfo } from '../utils/FirebaseDbUtils'
-import firebase from "firebase/app";
-import "firebase/storage";
+import { getProductImage } from '../utils/FirebaseStorageUtils'
 
 const useStyles = makeStyles({
   root: {
@@ -14,21 +13,6 @@ const useStyles = makeStyles({
     height: 140,
   },
 });
-
-const getProductImage = (image_id, setImageURL) => {
-  // Get image reference
-  const imageRef = firebase.storage().ref("product_images/" + image_id);
-
-  // Get the download URL
-  imageRef
-    .getDownloadURL()
-    .then(function(url) {
-      setImageURL(url);
-    })
-    .catch(function(error) {
-      console.log("error", error);
-    });
-};
 
 const ProductCard = ({ productId }) => {
   const classes = useStyles();
@@ -52,12 +36,11 @@ const ProductCard = ({ productId }) => {
           <CardMedia className={classes.media} image={imageURL} title="item"/>
           <CardContent>
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Typography gutterBottom variant="subtitle2">
                 {product.name}
               </Typography>
             </Grid>
-            <Grid item xs={6}></Grid>
             <Grid item xs={6}>
               <Typography
                 gutterBottom
