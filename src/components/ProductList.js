@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "rbx/index.css";
 import ProductCard from "./ProductCard";
 import { Grid, Container } from "@material-ui/core";
 
 const ProductList = ({ productIds }) => {
-  console.log(productIds)
+  const [showDetailpage, setShowDetailPage] = useState(false);
+
+  const handleClickProduct = () => {
+    setShowetailPage(true);
+  }
+
   if (productIds) {
     return (
       <Container>
@@ -13,7 +18,7 @@ const ProductList = ({ productIds }) => {
           {
             productIds.map(productId => {
               return (
-                <Grid key={productId} item xs={6} md={3}>
+                <Grid onClick={() => { handleClickProduct() }} key={productId} item xs={6} md={3}>
                   <ProductCard productId={productId} />
                 </Grid>
               );
