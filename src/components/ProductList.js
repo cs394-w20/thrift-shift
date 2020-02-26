@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "rbx/index.css";
 import ProductCard from "./ProductCard";
-import { Grid, Container, Slide, Button } from "@material-ui/core";
+import { Grid, Container, Fade } from "@material-ui/core";
 import ProductDescriptionCard from './ProductDescriptionCard';
-import MakeBidDialog from "./MakeBidDialog";
 
 const ProductList = ({ productIds, user, userRole }) => {
   console.log(productIds);
@@ -19,7 +18,7 @@ const ProductList = ({ productIds, user, userRole }) => {
 
     return (
       <Container>
-        <Slide direction="left" in={!showDetailpage} mountOnEnter unmountOnExit>
+        <Fade in={!showDetailpage} mountOnEnter unmountOnExit>
           <Grid container spacing={2}>
             {
               productIds.map(productId => {
@@ -31,8 +30,8 @@ const ProductList = ({ productIds, user, userRole }) => {
               })
             }
           </Grid>
-        </Slide>
-        <Slide direction="right" in={showDetailpage} mountOnEnter unmountOnExit>
+        </Fade>
+        <Fade in={showDetailpage} mountOnEnter unmountOnExit>
           <div>
             <ProductDescriptionCard
               productId = {selectProductId}
@@ -42,7 +41,7 @@ const ProductList = ({ productIds, user, userRole }) => {
               userRole = {userRole}
             />
           </div>
-        </Slide>
+        </Fade>
       </Container>
     );
   } else {

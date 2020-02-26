@@ -66,16 +66,15 @@ const ProductDescriptionCard = ({ productId, open, setOpen, user, userRole }) =>
         style={{ padding: "15px 10px 15px 10px" }}
         spacing={2}
       >
-        <Grid container xs={12} sm={4} spacing={2}>
+        <Grid container spacing={2}>
           <Grid item xs={12} sm={12} sm container>
-            <Grid xs container direction="column">
+            <Grid xs item>
               <Typography variant="h5">
                 {product.name}
               </Typography>
             </Grid>
             <Grid item>
               <MakeBidDialog user={user} userRole={userRole}/>
-
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12}>

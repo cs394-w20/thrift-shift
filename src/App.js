@@ -13,6 +13,7 @@ const App = () => {
   const [productIds, setProductIds] = useState(null);
   const [userRole, setUserRole] = useState('');
   const [open, setOpen] = useState(false);
+  const [page, setPage] = React.useState('product')
 
   const handleClose = () => {
     setOpen(false)
@@ -68,9 +69,14 @@ const App = () => {
   return (
     <Container disableGutters>
       <ChooseRole user={user}/>
-      <TopAppBar user={user} />
-      <ItemForm userRole={userRole} />
-      <ProductList productIds={productIds} user={user} userRole={userRole} />
+      <TopAppBar user={user} setPage={setPage}/>
+      {
+        page == 'product' ?
+        <div>
+          <ItemForm userRole={userRole} />
+          <ProductList productIds={productIds} user={user} userRole={userRole} />
+        </div>:null
+      }
     </Container>
   );
 };

@@ -36,12 +36,12 @@ const ProductCard = ({ productId }) => {
           <CardMedia className={classes.media} image={imageURL} title="item"/>
           <CardContent>
           <Grid container>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Typography gutterBottom variant="subtitle2">
                 {product.name}
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Typography
                 gutterBottom
                 variant="body2"
