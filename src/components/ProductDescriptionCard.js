@@ -64,7 +64,7 @@ const ProductDescriptionCard = ({ productId, user, userRole }) => {
               </Typography>
             </Grid>
             <Grid item>
-              <MakeBidDialog user={user} userRole={userRole}/>
+              <MakeBidDialog user={user} userRole={userRole} productId={productId}/>
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12}>
