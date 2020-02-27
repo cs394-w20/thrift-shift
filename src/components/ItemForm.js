@@ -103,7 +103,7 @@ const ItemForm = ({userRole}) => {
 
 	return (
 		<div>
-			{userRole=='seller'?
+			{userRole==='seller'?
 			(<div className={classes.root}>
 				<Fab variant="extended" onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
 					<AddIcon className={classes.extendedIcon}/>

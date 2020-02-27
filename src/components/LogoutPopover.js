@@ -1,6 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Popover, Typography, Button } from '@material-ui/core';
+import { Popover, Button } from '@material-ui/core';
 import { signOut } from '../utils/FirebaseAuthUtils';
 
 const LogoutPopover = (props) => {

@@ -8,7 +8,6 @@ import {
   DialogTitle,
   TextField
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import "../App.css";
 import { getProductInfo, addBid } from "../utils/FirebaseDbUtils";
 
@@ -26,9 +25,9 @@ const MakeBidDialog = ({ user, userRole }) => {
 
   const handleClickOpen = () => {
     if (product) {
-      if (product.bid && bidAmount == 0) {
+      if (product.bid && bidAmount === 0) {
         setBidAmount(product.bid.highestBid);
-      } else if (bidAmount == 0) {
+      } else if (bidAmount === 0) {
         setBidAmount(product.price);
       }
     }
@@ -45,13 +44,11 @@ const MakeBidDialog = ({ user, userRole }) => {
   };
 
   const submitBid = () => {
-    console.log("made bid", bidAmount);
     addBid(user.uid, productId, product, bidAmount);
     setOpen(false);
   };
 
-  if (product && user && userRole == "buyer") {
-    console.log("bid amount", bidAmount);
+  if (product && user && userRole === "buyer") {
     return (
       <div>
         <Button

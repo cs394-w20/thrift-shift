@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "rbx/index.css";
 import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MakeBidDialog from "./MakeBidDialog";
 import { getProductInfo } from "../utils/FirebaseDbUtils";
 import { getProductImage } from "../utils/FirebaseStorageUtils";
-import firebase from "firebase/app";
 import "firebase/storage";
 import {
   Grid,
-  Typography,
-  Slide,
-  Button,
-  ButtonBase
+  Typography
 } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -36,11 +31,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ProductDescriptionCard = ({ productId, open, setOpen, user, userRole }) => {
+const ProductDescriptionCard = ({ productId, user, userRole }) => {
   const classes = useStyles();
   const [imageURL, setImageURL] = useState(null);
   const [product, setProduct] = useState(null);
-  const [bidOpen, setBidOpen] = useState(false);
 
   useEffect(() => {
     if (productId) {
@@ -51,10 +45,6 @@ const ProductDescriptionCard = ({ productId, open, setOpen, user, userRole }) =>
   if (!imageURL && product) {
     getProductImage(product.imageId, setImageURL);
   }
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   if(imageURL && product){
     return(

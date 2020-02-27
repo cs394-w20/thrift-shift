@@ -5,7 +5,6 @@ import { Grid, Container, Fade } from "@material-ui/core";
 import ProductDescriptionCard from './ProductDescriptionCard';
 
 const ProductList = ({ productIds, user, userRole }) => {
-  console.log(productIds);
   const [showDetailpage, setShowDetailPage] = useState(false);
   const [selectProductId, setSelectProductId] = useState(null);
 

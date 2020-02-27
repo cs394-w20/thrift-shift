@@ -71,7 +71,7 @@ const App = () => {
       <ChooseRole user={user}/>
       <TopAppBar user={user} setPage={setPage}/>
       {
-        page == 'product' ?
+        page === 'product' ?
         <div>
           <ItemForm userRole={userRole} />
           <ProductList productIds={productIds} user={user} userRole={userRole} />

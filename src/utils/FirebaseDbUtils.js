@@ -27,6 +27,32 @@ const getProductInfo = (productId, setProduct) => {
     );
 }
 
+const getProductBidInfo = (productId, setBidIds) => {
+    const productBidDb = db.ref(`/Products/${productId}/bid/`);
+    productBidDb.on(
+        "value",
+        snapshot => {
+            if(snapshot.val()) {
+                let bidIds = Object.keys(snapshot.val());
+                bidIds.pop();
+                setBidIds(bidIds); 
+            }
+        },
+        error => alert(error) 
+    );
+}
+
+const getBidInfo = (productId, bidId, setBid) => {
+    const bidDb = db.ref(`/Products/${productId}/bid/${bidId}`)
+    bidDb.on(
+        "value",
+        snapshot => {
+            setBid(snapshot.val());
+        },
+        error => alert(error)
+    );
+}
+
 const addProduct = (usedId, product) =>{
     const productId = db.ref().child('Products').push().key;
     const updateProduct = {};
@@ -99,4 +125,4 @@ const getAllProductInfo = (setAllProductId) => {
 
 
 
-export {getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid}
+export {getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo}
