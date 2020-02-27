@@ -11,11 +11,10 @@ import {
 import "../App.css";
 import { getProductInfo, addBid } from "../utils/FirebaseDbUtils";
 
-const MakeBidDialog = ({ user, userRole }) => {
+const MakeBidDialog = ({ user, userRole, productId }) => {
   const [open, setOpen] = useState(false);
   const [product, setProduct] = useState(null);
   const [bidAmount, setBidAmount] = useState(0);
-  const productId = "-M0VrbmAEtpmzGsJOWQJ";
 
   useEffect(() => {
     if (productId) {
