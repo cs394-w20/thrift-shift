@@ -6,6 +6,7 @@ import ProductList from "./components/ProductList";
 import { updateUserState } from "./utils/FirebaseAuthUtils";
 import { getUserProductsInfo, getAllProductInfo, addRole, getRole } from "./utils/FirebaseDbUtils"
 import "./App.css";
+import Listings from "./components/Listings/Listings";
 
 
 const App = () => {
@@ -13,7 +14,7 @@ const App = () => {
   const [productIds, setProductIds] = useState(null);
   const [userRole, setUserRole] = useState('');
   const [open, setOpen] = useState(false);
-  const [page, setPage] = React.useState('product')
+  const [page, setPage] = React.useState('bid')
 
   const handleClose = () => {
     setOpen(false)
@@ -76,6 +77,10 @@ const App = () => {
             <ItemForm userRole={userRole} />
             <ProductList productIds={productIds} user={user} userRole={userRole} />
           </div> : null
+      }
+      {
+        page == 'bid' ?
+          <Listings productIds={productIds}/>: null
       }
     </Container>
   );
