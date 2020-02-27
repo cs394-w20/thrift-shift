@@ -18,10 +18,12 @@ const ProductCard = ({ productId }) => {
   const classes = useStyles();
   const [imageURL, setImageURL] = useState(null);
   const [product, setProduct] = useState(null);
+  const [bidIds, setBidIds] = useState(null);
+
 
   useEffect(() => {
     if (productId) {
-      getProductInfo(productId, setProduct)
+      getProductInfo(productId, setProduct);
     }
   }, []);
 
