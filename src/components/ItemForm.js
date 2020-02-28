@@ -155,11 +155,10 @@ const ItemForm = ({userRole}) => {
 					            ),
 					            labelWidth: 60
                     }}
-                    validators={["required", "matchRegexp:^[0-9]$", "minNumber:0"]}
+                    validators={["required", "matchRegexp:^[1-9]\\d*$"]}
                     errorMessages={[
                       "This field is required",
-                      "Invalid price",
-                      "Invalid price"
+                      "Price must be a positive number"
                     ]}
                   />
                 </FormControl>
