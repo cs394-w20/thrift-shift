@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "rbx/index.css";
 import ProductCard from "./ProductCard";
-import { Grid, Container, Fade } from "@material-ui/core";
+import { Grid, Container } from "@material-ui/core";
 import ProductDescriptionCard from './ProductDescriptionCard';
 
 const ProductList = ({ productIds, user, userRole }) => {

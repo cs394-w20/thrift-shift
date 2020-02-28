@@ -5,7 +5,7 @@ import MakeBidDialog from "./MakeBidDialog";
 import { getProductInfo } from "../utils/FirebaseDbUtils";
 import { getProductImage } from "../utils/FirebaseStorageUtils";
 import "firebase/storage";
-import { Grid, Typography, Slide, Dialog, AppBar, Toolbar, IconButton, DialogContent, Fade, DialogActions } from "@material-ui/core";
+import { Grid, Typography, Slide, Dialog, AppBar, Toolbar, IconButton, DialogContent, DialogActions } from "@material-ui/core";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles(theme => ({
@@ -72,7 +72,6 @@ const ProductDescriptionCard = ({ productId, user, userRole, open, setOpen }) =>
           </Toolbar>
         </AppBar>
         <Toolbar />
-        <img className={classes.img} alt={product.name} src={imageURL} />
         <DialogContent>
           <Grid
             justify="center"
@@ -83,14 +82,17 @@ const ProductDescriptionCard = ({ productId, user, userRole, open, setOpen }) =>
             spacing={2}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} sm container>
+              <Grid item xs={12} sm={12} container>
                 <Grid xs item>
                   <Typography variant="h5">
                     {product.name}
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid item xs={12} sm={12} sm container>
+              <Grid item xs={12} sm={12} container>
+                <img className={classes.img} alt={product.name} src={imageURL} />
+              </Grid>
+              <Grid item xs={12} sm={12} container>
                 <Grid item xs container>
                   <Typography gutterBottom variant="h5">
                     Starting Price
@@ -102,8 +104,8 @@ const ProductDescriptionCard = ({ productId, user, userRole, open, setOpen }) =>
               </Grid>
               <Grid item xs={12} sm={12} container>
                 <Typography gutterBottom variant="body1">
-                  Vintage lightweight leather jacket from the 1970s. No rips or tears, in very good condition. Women’s size medium. Serious inquiries only.
-            </Typography>
+                  {product.description}
+                </Typography>
               </Grid>
             </Grid>
           </Grid>

@@ -10,13 +10,12 @@ import {
 } from "@material-ui/core";
 import "../App.css";
 import { getProductInfo, addBid } from "../utils/FirebaseDbUtils";
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 const MakeBidDialog = ({ user, userRole, productId }) => {
   const [open, setOpen] = useState(false);
   const [product, setProduct] = useState(null);
-  const [bidAmount, setBidAmount] = useState(null);
-  const [belowMinBid, setBelowMinBid] = useState(false);
+  const [bidAmount, setBidAmount] = useState("");
 
   useEffect(() => {
     if (productId) {
@@ -26,28 +25,34 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
 
   const handleClickOpen = () => {
     setOpen(true);
+    ValidatorForm.addValidationRule("belowHighestBid", value => {
+      if (product && product.bid && value <= product.bid.highestBid) {
+        return false;
+      }
+      return true;
+    });
+
+    ValidatorForm.addValidationRule("belowStartingPrice", value => {
+      if ((!product || !product.bid) && value < product.price) {
+        return false;
+      }
+      return true;
+    });
   };
 
   const handleClose = () => {
     setOpen(false);
+    setBidAmount("");
   };
 
   const handleChangeBid = event => {
-    const newAmount = event.target.value;
-    if (
-      (product.bid && newAmount <= product.bid.highestBid) ||
-      newAmount < product.price
-    ) {
-      setBelowMinBid(true);
-    } else {
-      setBelowMinBid(false);
-    }
-    setBidAmount(newAmount);
+    setBidAmount(event.target.value);
   };
 
   const submitBid = () => {
     addBid(user.uid, productId, product, bidAmount);
     setOpen(false);
+    setBidAmount("");
   };
 
   if (product && user && userRole === "buyer") {
@@ -97,16 +102,16 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
                     InputLabelProps={{
                       shrink: true
                     }}
-                    error={belowMinBid}
-                    helperText={
-                      belowMinBid
-                        ? product.bid
-                          ? "Your bid must be at least the highest bid"
-                          : "Your bid must be at least the starting price"
-                        : null
-                    }
-                    validators={["required"]}
-                    errorMessages={["This field is required"]}
+                    validators={[
+                      "required",
+                      "belowHighestBid",
+                      "belowStartingPrice"
+                    ]}
+                    errorMessages={[
+                      "This field is required",
+                      "Your bid must be greater than the highest bid",
+                      "Your bid must be at least the starting price"
+                    ]}
                   />
                 </Grid>
               </Grid>
@@ -119,12 +124,7 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
               >
                 Cancel
               </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                disabled={belowMinBid}
-                type="submit"
-              >
+              <Button variant="contained" color="secondary" type="submit">
                 Submit Bid
               </Button>
             </DialogActions>
