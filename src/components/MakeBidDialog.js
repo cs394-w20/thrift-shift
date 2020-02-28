@@ -46,7 +46,11 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
   };
 
   const handleChangeBid = event => {
-    setBidAmount(event.target.value);
+    const newAmount = event.target.value;
+    console.log(newAmount);
+    if (newAmount !== "e" && newAmount !== "+" && newAmount !== "-") {
+      setBidAmount(newAmount);
+    }
   };
 
   const submitBid = () => {
@@ -90,8 +94,6 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
                 </Grid>
                 <Grid item xs={6}>
                   <TextValidator
-                    id="standard-number"
-                    type="number"
                     value={bidAmount}
                     InputProps={{
                       startAdornment: (
@@ -105,12 +107,14 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
                     validators={[
                       "required",
                       "belowHighestBid",
-                      "belowStartingPrice"
+                      "belowStartingPrice",
+                      "matchRegexp:^[0-9]$"
                     ]}
                     errorMessages={[
                       "This field is required",
                       "Your bid must be greater than the highest bid",
-                      "Your bid must be at least the starting price"
+                      "Your bid must be at least the starting price",
+                      "Invalid number"
                     ]}
                   />
                 </Grid>

@@ -146,20 +146,20 @@ const ItemForm = ({userRole}) => {
                     label="Price"
                     variant="outlined"
                     id="standard-number"
-                    type="number"
                     min={0}
                     value={product.price}
                     onChange={handleChange("price")}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">$</InputAdornment>
-					  ),
-					  labelWidth: 60
+					            ),
+					            labelWidth: 60
                     }}
-                    validators={["required", "minNumber:0"]}
+                    validators={["required", "matchRegexp:^[0-9]$", "minNumber:0"]}
                     errorMessages={[
                       "This field is required",
-                      "Your starting price must be at least $0"
+                      "Invalid price",
+                      "Invalid price"
                     ]}
                   />
                 </FormControl>
