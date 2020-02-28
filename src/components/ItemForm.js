@@ -184,6 +184,7 @@ const ItemForm = ({userRole}) => {
                   maxFileSize={20971520}
                   label="Upload image to show your item"
                   withPreview={true}
+                  singleImage={true}
                   required
                 />
               </ListItem>
