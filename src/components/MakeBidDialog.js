@@ -6,8 +6,7 @@ import {
   Dialog,
   DialogContent,
   InputAdornment,
-  DialogTitle,
-  TextField
+  DialogTitle
 } from "@material-ui/core";
 import "../App.css";
 import { getProductInfo, addBid } from "../utils/FirebaseDbUtils";
