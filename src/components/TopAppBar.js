@@ -31,7 +31,7 @@ const TopAppBar = (props) => {
 			<ElevationScroll {...props}>
 				<AppBar>
 					<Toolbar>
-						<AppDrawer userRole={props.userRole} setPage={props.setPage}/>
+						<AppDrawer userRole={props.userRole} setPage={props.setPage} />
 						<Grid container alignItems="center" justify="space-between">
 							<Grid item>
 								<Typography variant="h6">
@@ -41,7 +41,7 @@ const TopAppBar = (props) => {
 							<Grid item >
 								{
 									props.user ? <LogoutPopover><Avatar src={props.user.photoURL} /></LogoutPopover>
-									: <Button onClick={signInWithGoogle}>Sign In</Button>
+										: <Button onClick={signInWithGoogle}>Sign In</Button>
 								}
 							</Grid>
 						</Grid>
