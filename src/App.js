@@ -12,7 +12,7 @@ import Listings from "./components/Listings/Listings";
 const App = () => {
   const [user, setUser] = useState(null);
   const [productIds, setProductIds] = useState(null);
-  const [userRole, setUserRole] = useState('');
+  const [userRole, setUserRole] = useState(null);
   const [open, setOpen] = useState(false);
   const [page, setPage] = React.useState('bid')
 
@@ -42,19 +42,17 @@ const App = () => {
     updateUserState(setUser);
   }, [user]);
 
-  useEffect(() => {
-    if (user) {
-      getRole(user.uid, setUserRole);
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     getRole(user.uid, setUserRole);
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     if (user && !userRole) {
       setOpen(true);
-    } else {
-      setOpen(false);
     }
-  }, [userRole]);
+  });
 
   useEffect(() => {
     if (userRole) {
@@ -69,6 +67,7 @@ const App = () => {
 
   return (
     <Container disableGutters>
+      <div style={{ height: '10px' }} />
       <ChooseRole user={user} />
       <TopAppBar user={user} setPage={setPage} />
       {
@@ -80,7 +79,7 @@ const App = () => {
       }
       {
         page == 'bid' ?
-          <Listings productIds={productIds}/>: null
+          <Listings productIds={productIds} /> : null
       }
     </Container>
   );

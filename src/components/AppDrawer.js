@@ -27,15 +27,15 @@ const AppDrawer = props => {
 		<div
 			className={classes.list}
 			role="presentation"
-			onClick={() => {setOpen(false)}}
-			onKeyDown={() => {setOpen(false)}}
+			onClick={() => { setOpen(false) }}
+			onKeyDown={() => { setOpen(false) }}
 		>
 			<List>
-				<ListItem button onClick={()=>{props.setPage("product")}}>
+				<ListItem button onClick={() => { props.setPage("product") }}>
 					<ListItemIcon><ViewListIcon /></ListItemIcon>
 					<ListItemText primary={"Your Items"} />
 				</ListItem>
-				<ListItem button onClick={()=>{props.setPage("bid")}}>
+				<ListItem button onClick={() => { props.setPage("bid") }}>
 					<ListItemIcon><MonetizationOnIcon /></ListItemIcon>
 					<ListItemText primary={"Your Listings"} />
 				</ListItem>
@@ -45,14 +45,14 @@ const AppDrawer = props => {
 
 	return (
 		<div>
-			<IconButton onClick={() => {setOpen(true)}} edge="start" color="inherit" aria-label="menu">
-      	<MenuIcon />
-    	</IconButton>
-			
+			<IconButton onClick={() => { setOpen(true) }} edge="start" color="inherit" aria-label="menu">
+				<MenuIcon />
+			</IconButton>
+
 			<SwipeableDrawer
 				open={open}
-				onClose={() => {setOpen(false)}}
-				onOpen={() => {setOpen(true)}}
+				onClose={() => { setOpen(false) }}
+				onOpen={() => { setOpen(true) }}
 			>
 				{sideList('left')}
 			</SwipeableDrawer>

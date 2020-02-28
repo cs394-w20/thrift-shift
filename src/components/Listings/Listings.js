@@ -4,19 +4,23 @@ import { Container } from '@material-ui/core';
 import BidItem from './BidItems';
 
 const Listings = props => {
-
+	const [open, setOpen] = React.useState(null)
 	if (props.productIds) {
 		return (
-			<Container>
-				<Typography variant="h5" gutterBottom>Your Listings</Typography>
-				{
-					props.productIds.map(productId => {
-						return <BidItem key={productId} productId={productId} />
-					})
-				}
-			</Container>
+			<div>
+				<Container>
+					<Typography variant="h5" gutterBottom>Your Listings</Typography>
+				</Container>
+				<Container>
+					{
+						props.productIds.map(productId => {
+							return <BidItem key={productId} productId={productId} open={open} setOpen={setOpen} />
+						})
+					}
+				</Container>
+			</div>
 		);
-	} else{
+	} else {
 		return null
 	}
 }
