@@ -40,6 +40,7 @@ const App = () => {
   // Change user state when the user successfully logged in
   useEffect(() => {
     updateUserState(setUser);
+    console.log(user);
   }, [user]);
 
   // useEffect(() => {

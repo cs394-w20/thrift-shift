@@ -81,13 +81,6 @@ const ProductDescriptionCard = ({ productId, user, userRole }) => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12} container>
-            <Grid item xs container>
-              <Typography gutterBottom  variant="h6">
-                {product.name}
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={12} container>
             <Typography gutterBottom  variant="body1">
               Vintage lightweight leather jacket from the 1970s. No rips or tears, in very good condition. Women’s size medium. Serious inquiries only.
             </Typography>

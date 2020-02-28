@@ -24,6 +24,7 @@ import { uploadLQImage } from '../utils/FirebaseStorageUtils';
 import { getUser } from '../utils/FirebaseAuthUtils'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import '../App.css';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -102,55 +103,116 @@ const ItemForm = ({userRole}) => {
 	};
 
 	return (
-		<div>
-			{userRole==='seller'?
-			(<div className={classes.root}>
-				<Fab variant="extended" onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
-					<AddIcon className={classes.extendedIcon}/>
-                    Add item
-				</Fab>
-			</div>):null}
-			<Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' fullScreen={fullScreen} TransitionComponent={fullScreen ? SlideTransition : FadeTransition}>
-				<DialogTitle id='alert-dialog-title'>Add an Item to Sell</DialogTitle>
-				<DialogContent>
-					<List>
-						<ListItem>
-							<TextField label="Item Name" value={product.name} variant="outlined" onChange={handleChange('name')} />
-						</ListItem>
-						<ListItem>
-							<FormControl fullWidth variant="outlined">
-								<InputLabel>Price</InputLabel>
-								<OutlinedInput
-									value={product.price}
-									onChange={handleChange('price')}
-									startAdornment={<InputAdornment position="start">$</InputAdornment>}
-									labelWidth={60}
-								/>
-							</FormControl>
-						</ListItem>
-						<ListItem>
-							<TextField multiline label="Description" value={product.description} variant="outlined" onChange={handleChange('description')} />
-						</ListItem>
-						<ListItem>
-							<ImageUploader
-								withIcon={true}
-								buttonText='Choose image'
-								onChange={handleImageUpload}
-								accept="image/*"
-								maxFileSize={20971520}
-								label="Upload image to show your item"
-								withPreview={true}
-							/>
-						</ListItem>
-					</List>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={() => { handleClose() }}>Cancel</Button>
-					<Button variant="contained" color="secondary" onClick={() => { addItem() }}>Submit</Button>
-				</DialogActions>
-			</Dialog>
-		</div>
-	)
+    <div>
+      {userRole === "seller" ? (
+        <div className={classes.root}>
+          <Fab
+            variant="extended"
+            onClick={handleClickOpen}
+            className={classes.fab}
+            color="secondary"
+            aria-label="edit"
+          >
+            <AddIcon className={classes.extendedIcon} />
+            Add item
+          </Fab>
+        </div>
+      ) : null}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        fullScreen={fullScreen}
+        TransitionComponent={fullScreen ? SlideTransition : FadeTransition}
+      >
+        <DialogTitle id="alert-dialog-title">Add an Item to Sell</DialogTitle>
+        <ValidatorForm
+          onSubmit={() => {
+            addItem();
+          }}
+        >
+          <DialogContent>
+            <List>
+              <ListItem>
+                <TextValidator
+                  label="Item Name"
+                  value={product.name}
+                  variant="outlined"
+                  validators={["required"]}
+                  errorMessages={["This field is required"]}
+                  onChange={handleChange("name")}
+                />
+              </ListItem>
+              <ListItem>
+                <FormControl fullWidth variant="outlined">
+                  <TextValidator
+                    label="Price"
+                    variant="outlined"
+                    id="standard-number"
+                    type="number"
+                    min={0}
+                    value={product.price}
+                    onChange={handleChange("price")}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">$</InputAdornment>
+					  ),
+					  labelWidth: 60
+                    }}
+                    validators={["required", "minNumber:0"]}
+                    errorMessages={[
+                      "This field is required",
+                      "Your starting price must be at least $0"
+                    ]}
+                  />
+                </FormControl>
+              </ListItem>
+              <ListItem>
+                <TextValidator
+                  multiline
+                  label="Description"
+                  value={product.description}
+                  variant="outlined"
+                  onChange={handleChange("description")}
+                  validators={["required"]}
+                  errorMessages={["This field is required"]}
+                />
+              </ListItem>
+              <ListItem>
+                <ImageUploader
+                  withIcon={true}
+                  buttonText="Choose image"
+                  onChange={handleImageUpload}
+                  accept="image/*"
+                  maxFileSize={20971520}
+                  label="Upload image to show your item"
+                  withPreview={true}
+                  required
+                />
+              </ListItem>
+            </List>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              type="submit"
+              disabled={!image}
+            >
+              Submit
+            </Button>
+          </DialogActions>
+        </ValidatorForm>
+      </Dialog>
+    </div>
+  );
 }
 
 export default ItemForm
