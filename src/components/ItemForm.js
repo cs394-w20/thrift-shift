@@ -98,7 +98,7 @@ const ItemForm = ({userRole}) => {
 	};
 
 	const addItem = () => {
-		uploadLQImage(image, product.imageId, setProgress, setOpen, () => { addProduct(getUser().uid, product) })
+		uploadLQImage(image, product.imageId, setProgress, () => { handleClose() }, () => { addProduct(getUser().uid, product) });
 	};
 
 	return (
