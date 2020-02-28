@@ -35,10 +35,12 @@ const AppDrawer = props => {
 					<ListItemIcon><ViewListIcon /></ListItemIcon>
 					<ListItemText primary={"Your Items"} />
 				</ListItem>
-				<ListItem button onClick={() => { props.setPage("bid") }}>
-					<ListItemIcon><MonetizationOnIcon /></ListItemIcon>
-					<ListItemText primary={"Your Listings"} />
-				</ListItem>
+				{props.userRole === 'seller' ?
+					<ListItem button onClick={() => { props.setPage("bid") }}>
+						<ListItemIcon><MonetizationOnIcon /></ListItemIcon>
+						<ListItemText primary={"Your Listings"} />
+					</ListItem> : null
+				}
 			</List>
 		</div>
 	);

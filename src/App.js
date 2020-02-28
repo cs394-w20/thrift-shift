@@ -14,7 +14,7 @@ const App = () => {
   const [productIds, setProductIds] = useState(null);
   const [userRole, setUserRole] = useState(null);
   const [open, setOpen] = useState(false);
-  const [page, setPage] = React.useState('bid')
+  const [page, setPage] = React.useState('product')
 
   const handleClose = () => {
     setOpen(false)
@@ -69,7 +69,7 @@ const App = () => {
     <Container disableGutters>
       <div style={{ height: '10px' }} />
       <ChooseRole user={user} />
-      <TopAppBar user={user} setPage={setPage} />
+      <TopAppBar user={user} userRole={userRole} setPage={setPage} />
       {
         page == 'product' ?
           <div>

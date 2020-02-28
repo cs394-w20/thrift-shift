@@ -6,7 +6,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { getProductBidInfo, getProductInfo } from '../../utils/FirebaseDbUtils'
-import { Divider, Grid, List, MenuItem, ExpansionPanelActions, Button, Fade } from '@material-ui/core';
+import { Divider, Grid, List, MenuItem, ExpansionPanelActions, Button, Fade, Radio } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -98,9 +98,10 @@ const BidItem = props => {
 								{
 									Object.keys(bids).filter((key) => { return key === "highestBid" ? false : true }).map(bid =>
 										<MenuItem selected={selected === bid} button key={bid} onClick={() => { setSelected(bid) }}>
-											<Grid container>
-												<Grid item xs={9}>
-													<Typography className={classes.heading}>{"test"}</Typography>
+											<Grid container alignItems="center">
+												<Grid item container alignItems="center" xs={9}>
+													<Grid item><Radio checked={selected === bid} /></Grid>
+													<Grid item xs><Typography className={classes.heading}>{"Test"}</Typography></Grid>
 												</Grid>
 												<Grid item xs={3}>
 													<Typography align='right' className={classes.secondaryHeading}>$ {bids[bid].price}</Typography>

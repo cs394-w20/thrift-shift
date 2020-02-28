@@ -86,9 +86,6 @@ const ProductDescriptionCard = ({ productId, user, userRole }) => {
                 {product.name}
               </Typography>
             </Grid>
-            <Grid item>
-              <Typography variant="h6">Size 2</Typography>
-            </Grid>
           </Grid>
           <Grid item xs={12} sm={12} container>
             <Typography gutterBottom  variant="body1">

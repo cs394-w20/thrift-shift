@@ -31,7 +31,7 @@ const TopAppBar = (props) => {
 			<ElevationScroll {...props}>
 				<AppBar>
 					<Toolbar>
-						<AppDrawer setPage={props.setPage}/>
+						<AppDrawer userRole={props.userRole} setPage={props.setPage}/>
 						<Grid container alignItems="center" justify="space-between">
 							<Grid item>
 								<Typography variant="h6">
