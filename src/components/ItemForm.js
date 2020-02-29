@@ -85,7 +85,11 @@ const ItemForm = ({userRole}) => {
 	}
 
 	const handleChange = prop => event => {
-		setProduct({ ...product, [prop]: event.target.value });
+		if (prop === "price") {
+			setProduct({ ...product, [prop]: Number(event.target.value) })
+		} else {
+			setProduct({ ...product, [prop]: event.target.value });
+		}
 	};
 
 	const handleImageUpload = (pictureFiles, pictureDataURLs) => {

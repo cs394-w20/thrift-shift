@@ -49,7 +49,6 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
 
   const handleChangeBid = event => {
     const newAmount = event.target.value;
-    console.log(newAmount);
     setBidAmount(newAmount);
   };
 
