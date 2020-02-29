@@ -18,7 +18,7 @@ const getUserProductsInfo = (userId, setProductIds) => {
 
 const getProductInfo = (productId, setProduct) => {
     const productDb = db.ref("Products/" + productId);
-    productDb.on(
+    productDb.once(
         "value",
         snapshot => {
             setProduct(snapshot.val());
