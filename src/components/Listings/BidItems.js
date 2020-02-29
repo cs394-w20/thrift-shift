@@ -43,6 +43,8 @@ const BuyerInfo = () => {
 	)
 }
 
+const buyerNames = ['Sam Harrison', 'Ben Lowe', 'Samuel Grant', 'Kyle Lawson', 'Iker Vargas', 'Clay Glass', 'Tanner Woodward', 'Arthur Roth', 'Emerson Gates', 'Joshua Read'];
+
 const BidItem = props => {
 	const classes = useStyles();
 	const [bids, setBids] = React.useState(null)
@@ -60,6 +62,10 @@ const BidItem = props => {
 		} else {
 			props.setOpen(props.productId)
 		}
+	}
+
+	const getRandomBuyerName = () => {
+		return buyerNames[Math.floor(Math.random() * 10)];
 	}
 
 	if (!product && !bids) {
@@ -101,7 +107,7 @@ const BidItem = props => {
 											<Grid container alignItems="center">
 												<Grid item container alignItems="center" xs={9}>
 													<Grid item><Radio checked={selected === bid} /></Grid>
-													<Grid item xs><Typography className={classes.heading}>{"Test"}</Typography></Grid>
+													<Grid item xs><Typography className={classes.heading}>{getRandomBuyerName()}</Typography></Grid>
 												</Grid>
 												<Grid item xs={3}>
 													<Typography align='right' className={classes.secondaryHeading}>$ {bids[bid].price}</Typography>
