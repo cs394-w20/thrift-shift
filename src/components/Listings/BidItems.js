@@ -5,7 +5,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { getProductBidInfo, getProductInfo } from '../../utils/FirebaseDbUtils'
+import { getProductBidInfo, getProductInfo, getBuyerInfo } from '../../utils/FirebaseDbUtils'
 import { Divider, Grid, List, MenuItem, ExpansionPanelActions, Button, Fade, Radio } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -43,7 +43,7 @@ const BuyerInfo = () => {
 	)
 }
 
-const buyerNames = ['Sam Harrison', 'Ben Lowe', 'Samuel Grant', 'Kyle Lawson', 'Iker Vargas', 'Clay Glass', 'Tanner Woodward', 'Arthur Roth', 'Emerson Gates', 'Joshua Read'];
+
 
 const BidItem = props => {
 	const classes = useStyles();
@@ -64,8 +64,10 @@ const BidItem = props => {
 		}
 	}
 
-	const getRandomBuyerName = () => {
-		return buyerNames[Math.floor(Math.random() * 10)];
+	const getDate = (time) => {
+		let date = new Date(time);
+		let standardDate = date.toString();
+		return standardDate;
 	}
 
 	if (!product) {
@@ -114,7 +116,7 @@ const BidItem = props => {
 												<Grid container alignItems="center">
 													<Grid item container alignItems="center" xs={9}>
 														<Grid item><Radio checked={selected === bid} /></Grid>
-														<Grid item xs><Typography className={classes.heading}>{"Test"}</Typography></Grid>
+														<Grid item xs><Typography className={classes.heading}>Bid on {getDate(bids[bid].time)}</Typography></Grid>
 													</Grid>
 													<Grid item xs={3}>
 														<Typography align='right' className={classes.secondaryHeading}>$ {bids[bid].price}</Typography>

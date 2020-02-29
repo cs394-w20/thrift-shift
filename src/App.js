@@ -4,7 +4,7 @@ import TopAppBar from "./components/TopAppBar";
 import ItemForm from "./components/ItemForm";
 import ProductList from "./components/ProductList";
 import { updateUserState } from "./utils/FirebaseAuthUtils";
-import { getUserProductsInfo, getAllProductInfo, addRole, getRole } from "./utils/FirebaseDbUtils"
+import { getUserProductsInfo, getAllProductInfo, addRole, getRole, addUserInfo } from "./utils/FirebaseDbUtils"
 import "./App.css";
 import Listings from "./components/Listings/Listings";
 
@@ -52,6 +52,7 @@ const App = () => {
   useEffect(() => {
     if (user && !userRole) {
       setOpen(true);
+      addUserInfo(user);
     }
   });
 
@@ -72,14 +73,14 @@ const App = () => {
       <ChooseRole user={user} />
       <TopAppBar user={user} userRole={userRole} setPage={setPage} />
       {
-        page == 'product' ?
+        page === 'product' ?
           <div>
             <ItemForm userRole={userRole} />
             <ProductList productIds={productIds} user={user} userRole={userRole} />
           </div> : null
       }
       {
-        page == 'bid' ?
+        page === 'bid' ?
           <Listings productIds={productIds} /> : null
       }
     </Container>
