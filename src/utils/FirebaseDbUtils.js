@@ -97,25 +97,22 @@ const getRole = (userId, setUserRole) => {
         },
         error => alert(error)
     );
-
 }
 
 const addRole = (userId, role) => {
     const updateUser = {};
     updateUser[`/Users/${userId}/role`] = role;
     db.ref().update(updateUser);
-
 }
 
 const getAllProductInfo = (setAllProductId) => {
-
     const getProductInfo = snapshot => {
         if (snapshot.val()) {
           let allproductIdArr = Object.keys(snapshot.val());
           setAllProductId(allproductIdArr);
         }
-
     }
+
     const ProductDb = db.ref("Products");
     ProductDb.on("value", getProductInfo, error => alert(error));
 }
@@ -133,7 +130,7 @@ const addUserInfo = (user) => {
 const getBuyerInfo = (bid, setBuyerName, setBuyerEmail) => {
     var buyerId = bid.buyerId;
     const userDb = db.ref(`Users/${buyerId}`);
-    userProductDb.on(
+    userDb.on(
                     "value",
                     snapshot => {
                         if(snapshot.val()) {
