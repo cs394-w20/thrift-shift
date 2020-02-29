@@ -26,7 +26,7 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
   const handleClickOpen = () => {
     setOpen(true);
     ValidatorForm.addValidationRule("belowHighestBid", value => {
-      if (product && product.bid && value <= product.bid.highestBid) {
+      if (product && product.bid && parseInt(value) <= parseInt(product.bid.highestBid)) {
         return false;
       }
       return true;
@@ -108,7 +108,7 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
                       "required",
                       "belowHighestBid",
                       "belowStartingPrice",
-                      "matchRegexp:^[0-9]$"
+                      "matchRegexp:^[0-9]+$"
                     ]}
                     errorMessages={[
                       "This field is required",
