@@ -36,7 +36,7 @@ const getProductBidInfo = (productId, setProductBids) => {
                 setProductBids(snapshot.val());
             }
         },
-        error => alert(error) 
+        error => alert(error)
     );
 }
 
@@ -72,7 +72,7 @@ const addBid = (userId, productId, product, bidAmount) => {
     };
 
     var highestBidAmount = null;
-    if (!product.bid || bidAmount > product.bid.highestBid) {
+    if (!product.bid || parseInt(bidAmount) > parseInt(product.bid.highestBid)) {
         highestBidAmount = bidAmount;
     } else {
         highestBidAmount = product.bid.highestBid;
@@ -105,7 +105,7 @@ const addRole = (usedId, role) => {
     const updateUser = {};
     updateUser[`/Users/${usedId}/role`] = role;
     db.ref().update(updateUser);
-    
+
 }
 
 const getAllProductInfo = (setAllProductId) => {
@@ -118,7 +118,7 @@ const getAllProductInfo = (setAllProductId) => {
 
     }
     const ProductDb = db.ref("Products");
-    ProductDb.on("value", getProductInfo, error => alert(error)); 
+    ProductDb.on("value", getProductInfo, error => alert(error));
 }
 
 
