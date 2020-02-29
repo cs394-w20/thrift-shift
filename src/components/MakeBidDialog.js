@@ -26,6 +26,7 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
   const handleClickOpen = () => {
     setOpen(true);
     ValidatorForm.addValidationRule("belowHighestBid", value => {
+      value = Number(value);
       if (product && product.bid && value <= product.bid.highestBid) {
         return false;
       }
@@ -33,6 +34,7 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
     });
 
     ValidatorForm.addValidationRule("belowStartingPrice", value => {
+      value = Number(value);
       if ((!product || !product.bid) && value < product.price) {
         return false;
       }
@@ -48,9 +50,7 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
   const handleChangeBid = event => {
     const newAmount = event.target.value;
     console.log(newAmount);
-    if (newAmount !== "e" && newAmount !== "+" && newAmount !== "-") {
-      setBidAmount(newAmount);
-    }
+    setBidAmount(newAmount);
   };
 
   const submitBid = () => {
@@ -106,15 +106,15 @@ const MakeBidDialog = ({ user, userRole, productId }) => {
                     }}
                     validators={[
                       "required",
+                      "matchRegexp:^[0-9]*$",
                       "belowHighestBid",
-                      "belowStartingPrice",
-                      "matchRegexp:^[0-9]$"
+                      "belowStartingPrice"
                     ]}
                     errorMessages={[
                       "This field is required",
+                      "Invalid number",
                       "Your bid must be greater than the highest bid",
-                      "Your bid must be at least the starting price",
-                      "Invalid number"
+                      "Your bid must be at least the starting price"
                     ]}
                   />
                 </Grid>
