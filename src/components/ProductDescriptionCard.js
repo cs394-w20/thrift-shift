@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "rbx/index.css";
 import { makeStyles } from "@material-ui/core/styles";
 import MakeBidDialog from "./MakeBidDialog";
-import { getProductInfo } from "../utils/FirebaseDbUtils";
-import { getProductImage } from "../utils/FirebaseStorageUtils";
 import "firebase/storage";
 import { Grid, Typography, Slide, Dialog, AppBar, Toolbar, IconButton, DialogContent, DialogActions } from "@material-ui/core";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -41,29 +39,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
-const ProductDescriptionCard = ({ productId, user, userRole, open, setOpen }) => {
+const ProductDescriptionCard = props => {
   const classes = useStyles();
-  const [imageURL, setImageURL] = useState(null);
-  const [product, setProduct] = useState(null);
-
-  useEffect(() => {
-    if (productId) {
-      getProductInfo(productId, setProduct)
-    }
-  }, [productId]);
-
-  useEffect(() => {
-    if (product) {
-      getProductImage(product.imageId, setImageURL);
-    }
-  }, [product])
-
-  if (imageURL && product) {
+  
+  if (props.product) {
     return (
-      <Dialog fullScreen open={open} onClose={() => { setOpen(false) }} TransitionComponent={Transition} TransitionProps={{onExited:()=>{setImageURL(null)}}}>
+      <Dialog fullScreen open={props.open} onClose={() => { props.setOpen(false) }} TransitionComponent={Transition}>
         <AppBar>
           <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={() => { setOpen(false) }} aria-label="close">
+            <IconButton edge="start" color="inherit" onClick={() => { props.setOpen(false) }} aria-label="close">
               <ArrowBackIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
@@ -85,12 +69,12 @@ const ProductDescriptionCard = ({ productId, user, userRole, open, setOpen }) =>
               <Grid item xs={12} sm={12} container>
                 <Grid xs item>
                   <Typography variant="h5">
-                    {product.name}
+                    {props.product.name}
                   </Typography>
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={12} container>
-                <img className={classes.img} alt={product.name} src={imageURL} />
+                <img className={classes.img} alt={props.product.name} src={props.imageURL} />
               </Grid>
               <Grid item xs={12} sm={12} container>
                 <Grid item xs container>
@@ -99,19 +83,19 @@ const ProductDescriptionCard = ({ productId, user, userRole, open, setOpen }) =>
               </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography variant="h5">$ {product.price}</Typography>
+                  <Typography variant="h5">$ {props.product.price}</Typography>
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={12} container>
                 <Typography gutterBottom variant="body1">
-                  {product.description}
+                  {props.product.description}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <MakeBidDialog user={user} userRole={userRole} productId={productId} />
+          <MakeBidDialog user={props.user} userRole={props.userRole} productId={props.productId} />
         </DialogActions>
       </Dialog>
     );

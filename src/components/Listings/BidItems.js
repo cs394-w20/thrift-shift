@@ -96,19 +96,22 @@ const BidItem = props => {
 						<ExpansionPanelDetails className={classes.details}>
 							<List className={classes.bid} style={{ width: '100%' }}>
 								{
-									Object.keys(bids).filter((key) => { return key === "highestBid" ? false : true }).map(bid =>
-										<MenuItem selected={selected === bid} button key={bid} onClick={() => { setSelected(bid) }}>
-											<Grid container alignItems="center">
-												<Grid item container alignItems="center" xs={9}>
-													<Grid item><Radio checked={selected === bid} /></Grid>
-													<Grid item xs><Typography className={classes.heading}>{"Test"}</Typography></Grid>
+									Object.keys(bids)
+										.filter((key) => { return key === "highestBid" ? false : true })
+										.sort((a,b)=>{return bids[b].price - bids[a].price})
+										.map(bid =>
+											<MenuItem selected={selected === bid} button key={bid} onClick={() => { setSelected(bid) }}>
+												<Grid container alignItems="center">
+													<Grid item container alignItems="center" xs={9}>
+														<Grid item><Radio checked={selected === bid} /></Grid>
+														<Grid item xs><Typography className={classes.heading}>{"Test"}</Typography></Grid>
+													</Grid>
+													<Grid item xs={3}>
+														<Typography align='right' className={classes.secondaryHeading}>$ {bids[bid].price}</Typography>
+													</Grid>
 												</Grid>
-												<Grid item xs={3}>
-													<Typography align='right' className={classes.secondaryHeading}>$ {bids[bid].price}</Typography>
-												</Grid>
-											</Grid>
-										</MenuItem>
-									)
+											</MenuItem>
+										)
 								}
 							</List>
 						</ExpansionPanelDetails> : <ExpansionPanelDetails><BuyerInfo /></ExpansionPanelDetails>

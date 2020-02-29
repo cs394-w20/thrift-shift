@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Card, Grid, CardContent, Typography, CardMedia, CardActionArea } from "@material-ui/core";
 import { getProductInfo } from '../utils/FirebaseDbUtils'
 import { getProductImage } from '../utils/FirebaseStorageUtils'
+import ProductDescriptionCard from './ProductDescriptionCard';
 
 const useStyles = makeStyles({
   root: {
@@ -14,16 +15,15 @@ const useStyles = makeStyles({
   },
 });
 
-const ProductCard = ({ productId }) => {
+const ProductCard = props => {
   const classes = useStyles();
   const [imageURL, setImageURL] = useState(null);
   const [product, setProduct] = useState(null);
-  const [bidIds, setBidIds] = useState(null);
-
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (productId) {
-      getProductInfo(productId, setProduct);
+    if (props.productId) {
+      getProductInfo(props.productId, setProduct);
     }
   }, []);
 
@@ -33,31 +33,42 @@ const ProductCard = ({ productId }) => {
 
   if (product && imageURL) {
     return (
-      <Card>
-        <CardActionArea>
-          <CardMedia className={classes.media} image={imageURL} title="item"/>
-          <CardContent>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography gutterBottom variant="subtitle2">
-                {product.name}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography
-                gutterBottom
-                variant="body2"
-                component="h2"
-                align="right"
-                color="secondary"
-              >
-                ${product.price}
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-        </CardActionArea>
-      </Card>
+      <div>
+        <Card onClick={() => setOpen(true)}>
+          <CardActionArea>
+            <CardMedia className={classes.media} image={imageURL} title="item" />
+            <CardContent>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Typography gutterBottom variant="subtitle2">
+                    {product.name}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography
+                    gutterBottom
+                    variant="body2"
+                    component="h2"
+                    align="right"
+                    color="secondary"
+                  >
+                    ${product.price}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+        <ProductDescriptionCard
+          product={product}
+          productId={props.productId}
+          imageURL={imageURL}
+          open={open}
+          setOpen={setOpen}
+          user={props.user}
+          userRole={props.userRole}
+        />
+      </div>
     );
   } else {
     return null;
