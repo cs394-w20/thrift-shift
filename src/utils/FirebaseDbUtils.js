@@ -67,17 +67,16 @@ const addBid = (userId, productId, product, bidAmount) => {
     var updateProduct = {};
     updateProduct[`/Products/${productId}/bid/${bidId}`] = {
         buyerId: userId,
-        price: bidAmount,
+        price: Number(bidAmount),
         time: Date.now()
     };
 
-    var highestBidAmount = null;
-    if (!product.bid || parseInt(bidAmount) > parseInt(product.bid.highestBid)) {
-        highestBidAmount = bidAmount;
+    var highestBidAmount = 0;
+    if (!product.bid || Number(bidAmount) > product.bid.highestBid) {
+        highestBidAmount = Number(bidAmount);
     } else {
         highestBidAmount = product.bid.highestBid;
     }
-    console.log('new highest bid', highestBidAmount);
 
     updateProduct[`/Products/${productId}/bid/highestBid`] = highestBidAmount;
     db.ref().update(updateProduct);
