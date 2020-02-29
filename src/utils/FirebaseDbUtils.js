@@ -97,29 +97,50 @@ const getRole = (usedId, setUserRole) => {
         },
         error => alert(error)
     );
-
 }
 
 const addRole = (usedId, role) => {
     const updateUser = {};
     updateUser[`/Users/${usedId}/role`] = role;
     db.ref().update(updateUser);
-
 }
 
 const getAllProductInfo = (setAllProductId) => {
-
     const getProductInfo = snapshot => {
         if (snapshot.val()) {
           let allproductIdArr = Object.keys(snapshot.val());
           setAllProductId(allproductIdArr);
         }
-
     }
+
     const ProductDb = db.ref("Products");
     ProductDb.on("value", getProductInfo, error => alert(error));
 }
 
+const saveUserInfo = (user) => {
+    const updateUser = {};
+    var userInfo = {};
+    const userDb = db.ref("Users/"+ user.uid);
+
+    userDb.once("value").then((snapshot) => {
+        userInfo = snapshot.val();
+        userInfo['email'] = user.email;
+        userInfo['name'] = user.displayName;
+        updateUser[`/Users/${user.uid}`] = userInfo;
+        db.ref().update(updateUser);
+    });
+}
 
 
-export {getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo}
+export {
+    getUserProductsInfo,
+    getProductInfo,
+    addProduct,
+    getAllProductInfo,
+    addRole,
+    getRole,
+    addBid,
+    getProductBidInfo,
+    getBidInfo,
+    saveUserInfo
+}

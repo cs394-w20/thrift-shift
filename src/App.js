@@ -4,7 +4,7 @@ import TopAppBar from "./components/TopAppBar";
 import ItemForm from "./components/ItemForm";
 import ProductList from "./components/ProductList";
 import { updateUserState } from "./utils/FirebaseAuthUtils";
-import { getUserProductsInfo, getAllProductInfo, addRole, getRole } from "./utils/FirebaseDbUtils"
+import { getUserProductsInfo, getAllProductInfo, addRole, getRole, saveUserInfo } from "./utils/FirebaseDbUtils"
 import "./App.css";
 import Listings from "./components/Listings/Listings";
 
@@ -40,6 +40,9 @@ const App = () => {
   // Change user state when the user successfully logged in
   useEffect(() => {
     updateUserState(setUser);
+    if (user) {
+      saveUserInfo(user);
+    }
     console.log(user);
   }, [user]);
 
