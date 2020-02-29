@@ -7,8 +7,8 @@ const getUserProductsInfo = (userId, setProductIds) => {
     console.log(userId)
     const getProductInfo = snapshot => {
         if (snapshot.val()) {
-          let productIdArr = Object.keys(snapshot.val());
-          setProductIds(productIdArr);
+            let productIdArr = Object.keys(snapshot.val());
+            setProductIds(productIdArr);
         }
     };
 
@@ -18,10 +18,12 @@ const getUserProductsInfo = (userId, setProductIds) => {
 
 const getProductInfo = (productId, setProduct) => {
     const productDb = db.ref("Products/" + productId);
-    productDb.once(
+    productDb.on(
         "value",
         snapshot => {
-            setProduct(snapshot.val());
+            if (snapshot.val()) {
+                setProduct(snapshot.val());
+            }
         },
         error => alert(error)
     );
@@ -32,7 +34,7 @@ const getProductBidInfo = (productId, setProductBids) => {
     productBidDb.on(
         "value",
         snapshot => {
-            if(snapshot.val()) {
+            if (snapshot.val()) {
                 setProductBids(snapshot.val());
             }
         },
@@ -51,7 +53,7 @@ const getBidInfo = (productId, bidId, setBid) => {
     );
 }
 
-const addProduct = (usedId, product) =>{
+const addProduct = (usedId, product) => {
     const productId = db.ref().child('Products').push().key;
     const updateProduct = {};
     const updateUser = {};
@@ -89,7 +91,7 @@ const addBid = (userId, productId, product, bidAmount) => {
 
 const getRole = (usedId, setUserRole) => {
 
-    const productDb = db.ref("Users/"+usedId+"/role");
+    const productDb = db.ref("Users/" + usedId + "/role");
     productDb.once(
         "value",
         snapshot => {
@@ -111,8 +113,8 @@ const getAllProductInfo = (setAllProductId) => {
 
     const getProductInfo = snapshot => {
         if (snapshot.val()) {
-          let allproductIdArr = Object.keys(snapshot.val());
-          setAllProductId(allproductIdArr);
+            let allproductIdArr = Object.keys(snapshot.val());
+            setAllProductId(allproductIdArr);
         }
 
     }
@@ -122,4 +124,4 @@ const getAllProductInfo = (setAllProductId) => {
 
 
 
-export {getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo}
+export { getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo }
