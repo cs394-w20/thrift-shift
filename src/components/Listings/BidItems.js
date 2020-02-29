@@ -68,9 +68,13 @@ const BidItem = props => {
 		return buyerNames[Math.floor(Math.random() * 10)];
 	}
 
-	if (!product && !bids) {
-		getProductBidInfo(props.productId, setBids)
+	if (!product) {
+		console.log(product)
 		getProductInfo(props.productId, setProduct)
+	}
+
+	if (!bids){
+		getProductBidInfo(props.productId, setBids)
 	}
 
 	if (product && bids) {
