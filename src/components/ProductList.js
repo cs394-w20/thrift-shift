@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "rbx/index.css";
 import ProductCard from "./ProductCard";
 import { Grid, Container } from "@material-ui/core";

@@ -53,12 +53,12 @@ const getBidInfo = (productId, bidId, setBid) => {
     );
 }
 
-const addProduct = (usedId, product) => {
+const addProduct = (userId, product) => {
     const productId = db.ref().child('Products').push().key;
     const updateProduct = {};
     const updateUser = {};
     updateProduct['/Products/' + productId] = product;
-    updateUser[`/Users/${usedId}/Products/` + productId] = true;
+    updateUser[`/Users/${userId}/Products/` + productId] = true;
     db.ref().update(updateProduct);
     db.ref().update(updateUser);
     return productId
@@ -84,14 +84,13 @@ const addBid = (userId, productId, product, bidAmount) => {
     db.ref().update(updateProduct);
 
     // const updateUser = {};
-    // updateUser[`/Users/${usedId}/Products/` + productId] = true;
+    // updateUser[`/Users/${userId}/Products/` + productId] = true;
     // db.ref().update(updateUser);
     return productId
 }
 
-const getRole = (usedId, setUserRole) => {
-
-    const productDb = db.ref("Users/" + usedId + "/role");
+const getRole = (userId, setUserRole) => {
+    const productDb = db.ref("Users/" + userId + "/role");
     productDb.once(
         "value",
         snapshot => {
@@ -99,29 +98,48 @@ const getRole = (usedId, setUserRole) => {
         },
         error => alert(error)
     );
-
 }
 
-const addRole = (usedId, role) => {
+const addRole = (userId, role) => {
     const updateUser = {};
-    updateUser[`/Users/${usedId}/role`] = role;
+    updateUser[`/Users/${userId}/role`] = role;
     db.ref().update(updateUser);
-
 }
 
 const getAllProductInfo = (setAllProductId) => {
-
     const getProductInfo = snapshot => {
         if (snapshot.val()) {
             let allproductIdArr = Object.keys(snapshot.val());
             setAllProductId(allproductIdArr);
         }
-
     }
+
     const ProductDb = db.ref("Products");
     ProductDb.on("value", getProductInfo, error => alert(error));
 }
 
+const addUserInfo = (user) => {
+    var name = user.displayName;
+    var email = user.email;
+    var userId = user.uid;
+    const updateUserInfo = {};
+    updateUserInfo[`/Users/${userId}/name`] = name;
+    updateUserInfo[`/Users/${userId}/email`] = email;
+    db.ref().update(updateUserInfo);
+}
 
+const getBuyerInfo = (bid, setBuyerName, setBuyerEmail) => {
+    var buyerId = bid.buyerId;
+    const userDb = db.ref(`Users/${buyerId}`);
+    userDb.on(
+        "value",
+        snapshot => {
+            if (snapshot.val()) {
+                setBuyerName(snapshot.val().name);
+                setBuyerEmail(snapshot.val().email);
+            }
+        },
+        error => alert(error));
+}
 
-export { getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo }
+export { getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo, addUserInfo, getBuyerInfo }
