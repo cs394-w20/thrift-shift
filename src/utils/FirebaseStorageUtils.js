@@ -17,7 +17,7 @@ const getProductImage = (image_id, setImageURL) => {
       });
   };
 
-const uploadProductImage = (image, productId, setProgress, setOpen, addProduct) => {
+const uploadProductImage = (image, productId, setProgress, handleClose, addProduct) => {
   const uploadTask = st.ref().child(`product_images/${productId}`).put(image);
   uploadTask.on(
     "state_changed",
@@ -31,13 +31,13 @@ const uploadProductImage = (image, productId, setProgress, setOpen, addProduct) 
       console.log(error);
     },
     () => {
-      setOpen(false)
-      addProduct()
+      handleClose();
+      addProduct();
     }
   );
 }
 
-const uploadLQImage = (image, productId, setProgress, setOpen, addProduct) => {
+const uploadLQImage = (image, productId, setProgress, handleClose, addProduct) => {
   let reader = new FileReader()
   let img = new Image();
 
@@ -50,7 +50,6 @@ const uploadLQImage = (image, productId, setProgress, setOpen, addProduct) => {
   };
 
   img.onload = () => {
-    console.log(img.width)
     var originWidth = img.width;
     var originHeight = img.height;
     var maxWidth = 600, maxHeight = 600;
@@ -70,7 +69,7 @@ const uploadLQImage = (image, productId, setProgress, setOpen, addProduct) => {
     context.clearRect(0, 0, targetWidth, targetHeight);
     context.drawImage(img, 0, 0, targetWidth, targetHeight);
     canvas.toBlob(blob => {
-      uploadProductImage(blob, productId, setProgress, setOpen, addProduct)
+      uploadProductImage(blob, productId, setProgress, handleClose, addProduct);
     })
   };
 }

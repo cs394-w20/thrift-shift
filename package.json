@@ -13,6 +13,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-images-upload": "^1.2.7",
+    "react-material-ui-form-validator": "^2.0.10",
     "react-scripts": "3.4.0",
     "uuid": "^3.4.0"
   },
