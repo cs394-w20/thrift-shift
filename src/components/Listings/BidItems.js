@@ -5,8 +5,9 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { getProductBidInfo, getProductInfo, getBuyerInfo } from '../../utils/FirebaseDbUtils'
-import { Divider, Grid, List, MenuItem, ExpansionPanelActions, Button, Fade, Radio } from '@material-ui/core';
+import { getProductBidInfo, getProductInfo } from '../../utils/FirebaseDbUtils'
+import { Divider, Grid, List, ExpansionPanelActions, Button, Fade} from '@material-ui/core';
+import Bid from './Bid';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -43,12 +44,6 @@ const BuyerInfo = () => {
 	)
 }
 
-const buyerNames = ['Sam Harrison', 'Ben Lowe', 'Samuel Grant', 'Kyle Lawson', 'Iker Vargas', 'Clay Glass', 'Tanner Woodward', 'Arthur Roth', 'Emerson Gates', 'Joshua Read'];
-
-const getRandomBuyerName = seed => {
-	return buyerNames[seed % 10];
-}
-
 const BidItem = props => {
 	const classes = useStyles();
 	const [bids, setBids] = React.useState(null)
@@ -68,14 +63,7 @@ const BidItem = props => {
 		}
 	}
 
-	const getDate = (time) => {
-		let date = new Date(time);
-		let standardDate = date.toString();
-		return standardDate;
-	}
-
 	if (!product) {
-		console.log(product)
 		getProductInfo(props.productId, setProduct)
 	}
 
@@ -84,7 +72,6 @@ const BidItem = props => {
 	}
 
 	if (product && bids) {
-		console.log(bids)
 		return (
 			<ExpansionPanel expanded={props.productId === props.open} onChange={handleChange}>
 				<ExpansionPanelSummary
@@ -116,17 +103,7 @@ const BidItem = props => {
 										.filter((key) => { return key === "highestBid" ? false : true })
 										.sort((a,b)=>{return bids[b].price - bids[a].price})
 										.map(bid =>
-											<MenuItem selected={selected === bid} button key={bid} onClick={() => { setSelected(bid) }}>
-												<Grid container alignItems="center">
-													<Grid item container alignItems="center" xs={9}>
-														<Grid item><Radio checked={selected === bid} /></Grid>
-														<Grid item xs><Typography className={classes.heading}>{getRandomBuyerName(bids[bid].time)}</Typography></Grid>
-													</Grid>
-													<Grid item xs={3}>
-														<Typography align='right' className={classes.secondaryHeading}>$ {bids[bid].price}</Typography>
-													</Grid>
-												</Grid>
-											</MenuItem>
+											<Bid key={bid} bidId={bids[bid]} selected={selected} setSelected={setSelected}/>
 										)
 								}
 							</List>

@@ -50,7 +50,6 @@ const uploadLQImage = (image, productId, setProgress, handleClose, addProduct) =
   };
 
   img.onload = () => {
-    console.log(img.width)
     var originWidth = img.width;
     var originHeight = img.height;
     var maxWidth = 600, maxHeight = 600;

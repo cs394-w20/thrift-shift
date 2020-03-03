@@ -4,7 +4,6 @@ import 'firebase/database';
 const db = firebase.database();
 
 const getUserProductsInfo = (userId, setProductIds) => {
-    console.log(userId)
     const getProductInfo = snapshot => {
         if (snapshot.val()) {
             let productIdArr = Object.keys(snapshot.val());
@@ -42,15 +41,25 @@ const getProductBidInfo = (productId, setProductBids) => {
     );
 }
 
-const getBidInfo = (productId, bidId, setBid) => {
-    const bidDb = db.ref(`/Products/${productId}/bid/${bidId}`)
-    bidDb.on(
+const getBidInfo = (bidId, setBid) => {
+    const bidDb = db.ref(`/bid/${bidId}`)
+    bidDb.once(
         "value",
-        snapshot => {
-            setBid(snapshot.val());
+        snapshot1 => {
+            const buyerDb = db.ref(`/Users/${snapshot1.val().buyerId}`)
+            buyerDb.once(
+                "value",
+                snapshot2 => {
+                    setBid({
+                        ...snapshot1.val(),
+                        buyerName: snapshot2.val().name,
+                        buyerEmail: snapshot2.val().email
+                    })
+                }
+            )
         },
         error => alert(error)
-    );
+    )
 }
 
 const addProduct = (userId, product) => {
@@ -65,13 +74,24 @@ const addProduct = (userId, product) => {
 }
 
 const addBid = (userId, productId, product, bidAmount) => {
-    const bidId = db.ref().child(`/Products/${productId}/bid/`).push().key;
+    // Id under bid
+    const bidId = db.ref().child('/bid').push().key;
+    // Id under product
+    const productBidId = db.ref().child(`/Products/${productId}/bid/`).push().key;
+    // Id under buyer
+    const buyerBidId = db.ref().child(`/Users/${userId}/bid/`).push().key;
+
     var updateProduct = {};
-    updateProduct[`/Products/${productId}/bid/${bidId}`] = {
+
+    updateProduct[`/bid/${bidId}`] = {
         buyerId: userId,
+        productId: productId,
         price: Number(bidAmount),
         time: Date.now()
     };
+
+    updateProduct[`/Products/${productId}/bid/${productBidId}`] = bidId
+    updateProduct[`/Users/${userId}/buyerBid/${buyerBidId}`] = bidId
 
     var highestBidAmount = 0;
     if (!product.bid || Number(bidAmount) > product.bid.highestBid) {
@@ -83,9 +103,6 @@ const addBid = (userId, productId, product, bidAmount) => {
     updateProduct[`/Products/${productId}/bid/highestBid`] = highestBidAmount;
     db.ref().update(updateProduct);
 
-    // const updateUser = {};
-    // updateUser[`/Users/${userId}/Products/` + productId] = true;
-    // db.ref().update(updateUser);
     return productId
 }
 
