@@ -14,19 +14,18 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [productIds, setProductIds] = useState(null);
   const [userRole, setUserRole] = useState(null);
-  const [page, setPage] = React.useState('product')
-  const [address, setAddress] = useState('')
+  const [page, setPage] = React.useState('product');
 
   // Change user state when the user successfully logged in
   useEffect(() => {
     updateUserState(setUser);
   }, [user]);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     getRole(user.uid, setUserRole);
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (user) {
+      getRole(user.uid, setUserRole);
+    }
+  }, [user, userRole]);
 
   useEffect(() => {
     if (userRole) {

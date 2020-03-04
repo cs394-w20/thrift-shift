@@ -14,7 +14,7 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const LoginDialog = ({ user }) => {
   const [role, setRole] = useState('seller');
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [profile, setProfile] = useState({
     name: '',
     email: '',
@@ -24,6 +24,7 @@ const LoginDialog = ({ user }) => {
 
   useEffect(() => {
     if (user) {
+      setOpen(true);
       setProfile({
         name: user.displayName,
         email: user.email,
@@ -50,30 +51,48 @@ const LoginDialog = ({ user }) => {
     <Dialog
       open={open}
     >
-      <DialogTitle id="simple-dialog-title" style={{ textAlign: 'center'}}>Choose Your Role</DialogTitle>
-      <ListItem>
-        <TextField label="Name" value={profile.name} onChange={ handleChange('name') } />
-      </ListItem>
-      <ListItem>
-        <TextField label="Email Address" value={profile.email} onChange={ handleChange('email') } />
-      </ListItem>
-      <ListItem>
-        <TextField label="Address" value={profile.address} onChange={ handleChange('address') } />
-      </ListItem>
-      <ListItem>
-        <RadioGroup aria-label="gender" name="gender1" value={profile.role} onChange={handleChange('role')}>
-          <FormControlLabel value="seller" control={<Radio />} label="I'm a Seller" />
-          <FormControlLabel value="buyer" control={<Radio />} label="I'm a Buyer" />
-        </RadioGroup>
-      </ListItem>
-      <Button
-        variant="contained"
-        color="primary"
-        style={{ marginTop: '5px', marginBottom: '5px', width: '50%', marginLeft: '25%' }}
-        onClick={() => { submitForm() }}
+      <ValidatorForm
+        onSubmit={() => {
+          submitForm();
+        }}
       >
-        Submit
-      </Button>
+        <DialogTitle id="simple-dialog-title" style={{ textAlign: 'center'}}>Choose Your Role</DialogTitle>
+        <ListItem>
+          <TextValidator
+            label="Name"
+            value={profile.name}
+            validators={["required"]}
+            errorMessages={["This field is required"]}
+            onChange={handleChange("name")}
+          />
+        </ListItem>
+        <ListItem>
+          <TextValidator
+            label="Email Address"
+            value={profile.email}
+            validators={["required"]}
+            errorMessages={["This field is required"]}
+            onChange={ handleChange("email") }
+          />
+        </ListItem>
+        <ListItem>
+          <TextField label="Address" value={profile.address} onChange={ handleChange('address') } />
+        </ListItem>
+        <ListItem>
+          <RadioGroup aria-label="gender" name="gender1" value={profile.role} onChange={handleChange('role')}>
+            <FormControlLabel value="seller" control={<Radio />} label="I'm a Seller" />
+            <FormControlLabel value="buyer" control={<Radio />} label="I'm a Buyer" />
+          </RadioGroup>
+        </ListItem>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          style={{ marginTop: '5px', marginBottom: '5px', width: '50%', marginLeft: '25%' }}
+        >
+          Submit
+        </Button>
+      </ValidatorForm>
     </Dialog>
   )
 }
