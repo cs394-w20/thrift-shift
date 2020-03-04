@@ -46,6 +46,7 @@ const MakeBidDialog = ({
 
   const handleClickOpen = () => {
     setBidSubmitted(false);
+    setBidAmount("");
     setOpen(true);
     ValidatorForm.addValidationRule("belowHighestBid", value => {
       value = Number(value);
@@ -66,7 +67,6 @@ const MakeBidDialog = ({
 
   const handleClose = () => {
     setOpen(false);
-    setBidAmount("");
   };
 
   const handleChangeBid = event => {
@@ -76,7 +76,6 @@ const MakeBidDialog = ({
 
   const submitBid = () => {
     addBid(user.uid, productId, product, bidAmount);
-    setBidAmount("");
     setBidSubmitted(true);
   };
 
