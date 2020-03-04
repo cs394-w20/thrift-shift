@@ -75,7 +75,7 @@ const App = () => {
         page === 'product' ?
           <div>
             <ItemForm userRole={userRole} />
-            <ProductList productIds={productIds} user={user} userRole={userRole} />
+            <ProductList productIds={productIds} user={user} userRole={userRole} setPage={setPage} />
           </div> : null
       }
       {

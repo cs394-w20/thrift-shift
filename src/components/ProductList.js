@@ -4,7 +4,7 @@ import ProductCard from "./ProductCard";
 import { Grid, Container } from "@material-ui/core";
 
 
-const ProductList = ({ productIds, user, userRole }) => {
+const ProductList = ({ productIds, user, userRole, setPage }) => {
   if (productIds && productIds.length > 0) {
     return (
       <Container>
@@ -13,7 +13,7 @@ const ProductList = ({ productIds, user, userRole }) => {
             productIds.map(productId => {
               return (
                 <Grid key={productId} item xs={6} md={3}>
-                  <ProductCard productId={productId} user={user} userRole={userRole}/>
+                  <ProductCard productId={productId} user={user} userRole={userRole} setPage={setPage} />
                 </Grid>
               );
             })

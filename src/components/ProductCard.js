@@ -67,6 +67,7 @@ const ProductCard = props => {
           setOpen={setOpen}
           user={props.user}
           userRole={props.userRole}
+          setPage={props.setPage}
         />
       </div>
     );
