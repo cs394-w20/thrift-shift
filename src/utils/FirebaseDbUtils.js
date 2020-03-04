@@ -116,6 +116,23 @@ const getRole = (userId, setUserRole) => {
         error => alert(error)
     );
 }
+const getAddress = (userId, setAddress) => {
+    const productDb = db.ref("Users/" + userId + "/address");
+    productDb.once(
+        "value",
+        snapshot => {
+            setAddress(snapshot.val());
+        },
+        error => alert(error)
+    );
+
+}
+
+const addAddress = (userId, address) => {
+    const updateUser = {}; 
+    updateUser[`/Users/${userId}/address`] = address;
+    db.ref().update(updateUser);
+}
 
 const addRole = (userId, role) => {
     const updateUser = {};
@@ -159,4 +176,4 @@ const getBuyerInfo = (bid, setBuyerName, setBuyerEmail) => {
         error => alert(error));
 }
 
-export { getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo, addUserInfo, getBuyerInfo }
+export { getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo, addUserInfo, getBuyerInfo, addAddress, getAddress}
