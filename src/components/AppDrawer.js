@@ -9,6 +9,9 @@ import ViewListIcon from '@material-ui/icons/ViewList';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import PersonIcon from '@material-ui/icons/Person';
+import { signOut } from '../utils/FirebaseAuthUtils';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles({
 	list: {
@@ -31,6 +34,10 @@ const AppDrawer = props => {
 			onKeyDown={() => { setOpen(false) }}
 		>
 			<List>
+			<ListItem button onClick={() => { props.setPage("product") }}>
+					<ListItemIcon><PersonIcon/></ListItemIcon>
+					<ListItemText primary={"Profile"} />
+				</ListItem>
 				<ListItem button onClick={() => { props.setPage("product") }}>
 					<ListItemIcon><ViewListIcon /></ListItemIcon>
 					<ListItemText primary={"Your Items"} />
@@ -41,6 +48,10 @@ const AppDrawer = props => {
 						<ListItemText primary={"Your Listings"} />
 					</ListItem> : null
 				}
+				<ListItem button onClick={signOut}>
+					<ListItemIcon><ExitToAppIcon/></ListItemIcon>
+					<ListItemText primary={"Sign Out"} />
+				</ListItem>
 			</List>
 		</div>
 	);

@@ -29,13 +29,17 @@ const TopAppBar = (props) => {
 		<React.Fragment>
 			<CssBaseline />
 			<ElevationScroll {...props}>
-				<AppBar>
+				<AppBar style = {{background: 'linear-gradient(153deg, #67A6FC 30%, #D4FFE8 90%)'}}>
 					<Toolbar>
 						<AppDrawer userRole={props.userRole} setPage={props.setPage} />
 						<Grid container alignItems="center" justify="space-between">
 							<Grid item>
-								<Typography variant="h6">
-									Thrift Shift
+								<Typography>
+								<h1 style = {{textAlign: 'center'}}> <div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontWeight: 'bolder', color:'white', letterSpacing:'4px'}}> 
+          				THRIFT
+          				</div>
+          				<div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontStyle: 'italic', color:'white', letterSpacing:'4px'}}> SHIFT</div>
+          				</h1>
 								</Typography>
 							</Grid>
 							<Grid item >
