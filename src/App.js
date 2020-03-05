@@ -43,7 +43,7 @@ const App = () => {
       <div style={{ height: '10px' }} />
       {
         (user && !userRole) ?
-          <LoginDialog user={user} /> : null
+          <LoginDialog user={user} setUserRole = {setUserRole} /> : null
       }
       <TopAppBar user={user} userRole={userRole} setPage={setPage} />
       {
@@ -61,4 +61,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default App
