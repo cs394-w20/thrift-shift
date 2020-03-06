@@ -19,11 +19,12 @@ const Bid = props => {
   }, [])
 
   if (bid) {
+    let selected = props.selected && (props.selected.bidId === props.bidId)
     return (
-      <MenuItem selected={props.selected === props.bidId} button key={props.bidId} onClick={() => { props.setSelected(props.bidId) }}>
+      <MenuItem selected={selected} button key={props.bidId} onClick={() => { props.setSelected({bidId:props.bidId, ...bid}) }}>
         <Grid container alignItems="center">
           <Grid item container alignItems="center" xs={9}>
-            <Grid item><Radio checked={props.selected === props.bidId} /></Grid>
+            <Grid item><Radio checked={selected} /></Grid>
             <Grid item xs><Typography className={classes.heading}>{bid.buyerName}</Typography></Grid>
           </Grid>
           <Grid item xs={3}>

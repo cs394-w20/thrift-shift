@@ -13,6 +13,11 @@ const LogoutPopover = (props) => {
         setAnchorEl(null);
     };
 
+    const handleSignOut = () => {
+        signOut()
+        props.setUser(null)
+    }
+
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
@@ -35,7 +40,7 @@ const LogoutPopover = (props) => {
                     horizontal: 'center',
                 }}
             >
-                <Button size="large" onClick={signOut}>Sign out</Button>
+                <Button size="large" onClick={handleSignOut}>Sign out</Button>
             </Popover>
         </div>
     );

@@ -3,6 +3,18 @@ import 'firebase/database';
 
 const db = firebase.database();
 
+const getUserInfo = (userId, setUserInfo) => {
+    const userDb = db.ref(`/Users/${userId}`)
+    userDb.on(
+        "value",
+        snapshot => {
+            if (snapshot.val()) {
+                setUserInfo(snapshot.val())
+            }
+        }
+    )
+}
+
 const getUserProductsInfo = (userId, setProductIds) => {
     const getProductInfo = snapshot => {
         if (snapshot.val()) {
@@ -13,6 +25,19 @@ const getUserProductsInfo = (userId, setProductIds) => {
 
     const userProductDb = db.ref(`Users/${userId}/Products`);
     userProductDb.on("value", getProductInfo, error => alert(error));
+}
+
+const getBuyerBid = (userId, setBids) => {
+    const productDb = db.ref(`Users/${userId}/buyerBid`);
+    productDb.once(
+        "value",
+        snapshot => {
+            if (snapshot.val()) {
+                setBids(snapshot.val())
+            }
+        },
+        error => alert(error)
+    )
 }
 
 const getProductInfo = (productId, setProduct) => {
@@ -62,6 +87,26 @@ const getBidInfo = (bidId, setBid) => {
     )
 }
 
+const getBidInfoWithProduct = (bidId, setBid) => {
+    const bidDb = db.ref(`/bid/${bidId}`)
+    bidDb.on(
+        "value",
+        snapshot1 => {
+            const productDb = db.ref(`/Products/${snapshot1.val().productId}`)
+            productDb.once(
+                "value",
+                snapshot2 => {
+                    setBid({
+                        ...snapshot1.val(),
+                        product: snapshot2.val()
+                    })
+                }
+            )
+        },
+        error => alert(error)
+    )
+}
+
 const addProduct = (userId, product) => {
     const productId = db.ref().child('Products').push().key;
     const updateProduct = {};
@@ -87,7 +132,13 @@ const addBid = (userId, productId, product, bidAmount) => {
         buyerId: userId,
         productId: productId,
         price: Number(bidAmount),
-        time: Date.now()
+        time: Date.now(),
+        // Unread: Seller haven't view the bid
+        // Read: Seller viewed the bid but no further actions
+        // Accepted: Seller Accepted this bid
+        // Declined: Seller Accepted other bid
+        // Verified: Buyer viewed accept/decline of this bid
+        status: "Unread"
     };
 
     updateProduct[`/Products/${productId}/bid/${productBidId}`] = bidId
@@ -159,4 +210,48 @@ const getBuyerInfo = (bid, setBuyerName, setBuyerEmail) => {
         error => alert(error));
 }
 
-export { getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo, addUserInfo, getBuyerInfo }
+
+const acceptBid = (bidId, productId) => {
+    const updateBidAccept = {};
+    updateBidAccept[`/bid/${bidId}/status`] = "Accepted";
+    updateBidAccept[`/Products/${productId}/sold`] = true;
+    db.ref().update(updateBidAccept);
+}
+
+const verifyBid = (bidId) => {
+    const updateBidView = {};
+    updateBidView[`/bid/${bidId}/status`] = "Verified";
+    db.ref().update(updateBidView);
+}
+
+const alterBuyerNotificationCount = (userId, increase) => {
+    const userDb = db.ref(`Users/${userId}/buyerNotification`);
+    userDb.transaction((buyerNotification) => {
+        if (buyerNotification === null) {
+            return 1
+        } else {
+            if (increase) {
+                return buyerNotification + 1
+            } else {
+                return buyerNotification - 1
+            }
+        }
+    })
+}
+
+const alterSellerNotificationCount = (userId, increase) => {
+    const userDb = db.ref(`Users/${userId}/sellerNotification`);
+    userDb.transaction((sellerNotification) => {
+        if (sellerNotification === null) {
+            return 1
+        } else {
+            if (increase) {
+                return sellerNotification + 1
+            } else {
+                return sellerNotification - 1
+            }
+        }
+    })
+}
+
+export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount, getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo, addUserInfo, getBuyerInfo }
