@@ -1,5 +1,6 @@
 import firebase from "firebase"
 import 'firebase/database';
+import { version } from "react";
 
 const db = firebase.database();
 
@@ -66,6 +67,19 @@ const getProductBidInfo = (productId, setProductBids) => {
     );
 }
 
+const getBuyerBids = (buyerId, setBuyerBids) => {
+    const buyerBidDb = db.ref(`/Users/${buyerId}/buyerBid`);
+    buyerBidDb.on(
+        "value",
+        snapshot => {
+            if(snapshot.val()) {
+                setBuyerBids(snapshot.val());
+            }
+        },
+        error => alert(error)
+    );
+}
+
 const getBidInfo = (bidId, setBid) => {
     const bidDb = db.ref(`/bid/${bidId}`)
     bidDb.once(
@@ -78,7 +92,8 @@ const getBidInfo = (bidId, setBid) => {
                     setBid({
                         ...snapshot1.val(),
                         buyerName: snapshot2.val().name,
-                        buyerEmail: snapshot2.val().email
+                        buyerEmail: snapshot2.val().email,
+                        buyerAddress: snapshot2.val().address
                     })
                 }
             )
@@ -157,6 +172,12 @@ const addBid = (userId, productId, product, bidAmount) => {
     return productId
 }
 
+const updateBidPrice = (bidId, price) => {
+    const updatePrice = {};
+    updatePrice[`/bid/${bidId}/price`] = Number(price);
+    db.ref().update(updatePrice);
+}
+
 const getRole = (userId, setUserRole) => {
     const productDb = db.ref("Users/" + userId + "/role");
     productDb.once(
@@ -196,7 +217,7 @@ const addUserInfo = (user) => {
     db.ref().update(updateUserInfo);
 }
 
-const getBuyerInfo = (bid, setBuyerName, setBuyerEmail) => {
+const getBuyerInfo = (bid, setBuyerName, setBuyerEmail, setBuyerAdrress) => {
     var buyerId = bid.buyerId;
     const userDb = db.ref(`Users/${buyerId}`);
     userDb.on(
@@ -205,6 +226,7 @@ const getBuyerInfo = (bid, setBuyerName, setBuyerEmail) => {
             if (snapshot.val()) {
                 setBuyerName(snapshot.val().name);
                 setBuyerEmail(snapshot.val().email);
+                setBuyerAdrress(snapshot.val().address);
             }
         },
         error => alert(error));
