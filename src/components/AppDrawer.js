@@ -48,7 +48,7 @@ const AppDrawer = props => {
 						<ListItemText primary={"Your Listings"} />
 					</ListItem> : null
 				}
-				<ListItem button onClick={signOut}>
+				<ListItem button onClick={() => {signOut()}}>
 					<ListItemIcon><ExitToAppIcon/></ListItemIcon>
 					<ListItemText primary={"Sign Out"} />
 				</ListItem>

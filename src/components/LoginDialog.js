@@ -14,6 +14,7 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Card, Grid, CardContent, Typography, CardMedia, CardActionArea } from "@material-ui/core";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
  
 
  
@@ -87,10 +88,15 @@ const LoginDialog = ({ user , setUserRole }) => {
           <h1 style = {{textAlign: 'center'}}> <div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontWeight: 'bolder', color:'white', letterSpacing:'4px'}}> 
           THRIFT
           </div>
-          <div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontStyle: 'italic', color:'white', letterSpacing:'4px'}}> SHIFT</div>
+          <div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontStyle: 'italic', color:'white', letterSpacing:'4px', fontWeight: "100"}}> SHIFT</div>
           </h1>
         </div>
         </DialogTitle>
+        <ListItem>
+          <div>
+          <img src='logo.png' style = {{mixBlendMode: 'multiply'}}></img>
+          </div>
+        </ListItem>
         
         <ListItem>
            <p style = {{color: 'white'}}>Welcome {user.displayName}! Are you interested in selling your items to local thrift stores, or are you a store owner looking to buy?</p>
@@ -121,7 +127,7 @@ const LoginDialog = ({ user , setUserRole }) => {
         </ListItem>
         <ListItem style = {{color: "white"}}>
           <RadioGroup aria-label="gender" name="gender1" value={profile.role} onChange={handleChange('role')}>
-            <FormControlLabel value="seller" control={<Radio />} label="I'm a Seller" />
+            <FormControlLabel value="seller" control={<Radio />} label="I'm a Seller"  style = {{color: 'white'}}/>
             <FormControlLabel value="buyer" control={<Radio />} label="I'm a Buyer" />
           </RadioGroup>
         </ListItem>

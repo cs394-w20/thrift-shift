@@ -25,6 +25,7 @@ ElevationScroll.propTypes = {
 
 // App bar at the top of the application, example from Material UI
 const TopAppBar = (props) => {
+	props.setPage('product')
 	return (
 		<React.Fragment>
 			<CssBaseline />
@@ -38,7 +39,7 @@ const TopAppBar = (props) => {
 								<h1 style = {{textAlign: 'center'}}> <div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontWeight: 'bolder', color:'white', letterSpacing:'4px'}}> 
           				THRIFT
           				</div>
-          				<div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontStyle: 'italic', color:'white', letterSpacing:'4px'}}> SHIFT</div>
+          				<div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontStyle: 'italic', color:'white', letterSpacing:'4px', fontWeight: "100"}}> SHIFT</div>
           				</h1>
 								</Typography>
 							</Grid>

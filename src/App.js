@@ -8,13 +8,15 @@ import { getUserProductsInfo, getAllProductInfo, getRole } from "./utils/Firebas
 import "./App.css";
 import Listings from "./components/Listings/Listings";
 import LoginDialog from './components/LoginDialog';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {Startup} from './components/Startup'
 
 
 const App = () => {
   const [user, setUser] = useState(null);
   const [productIds, setProductIds] = useState(null);
   const [userRole, setUserRole] = useState(null);
-  const [page, setPage] = React.useState('product');
+  const [page, setPage] = React.useState(null);
 
   // Change user state when the user successfully logged in
   useEffect(() => {
@@ -45,7 +47,11 @@ const App = () => {
         (user && !userRole) ?
           <LoginDialog user={user} setUserRole = {setUserRole} /> : null
       }
-      <TopAppBar user={user} userRole={userRole} setPage={setPage} />
+      {
+        (!user) ? 
+        <Startup/> : <TopAppBar user={user} userRole={userRole} setPage={setPage} />
+      }
+
       {
         page === 'product' ?
           <div>
