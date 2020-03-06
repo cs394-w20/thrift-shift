@@ -32,8 +32,11 @@ const ProductCard = props => {
   }
 
   if (product && imageURL) {
+    if (product.sold) {
+      return null;
+    }
     return (
-      <div>
+      <Grid key={props.productId} item xs={6} md={3}>
         <Card onClick={() => setOpen(true)}>
           <CardActionArea>
             <CardMedia className={classes.media} image={imageURL} title="item" />
@@ -67,8 +70,9 @@ const ProductCard = props => {
           setOpen={setOpen}
           user={props.user}
           userRole={props.userRole}
+          setPage={props.setPage}
         />
-      </div>
+      </Grid>
     );
   } else {
     return null;

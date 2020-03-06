@@ -3,37 +3,46 @@ import "rbx/index.css";
 import { makeStyles } from "@material-ui/core/styles";
 import MakeBidDialog from "./MakeBidDialog";
 import "firebase/storage";
-import { Grid, Typography, Slide, Dialog, AppBar, Toolbar, IconButton, DialogContent, DialogActions } from "@material-ui/core";
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {
+  Grid,
+  Typography,
+  Slide,
+  Dialog,
+  AppBar,
+  Toolbar,
+  IconButton,
+  DialogContent,
+  DialogActions
+} from "@material-ui/core";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
     padding: theme.spacing(2),
-    margin: 'auto',
-    maxWidth: 500,
+    margin: "auto",
+    maxWidth: 500
   },
   image: {
     width: 128,
-    height: 128,
+    height: 128
   },
   img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
+    margin: "auto",
+    display: "block",
+    maxWidth: "100%",
+    maxHeight: "100%"
   },
   appBar: {
-    position: 'relative',
+    position: "relative"
   },
   title: {
     marginLeft: theme.spacing(2),
-    flex: 1,
-  },
+    flex: 1
+  }
 }));
-
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -41,13 +50,27 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const ProductDescriptionCard = props => {
   const classes = useStyles();
-  
+
   if (props.product) {
     return (
-      <Dialog fullScreen open={props.open} onClose={() => { props.setOpen(false) }} TransitionComponent={Transition}>
+      <Dialog
+        fullScreen
+        open={props.open}
+        onClose={() => {
+          props.setOpen(false);
+        }}
+        TransitionComponent={Transition}
+      >
         <AppBar>
           <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={() => { props.setOpen(false) }} aria-label="close">
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={() => {
+                props.setOpen(false);
+              }}
+              aria-label="close"
+            >
               <ArrowBackIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
@@ -68,19 +91,21 @@ const ProductDescriptionCard = props => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} container>
                 <Grid xs item>
-                  <Typography variant="h5">
-                    {props.product.name}
-                  </Typography>
+                  <Typography variant="h5">{props.product.name}</Typography>
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={12} container>
-                <img className={classes.img} alt={props.product.name} src={props.imageURL} />
+                <img
+                  className={classes.img}
+                  alt={props.product.name}
+                  src={props.imageURL}
+                />
               </Grid>
               <Grid item xs={12} sm={12} container>
                 <Grid item xs container>
                   <Typography gutterBottom variant="h5">
                     Starting Price
-              </Typography>
+                  </Typography>
                 </Grid>
                 <Grid item>
                   <Typography variant="h5">$ {props.product.price}</Typography>
@@ -95,13 +120,19 @@ const ProductDescriptionCard = props => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <MakeBidDialog user={props.user} userRole={props.userRole} productId={props.productId} />
+          <MakeBidDialog
+            user={props.user}
+            userRole={props.userRole}
+            productId={props.productId}
+            setProductDescriptonCardOpen={props.setOpen}
+            setPage={props.setPage}
+          />
         </DialogActions>
       </Dialog>
     );
   } else {
     return null;
   }
-}
+};
 
 export default ProductDescriptionCard;

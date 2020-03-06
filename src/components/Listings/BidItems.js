@@ -5,7 +5,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { getProductBidInfo, getProductInfo } from '../../utils/FirebaseDbUtils'
+import { getProductBidInfo, getProductInfo, acceptBid, alterBuyerNotificationCount } from '../../utils/FirebaseDbUtils'
 import { Divider, Grid, List, ExpansionPanelActions, Button, Fade} from '@material-ui/core';
 import Bid from './Bid';
 
@@ -49,10 +49,10 @@ const BidItem = props => {
 	const [bids, setBids] = React.useState(null)
 	const [product, setProduct] = React.useState(null)
 	const [selected, setSelected] = React.useState(null)
-	const [accepted, setAccepted] = React.useState(null)
 
 	const handleAccept = () => {
-		setAccepted(true)
+		acceptBid(selected.bidId, props.productId)
+		alterBuyerNotificationCount(selected.buyerId, true)
 	}
 
 	const handleChange = () => {
@@ -71,7 +71,10 @@ const BidItem = props => {
 		getProductBidInfo(props.productId, setBids)
 	}
 
+	console.log(selected)
+
 	if (product && bids) {
+		let accepted = product.sold
 		return (
 			<ExpansionPanel expanded={props.productId === props.open} onChange={handleChange}>
 				<ExpansionPanelSummary

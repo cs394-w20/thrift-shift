@@ -7,6 +7,7 @@ import { updateUserState } from "./utils/FirebaseAuthUtils";
 import { getUserProductsInfo, getAllProductInfo, addRole, getRole, addUserInfo } from "./utils/FirebaseDbUtils"
 import "./App.css";
 import Listings from "./components/Listings/Listings";
+import YourBids from "./components/YourBids/YourBids";
 
 
 const App = () => {
@@ -29,10 +30,10 @@ const App = () => {
         <DialogTitle id="simple-dialog-title" style={{ textAlign: 'center' }}>Choose Your Role</DialogTitle>
         <Button variant="contained" color="primary" style={{ width: '50%', marginLeft: '25%' }} onClick={() => { addRole(user.uid, "seller"); getRole(user.uid, setUserRole); handleClose() }}>
           Seller
-      </Button>
+        </Button>
         <Button variant="contained" color="primary" style={{ marginTop: '5px', marginBottom: '5px', width: '50%', marginLeft: '25%' }} onClick={() => { addRole(user.uid, "buyer"); getRole(user.uid, setUserRole); handleClose() }}>
           Buyer
-      </Button>
+        </Button>
       </Dialog>
     )
   }
@@ -70,17 +71,21 @@ const App = () => {
     <Container disableGutters>
       <div style={{ height: '10px' }} />
       <ChooseRole user={user} />
-      <TopAppBar user={user} userRole={userRole} setPage={setPage} />
+      <TopAppBar user={user} setUser={setUser} userRole={userRole} setPage={setPage} />
       {
         page === 'product' ?
           <div>
             <ItemForm userRole={userRole} />
-            <ProductList productIds={productIds} user={user} userRole={userRole} />
+            <ProductList productIds={productIds} user={user} userRole={userRole} setPage={setPage} />
           </div> : null
       }
       {
-        page === 'bid' ?
+        page === 'bid' && userRole === 'seller' ?
           <Listings productIds={productIds} /> : null
+      }
+      {
+        page === 'bid' && userRole === 'buyer' ?
+          <YourBids /> : null
       }
     </Container>
   );
