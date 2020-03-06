@@ -3,14 +3,17 @@ import { Container } from "@material-ui/core";
 import TopAppBar from "./components/TopAppBar";
 import ItemForm from "./components/ItemForm";
 import ProductList from "./components/ProductList";
-import { updateUserState, updateAddress} from "./utils/FirebaseAuthUtils";
-import { getUserProductsInfo, getAllProductInfo, getRole } from "./utils/FirebaseDbUtils";
+import { updateUserState, updateAddress } from "./utils/FirebaseAuthUtils";
+import {
+  getUserProductsInfo,
+  getAllProductInfo,
+  getRole
+} from "./utils/FirebaseDbUtils";
 import "./App.css";
 import Listings from "./components/Listings/Listings";
-import LoginDialog from './components/LoginDialog';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {Startup} from './components/Startup'
-
+import LoginDialog from "./components/LoginDialog";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { Startup } from "./components/Startup";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -31,40 +34,40 @@ const App = () => {
 
   useEffect(() => {
     if (userRole) {
-      if (userRole === "buyer" ) {
-        getAllProductInfo(setProductIds)
+      if (userRole === "buyer") {
+        getAllProductInfo(setProductIds);
       }
       if (userRole === "seller") {
-        getUserProductsInfo(user.uid, setProductIds)
+        getUserProductsInfo(user.uid, setProductIds);
       }
     }
   }, [userRole]);
 
-  return (
-    <Container disableGutters>
-      <div style={{ height: '10px' }} />
-      {
-        (user && !userRole) ?
-          <LoginDialog user={user} setUserRole = {setUserRole} /> : null
-      }
-      {
-        (!user) ? 
-        <Startup/> : <TopAppBar user={user} userRole={userRole} setPage={setPage} />
-      }
-
-      {
-        page === 'product' ?
+  if (user) {
+    return (
+      <Container disableGutters>
+        <div style={{ height: "10px" }} />
+        {user && !userRole ? (
+          <LoginDialog user={user} setUserRole={setUserRole} />
+        ) : null}
+        <TopAppBar user={user} userRole={userRole} setPage={setPage} />
+        {page === "product" ? (
           <div>
             <ItemForm userRole={userRole} />
-            <ProductList productIds={productIds} user={user} userRole={userRole} setPage={setPage} />
-          </div> : null
-      }
-      {
-        page === 'bid' ?
-          <Listings productIds={productIds} /> : null
-      }
-    </Container>
-  );
+            <ProductList
+              productIds={productIds}
+              user={user}
+              userRole={userRole}
+              setPage={setPage}
+            />
+          </div>
+        ) : null}
+        {page === "bid" ? <Listings productIds={productIds} /> : null}
+      </Container>
+    );
+  } else {
+    return <Startup />;
+  }
 };
 
-export default App
+export default App;
