@@ -5,7 +5,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { getProductBidInfo, getProductInfo } from '../../utils/FirebaseDbUtils'
+import { getProductBidInfo, getProductInfo, updateAcceptBid } from '../../utils/FirebaseDbUtils'
 import { Divider, Grid, List, ExpansionPanelActions, Button, Fade} from '@material-ui/core';
 import Bid from './Bid';
 
@@ -52,6 +52,7 @@ const BidItem = props => {
 	const [accepted, setAccepted] = React.useState(null)
 
 	const handleAccept = () => {
+		updateAcceptBid(selected)
 		setAccepted(true)
 	}
 

@@ -87,7 +87,8 @@ const addBid = (userId, productId, product, bidAmount) => {
         buyerId: userId,
         productId: productId,
         price: Number(bidAmount),
-        time: Date.now()
+        time: Date.now(),
+        status: "default" //"default", "accepted" -> seller accept bid, "viewed" -> buyer view bid
     };
 
     updateProduct[`/Products/${productId}/bid/${productBidId}`] = bidId
@@ -104,6 +105,31 @@ const addBid = (userId, productId, product, bidAmount) => {
     db.ref().update(updateProduct);
 
     return productId
+}
+
+
+const updateAcceptBid = (bidId) => {
+    const updateBidAccept = {};
+    updateBidAccept[`/bid/${bidId}/status`] = "accepted";
+    db.ref().update(updateBidAccept);
+}
+
+
+const updateViewBid = (bidId) => {
+    const updateBidView = {};
+    updateBidView[`/bid/${bidId}/status`] = "viewed";
+    db.ref().update(updateBidView);
+}
+
+const getBidStatus = (bidId, setBidStatus) => {
+    const bidDb = db.ref(`/bid/${bidId}/status`);
+    bidDb.on(
+        "value",
+        snapshot => {
+            setBidStatus(snapshot.val());
+        },
+        error => alert(error)
+    );
 }
 
 const getRole = (userId, setUserRole) => {
@@ -159,4 +185,5 @@ const getBuyerInfo = (bid, setBuyerName, setBuyerEmail) => {
         error => alert(error));
 }
 
-export { getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo, addUserInfo, getBuyerInfo }
+export { getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo, addUserInfo, getBuyerInfo, updateAcceptBid, updateViewBid, getBidStatus     }
+ 
