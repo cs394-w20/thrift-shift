@@ -21,6 +21,7 @@ const uploadProductImage = (image, productId, setProgress, handleClose, addProdu
   const uploadTask = st.ref().child(`product_images/${productId}`).put(image);
   uploadTask.on(
     "state_changed",
+    
     snapshot => {
       const progress = Math.round(
         (snapshot.bytesTransferred / snapshot.totalBytes) * 100

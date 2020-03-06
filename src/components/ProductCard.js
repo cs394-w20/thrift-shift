@@ -40,7 +40,7 @@ const ProductCard = props => {
             <CardContent>
               <Grid container>
                 <Grid item xs={12}>
-                  <Typography gutterBottom variant="subtitle2">
+                  <Typography gutterBottom variant="subtitle2" style = {{fontFamily: 'Proxima Nova', fontWeight: 'bold', color:'#707070', fontSize: '18px'}}>
                     {product.name}
                   </Typography>
                 </Grid>
@@ -50,7 +50,7 @@ const ProductCard = props => {
                     variant="body2"
                     component="h2"
                     align="right"
-                    color="secondary"
+                    style = {{fontFamily: 'Proxima Nova', fontWeight: 'bold', color:'#707070', fontSize: '18px'}}
                   >
                     ${product.price}
                   </Typography>

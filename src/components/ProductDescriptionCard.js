@@ -95,7 +95,7 @@ const ProductDescriptionCard = props => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} container>
                 <Grid xs item>
-                  <Typography variant="h5">{props.product.name}</Typography>
+                  <Typography style = {{fontFamily: 'Proxima Nova', color: '#707070', fontSize: '30px', fontWeight:'900'}} variant="h5">{props.product.name}</Typography>
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={12} container>
@@ -107,16 +107,16 @@ const ProductDescriptionCard = props => {
               </Grid>
               <Grid item xs={12} sm={12} container>
                 <Grid item xs container>
-                  <Typography gutterBottom variant="h5">
-                    Starting Price
+                  <Typography style = {{fontFamily: 'Proxima Nova', color: '#707070', fontSize: '28px', fontWeight:'600', opacity :'100%'}} gutterBottom variant="h5">
+                    LIST PRICE
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography variant="h5">$ {props.product.price}</Typography>
+                  <Typography variant="h4" style = {{fontFamily: 'Proxima Nova', color: '#707070', fontSize: '36px', fontWeight:'900'}}>$ {props.product.price} </Typography>
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={12} container>
-                <Typography gutterBottom variant="body1">
+                <Typography gutterBottom variant="body1" style = {{fontFamily: 'Proxima Nova', color: '#707070', fontSize: '24px'}}>
                   {props.product.description}
                 </Typography>
               </Grid>

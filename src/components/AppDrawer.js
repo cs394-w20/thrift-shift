@@ -67,7 +67,7 @@ const AppDrawer = props => {
 				onClose={() => { setOpen(false) }}
 				onOpen={() => { setOpen(true) }}
 			>
-				{sideList('left')}
+				{sideList('right')}
 			</SwipeableDrawer>
 		</div>
 	);
