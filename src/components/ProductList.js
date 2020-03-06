@@ -12,9 +12,9 @@ const ProductList = ({ productIds, user, userRole, setPage }) => {
           {
             productIds.map(productId => {
               return (
-                <Grid key={productId} item xs={6} md={3}>
+                
                   <ProductCard productId={productId} user={user} userRole={userRole} setPage={setPage} />
-                </Grid>
+                
               );
             })
           }
