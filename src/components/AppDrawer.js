@@ -68,7 +68,7 @@ const AppDrawer = props => {
 							<MonetizationOnIcon />
 						</Badge>
 					</ListItemIcon>
-					<ListItemText primary={props.role === 'seller' ? "Your Listings" : "Your Bids"} />
+					<ListItemText primary={props.userRole === 'seller' ? "Your Listings" : "Your Bids"} />
 				</ListItem>
 			</List>
 		</div>
