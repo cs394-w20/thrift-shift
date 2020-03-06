@@ -5,7 +5,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { getBidInfoWithProduct, verifyBid, alterBuyerNotificationCount } from '../../utils/FirebaseDbUtils'
+import { getBidInfoWithProduct, verifyBid, alterBuyerNotificationCount, addBid } from '../../utils/FirebaseDbUtils'
 import { Divider, Grid, List, ExpansionPanelActions, Button, Fade } from '@material-ui/core';
 import { getUser } from '../../utils/FirebaseAuthUtils';
 
@@ -39,7 +39,7 @@ const BuyerBid = props => {
 		} else {
 			props.setOpen(props.bidId)
 		}
-	}
+  }
 
   React.useEffect(()=>{
     getBidInfoWithProduct(props.bidId, setBid)
@@ -49,7 +49,7 @@ const BuyerBid = props => {
     return (
       <ExpansionPanel expanded={props.bidId === props.open} onChange={handleChange}>
         <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
+          // expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
@@ -61,11 +61,11 @@ const BuyerBid = props => {
               <Typography className={classes.secondaryHeading}>{bid.status && (bid.status === 'Accepted' || bid.status==='Verified') ? 'Accepted' : '$' + bid.price}</Typography>
             </Grid>
           </Grid>
-        </ExpansionPanelSummary>
-        <ExpansionPanelActions>
+       </ExpansionPanelSummary>
+         {/* <ExpansionPanelActions>
           <Button color='secondary'>Delete Bid</Button>
           <Button color='primary'>Change Bid</Button>
-        </ExpansionPanelActions>
+        </ExpansionPanelActions> */}
 			</ExpansionPanel>
     )
   } else {
