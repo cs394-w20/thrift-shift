@@ -276,4 +276,21 @@ const alterSellerNotificationCount = (userId, increase) => {
     })
 }
 
-export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount, getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo, addUserInfo, getBuyerInfo }
+const isBidRead = (bidId) => {
+    const bidDb = db.ref(`bid/${bidId}`);
+    var status;
+    bidDb.on(
+        "value",
+        snapshot => {
+            if (snapshot.val()) {
+                status = snapshot.val().status
+                 console.log(status)
+            }
+        },
+        error => alert(error));
+    return status !== 'Accepted';
+}
+
+export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount, 
+    getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, 
+    addRole, getRole, addBid, getProductBidInfo, getBidInfo, addUserInfo, getBuyerInfo, isBidRead }
