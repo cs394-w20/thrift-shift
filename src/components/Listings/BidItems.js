@@ -71,8 +71,6 @@ const BidItem = props => {
 		getProductBidInfo(props.productId, setBids)
 	}
 
-	console.log(selected)
-
 	if (product && bids) {
 		let accepted = product.sold
 		return (

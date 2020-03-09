@@ -98,7 +98,8 @@ const ItemForm = ({userRole}) => {
 		const uuidv4 = require('uuid/v4');
 		const imageId = uuidv4();
 		setProduct({ ...product, imageId: imageId });
-		setImage(pictureFiles[0]);
+    setImage(pictureFiles[0]);
+    console.log(pictureFiles[0])
 	};
 
 	const addItem = () => {

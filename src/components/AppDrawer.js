@@ -32,7 +32,6 @@ const AppDrawer = props => {
 
 	React.useEffect(() => {
 		if (getUser()) {
-			console.log('test')
 			getUserInfo(getUser().uid, setUserInfo)
 		}
 	}, [getUser()])

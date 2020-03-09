@@ -288,7 +288,6 @@ const isBidRead = (bidId) => {
         snapshot => {
             if (snapshot.val()) {
                 status = snapshot.val().status
-                 console.log(status)
             }
         },
         error => alert(error));
