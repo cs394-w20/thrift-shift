@@ -96,7 +96,7 @@ const MakeBidDialog = ({
         <Button
           variant="contained"
           onClick={handleClickOpen}
-          color="secondary"
+          style = {{background: '#67A6FC'}}
           aria-label="edit"
         >
           Make Bid
@@ -187,7 +187,7 @@ const MakeBidDialog = ({
                         keepShopping();
                       }}
                       variant="contained"
-                      color="secondary"
+                      style = {{background: '#67A6FC'}}
                     >
                       Keep Shopping
                     </Button>
@@ -220,7 +220,7 @@ const MakeBidDialog = ({
                 >
                   Cancel
                 </Button>
-                <Button variant="contained" color="secondary" type="submit">
+                <Button variant="contained" style = {{background: '#67A6FC'}} type="submit">
                   Submit Bid
                 </Button>
               </DialogActions>

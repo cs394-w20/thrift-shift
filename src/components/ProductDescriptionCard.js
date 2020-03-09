@@ -61,7 +61,7 @@ const ProductDescriptionCard = props => {
         }}
         TransitionComponent={Transition}
       >
-        <AppBar>
+        <AppBar style = {{background: 'linear-gradient(153deg, #67A6FC 30%, #D4FFE8 90%)'}}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -73,8 +73,12 @@ const ProductDescriptionCard = props => {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Thrift Shift
+            <Typography >
+            <h1 style = {{textAlign: 'center'}}> <div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontWeight: 'bolder', color:'white', letterSpacing:'4px'}}> 
+          				THRIFT
+          				</div>
+          				<div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontStyle: 'italic', color:'white', letterSpacing:'4px', fontWeight: "100"}}> SHIFT</div>
+          				</h1>
             </Typography>
           </Toolbar>
         </AppBar>

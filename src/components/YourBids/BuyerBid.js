@@ -8,12 +8,9 @@ import {
   getBidInfoWithProduct,
   verifyBid,
   alterBuyerNotificationCount,
-  addBid
 } from "../../utils/FirebaseDbUtils";
 import {
   Grid,
-  ExpansionPanelActions,
-  Button,
   Badge
 } from "@material-ui/core";
 import { getUser } from "../../utils/FirebaseAuthUtils";

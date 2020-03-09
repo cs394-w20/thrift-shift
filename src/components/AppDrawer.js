@@ -6,12 +6,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ViewListIcon from '@material-ui/icons/ViewList';
+import Avatar from '@material-ui/core/Avatar';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
-import { Badge } from '@material-ui/core';
+import { Badge, Grid, Typography, Divider } from '@material-ui/core';
 import { getUserInfo } from '../utils/FirebaseDbUtils';
 import { getUser } from '../utils/FirebaseAuthUtils';
+import { signOut } from '../utils/FirebaseAuthUtils';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles({
 	list: {
@@ -57,6 +60,20 @@ const AppDrawer = props => {
 			onClick={() => { setOpen(false) }}
 			onKeyDown={() => { setOpen(false) }}
 		>
+			<List style={{background: 'linear-gradient(153deg, #67A6FC 50%, #D4FFE8 90%)'}}>
+				<ListItem>
+					<Grid conatiner style={{ marginTop: '50px' }}>
+						<Grid item >
+							<Avatar src={props.user.photoURL} style={{ marginBottom: '10px' }}/>
+						</Grid>
+						<Grid item>
+							<Typography variant='body1' style={{color:'white'}}>{props.user.displayName}</Typography>
+							<Typography variant='body2' style={{color:'#F0F0F0'}}>{props.user.email}</Typography>
+						</Grid>
+					</Grid>
+				</ListItem>
+			</List>
+			<Divider />
 			<List>
 				<ListItem button onClick={() => { props.setPage("product") }}>
 					<ListItemIcon><ViewListIcon /></ListItemIcon>
@@ -69,6 +86,10 @@ const AppDrawer = props => {
 						</Badge>
 					</ListItemIcon>
 					<ListItemText primary={props.userRole === 'seller' ? "Your Listings" : "Your Bids"} />
+				</ListItem>
+				<ListItem button onClick={() => {signOut()}}>
+					<ListItemIcon><ExitToAppIcon/></ListItemIcon>
+					<ListItemText primary={"Sign Out"} />
 				</ListItem>
 			</List>
 		</div>

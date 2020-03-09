@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AppBar, Toolbar, Typography, useScrollTrigger, CssBaseline, Avatar, Button, Grid } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, useScrollTrigger, CssBaseline, Grid } from '@material-ui/core';
 import { signInWithGoogle, getUser } from '../utils/FirebaseAuthUtils';
-import LogoutPopover from './LogoutPopover';
 import AppDrawer from './AppDrawer';
 
 
@@ -30,20 +29,18 @@ const TopAppBar = (props) => {
 		<React.Fragment>
 			<CssBaseline />
 			<ElevationScroll {...props}>
-				<AppBar>
+				<AppBar style = {{background: 'linear-gradient(153deg, #67A6FC 30%, #D4FFE8 90%)'}}>
 					<Toolbar>
-						<AppDrawer user={props.user} userRole={props.userRole} setPage={props.setPage} />
+						<AppDrawer setUser={props.setUser} user={props.user} userRole={props.userRole} setPage={props.setPage} />
 						<Grid container alignItems="center" justify="space-between">
 							<Grid item>
-								<Typography variant="h6">
-									Thrift Shift
+								<Typography>
+								<h1 style = {{textAlign: 'center'}}> <div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontWeight: 'bolder', color:'white', letterSpacing:'4px'}}> 
+          				THRIFT
+          				</div>
+          				<div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontStyle: 'italic', color:'white', letterSpacing:'4px', fontWeight: "100"}}> SHIFT</div>
+          				</h1>
 								</Typography>
-							</Grid>
-							<Grid item >
-								{
-									props.user ? <LogoutPopover setUser={props.setUser}><Avatar src={props.user.photoURL} /></LogoutPopover>
-										: <Button onClick={signInWithGoogle}>Sign In</Button>
-								}
 							</Grid>
 						</Grid>
 					</Toolbar>

@@ -63,7 +63,8 @@ const ItemForm = ({userRole}) => {
 		description: ''
 	});
 	const [image, setImage] = useState(null);
-	const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -75,7 +76,8 @@ const ItemForm = ({userRole}) => {
 	};
 
 	const initialState = () => {
-		setProgress(0);
+    setProgress(null);
+    setDisabled(false)
 		setProduct({
 			name: '',
 			price: '',
@@ -130,6 +132,7 @@ const ItemForm = ({userRole}) => {
         <ValidatorForm
           onSubmit={() => {
             addItem();
+            setDisabled(true);
           }}
         >
           <DialogContent>
@@ -205,7 +208,7 @@ const ItemForm = ({userRole}) => {
               variant="contained"
               color="secondary"
               type="submit"
-              disabled={!image}
+              disabled={!image || disabled}
             >
               Submit
             </Button>

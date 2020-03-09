@@ -23,7 +23,7 @@ const LogoutPopover = (props) => {
 
     return (
         <div>
-            <Button size="small" aria-describedby={id} variant="contained" color="primary" onClick={handleClick} disableElevation>
+            <Button size="small" aria-describedby={id} onClick={handleClick} disableElevation>
                 {props.children}
             </Button>
             <Popover
