@@ -14,7 +14,8 @@ import {
   Button,
   ExpansionPanelActions
 } from "@material-ui/core";
-import { getUser, updateBidPrice, deleteBid } from "../../utils/FirebaseAuthUtils";
+import { getUser } from "../../utils/FirebaseAuthUtils";
+import { updateBidPrice, deleteBid } from "../../utils/FirebaseDbUtils";
 import { isBidRead } from "../../utils/FirebaseDbUtils";
 
 const useStyles = makeStyles(theme => ({
@@ -57,7 +58,7 @@ const BuyerBid = props => {
   }
 
   const handleChangeBid = () => {
-    updateBidPrice(props.bidId, price); 
+    // updateBidPrice(props.bidId, price);
   }
 
   React.useEffect(() => {

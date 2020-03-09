@@ -109,10 +109,11 @@ const getBidInfoWithProduct = (bidId, setBid) => {
     )
 }
 
-const addProduct = (userId, product) => {
+const addProduct = (userId, product, price) => {
     const productId = db.ref().child('Products').push().key;
     const updateProduct = {};
     const updateUser = {};
+    product['price'] = Number(price);
     updateProduct['/Products/' + productId] = product;
     updateUser[`/Users/${userId}/Products/` + productId] = true;
     db.ref().update(updateProduct);
@@ -290,6 +291,6 @@ const isBidRead = (bidId) => {
     return status !== 'Accepted';
 }
 
-export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount, 
-    getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, 
+export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount,
+    getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo,
     setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, updateBidPrice, deleteBid }
