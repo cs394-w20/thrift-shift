@@ -67,19 +67,6 @@ const getProductBidInfo = (productId, setProductBids) => {
     );
 }
 
-const getBuyerBids = (buyerId, setBuyerBids) => {
-    const buyerBidDb = db.ref(`/Users/${buyerId}/buyerBid`);
-    buyerBidDb.on(
-        "value",
-        snapshot => {
-            if(snapshot.val()) {
-                setBuyerBids(snapshot.val());
-            }
-        },
-        error => alert(error)
-    );
-}
-
 const getBidInfo = (bidId, setBid) => {
     const bidDb = db.ref(`/bid/${bidId}`)
     bidDb.once(
@@ -176,6 +163,14 @@ const updateBidPrice = (bidId, price) => {
     const updatePrice = {};
     updatePrice[`/bid/${bidId}/price`] = Number(price);
     db.ref().update(updatePrice);
+}
+
+const deleteBid = (bidId, productId, buyerId) => {
+    const updateDeleteBid = {};
+    updateDeleteBid[`/bid/${bidId}`] = null;
+    updateDeleteBid[`/Products/${productId}/bid/${bidId}`] = null;
+    updateDeleteBid[`/Users/${buyerId}/buyerBid/${bidId}`] = null;
+    db.ref().update(updateDeleteBid);
 }
 
 const getRole = (userId, setUserRole) => {
@@ -297,4 +292,4 @@ const isBidRead = (bidId) => {
 
 export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount, 
     getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, 
-    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead }
+    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, updateBidPrice, deleteBid }
