@@ -30,7 +30,7 @@ const getUserProductsInfo = (userId, setProductIds) => {
 
 const getBuyerBid = (userId, setBids) => {
     const productDb = db.ref(`Users/${userId}/buyerBid`);
-    productDb.once(
+    productDb.on(
         "value",
         snapshot => {
             if (snapshot.val()) {
@@ -61,19 +61,6 @@ const getProductBidInfo = (productId, setProductBids) => {
         snapshot => {
             if (snapshot.val()) {
                 setProductBids(snapshot.val());
-            }
-        },
-        error => alert(error)
-    );
-}
-
-const getBuyerBids = (buyerId, setBuyerBids) => {
-    const buyerBidDb = db.ref(`/Users/${buyerId}/buyerBid`);
-    buyerBidDb.on(
-        "value",
-        snapshot => {
-            if(snapshot.val()) {
-                setBuyerBids(snapshot.val());
             }
         },
         error => alert(error)
@@ -122,10 +109,11 @@ const getBidInfoWithProduct = (bidId, setBid) => {
     )
 }
 
-const addProduct = (userId, product) => {
+const addProduct = (userId, product, price) => {
     const productId = db.ref().child('Products').push().key;
     const updateProduct = {};
     const updateUser = {};
+    product['price'] = Number(price);
     updateProduct['/Products/' + productId] = product;
     updateUser[`/Users/${userId}/Products/` + productId] = true;
     db.ref().update(updateProduct);
@@ -172,10 +160,13 @@ const addBid = (userId, productId, product, bidAmount) => {
     return productId
 }
 
-const updateBidPrice = (bidId, price) => {
-    const updatePrice = {};
-    updatePrice[`/bid/${bidId}/price`] = Number(price);
-    db.ref().update(updatePrice);
+
+const deleteBid = (bidId, productId, buyerId) => {
+    const updateDeleteBid = {};
+    updateDeleteBid[`/bid/${bidId}`] = null;
+    db.ref(`/Products/${productId}/bid/${bidId}`).remove();
+    db.ref(`/Users/${buyerId}/buyerBid/${bidId}`).remove();
+    db.ref().update(updateDeleteBid);
 }
 
 const getRole = (userId, setUserRole) => {
@@ -296,4 +287,4 @@ const isBidRead = (bidId) => {
 
 export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount, 
     getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, 
-    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead }
+    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, deleteBid }

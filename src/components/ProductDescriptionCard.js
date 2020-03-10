@@ -25,15 +25,11 @@ const useStyles = makeStyles(theme => ({
     margin: "auto",
     maxWidth: 500
   },
-  image: {
-    width: 128,
-    height: 128
-  },
   img: {
     margin: "auto",
     display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%"
+    width: "auto",
+    height: "260px"
   },
   appBar: {
     position: "relative"
@@ -74,7 +70,7 @@ const ProductDescriptionCard = props => {
               <ArrowBackIcon />
             </IconButton>
             <Typography >
-            <h1 style = {{textAlign: 'center'}}> <div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontWeight: 'bolder', color:'white', letterSpacing:'4px'}}> 
+            <h1 style = {{textAlign: 'center'}}> <div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontWeight: 'bolder', color:'white', letterSpacing:'4px'}}>
           				THRIFT
           				</div>
           				<div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontStyle: 'italic', color:'white', letterSpacing:'4px', fontWeight: "100"}}> SHIFT</div>
@@ -92,19 +88,17 @@ const ProductDescriptionCard = props => {
             style={{ padding: "15px 10px 15px 10px" }}
             spacing={2}
           >
-            <Grid container spacing={2}>
+            <Grid container direction="column" spacing={2}>
               <Grid item xs={12} sm={12} container>
-                <Grid xs item>
+                <Grid xs item >
                   <Typography variant="h5">{props.product.name}</Typography>
                 </Grid>
               </Grid>
-              <Grid item xs={12} sm={12} container>
-                <img
-                  className={classes.img}
-                  alt={props.product.name}
-                  src={props.imageURL}
-                />
-              </Grid>
+              <img
+                className={classes.img}
+                alt={props.product.name}
+                src={props.imageURL}
+              />
               <Grid item xs={12} sm={12} container>
                 <Grid item xs container>
                   <Typography gutterBottom variant="h5">

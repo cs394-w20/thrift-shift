@@ -22,7 +22,7 @@ const YourBids = props => {
 				<Container>
 					{
 						Object.values(bidIds).map(bidId => {
-							return <BuyerBid key={bidId} bidId={bidId} open={open} setOpen={setOpen} />
+							return <BuyerBid key={bidId} bidId={bidId} open={open} setOpen={setOpen} setPage={props.setPage}/>
 						})
 					}
 				</Container>
