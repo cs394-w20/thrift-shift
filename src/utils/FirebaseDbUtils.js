@@ -169,6 +169,16 @@ const deleteBid = (bidId, productId, buyerId) => {
     db.ref().update(updateDeleteBid);
 }
 
+const changeBid = (bidId, bidAmount, productId) => {
+    const updateBid = {};
+    updateBid[`/bid/${bidId}/price`] = Number(bidAmount);
+    db.ref().update(updateBid);
+
+    const updateProduct = {};
+    updateProduct[`/Products/${productId}/bid/highestBid`] = bidAmount;
+    db.ref().update(updateProduct);
+}
+
 const getRole = (userId, setUserRole) => {
     const productDb = db.ref("Users/" + userId + "/role");
     productDb.once(
@@ -285,6 +295,6 @@ const isBidRead = (bidId) => {
     return status !== 'Accepted';
 }
 
-export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount, 
-    getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, 
-    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, deleteBid }
+export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount,
+    getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo,
+    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, deleteBid, changeBid }

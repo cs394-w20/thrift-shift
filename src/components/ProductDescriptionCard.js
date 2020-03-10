@@ -94,11 +94,13 @@ const ProductDescriptionCard = props => {
                   <Typography variant="h5">{props.product.name}</Typography>
                 </Grid>
               </Grid>
-              <img
-                className={classes.img}
-                alt={props.product.name}
-                src={props.imageURL}
-              />
+              <Grid item xs={12} sm={12} container>
+                <img
+                  className={classes.img}
+                  alt={props.product.name}
+                  src={props.imageURL}
+                />
+              </Grid>
               <Grid item xs={12} sm={12} container>
                 <Grid item xs container>
                   <Typography gutterBottom variant="h5">

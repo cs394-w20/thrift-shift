@@ -9,7 +9,7 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import "../../App.css";
-import { addBid, deleteBid } from "../../utils/FirebaseDbUtils";
+import { changeBid } from "../../utils/FirebaseDbUtils";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -32,7 +32,7 @@ const ChangeBidDialog = ({
   productId,
   setPage
 }) => {
-  const classes = useStyles(); 
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [bidAmount, setBidAmount] = useState("");
   const [bidSubmitted, setBidSubmitted] = useState(false);
@@ -69,8 +69,7 @@ const ChangeBidDialog = ({
   };
 
   const submitBid = () => {
-    deleteBid(bidId, productId, user.uid);
-    addBid(user.uid, productId, product, bidAmount);
+    changeBid(bidId, bidAmount, productId)
     setBidSubmitted(true);
   };
 
@@ -83,7 +82,7 @@ const ChangeBidDialog = ({
     return (
       <div>
         <Button
-          color='primary' 
+          color='primary'
           onClick={handleClickOpen}
           aria-label="edit"
         >

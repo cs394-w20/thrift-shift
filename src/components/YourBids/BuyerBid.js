@@ -81,7 +81,6 @@ const BuyerBid = props => {
           className={classes.expansionPanel}
         >
           <ExpansionPanelSummary
-            // expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -102,7 +101,6 @@ const BuyerBid = props => {
             </Grid>
           </ExpansionPanelSummary>
           {<ExpansionPanelActions>
-          <Button color='secondary' onClick={handleDeleteBid}>Delete Bid</Button>
           <ChangeBidDialog user={getUser()} bidId={props.bidId} product={bid.product} productId={bid.productId} setPage={props.setPage} />
         </ExpansionPanelActions>}
         </ExpansionPanel>
