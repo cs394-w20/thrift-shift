@@ -101,6 +101,7 @@ const BuyerBid = props => {
             </Grid>
           </ExpansionPanelSummary>
           {<ExpansionPanelActions>
+          <Button color='secondary'>Delete Bid</Button>
           <ChangeBidDialog user={getUser()} bidId={props.bidId} product={bid.product} productId={bid.productId} setPage={props.setPage} />
         </ExpansionPanelActions>}
         </ExpansionPanel>
