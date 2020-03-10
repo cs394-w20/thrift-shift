@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import {
   getBidInfoWithProduct,
   verifyBid,
-  alterBuyerNotificationCount,
+  alterBuyerNotificationCount
 } from "../../utils/FirebaseDbUtils";
 import {
   Grid,
@@ -18,7 +18,7 @@ import {
 } from "@material-ui/core";
 import { getUser } from "../../utils/FirebaseAuthUtils";
 import { isBidRead, deleteBid } from "../../utils/FirebaseDbUtils";
-import ChangeBidDialog from './ChangeBidDialog';
+import ChangeBidDialog from "./ChangeBidDialog";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,7 +57,7 @@ const BuyerBid = props => {
 
   const handleDeleteBid = () => {
     deleteBid(props.bidId, bid.productId, bid.buyerId);
-  }
+  };
 
   React.useEffect(() => {
     getBidInfoWithProduct(props.bidId, setBid);
@@ -100,10 +100,19 @@ const BuyerBid = props => {
               </Grid>
             </Grid>
           </ExpansionPanelSummary>
-          {<ExpansionPanelActions>
-          <Button color='secondary'>Delete Bid</Button>
-          <ChangeBidDialog user={getUser()} bidId={props.bidId} product={bid.product} productId={bid.productId} setPage={props.setPage} />
-        </ExpansionPanelActions>}
+          {bid.status &&
+          (bid.status === "Accepted" || bid.status === "Verified") ? null : (
+            <ExpansionPanelActions>
+              <Button color="secondary">Delete Bid</Button>
+              <ChangeBidDialog
+                user={getUser()}
+                bidId={props.bidId}
+                product={bid.product}
+                productId={bid.productId}
+                setPage={props.setPage}
+              />
+            </ExpansionPanelActions>
+          )}
         </ExpansionPanel>
       </Badge>
     );
