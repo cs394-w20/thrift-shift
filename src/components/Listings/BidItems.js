@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	secondaryHeading: {
 		fontSize: theme.typography.pxToRem(15),
-		color: "red"
+		color: "#707070"
 	},
 	bid: {
 		padding: 0
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 		padding: 0
 	},
 	accept: {
-		color: "green"
+		color: "#67A6FC"
 	}
 }));
 
