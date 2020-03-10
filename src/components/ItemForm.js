@@ -115,7 +115,7 @@ const ItemForm = ({userRole}) => {
             variant="extended"
             onClick={handleClickOpen}
             className={classes.fab}
-            color="secondary"
+            style = {{backgroundColor:'#67A6FC', color: "white"}}
             aria-label="edit"
           >
             <AddIcon className={classes.extendedIcon} />
@@ -211,7 +211,7 @@ const ItemForm = ({userRole}) => {
             </Button>
             <Button
               variant="contained"
-              color="secondary"
+              style = {{backgroundColor:'#67A6FC'}}
               type="submit"
               disabled={!image || disabled}
             >
