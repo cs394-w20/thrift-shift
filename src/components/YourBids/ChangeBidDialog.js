@@ -198,7 +198,7 @@ const ChangeBidDialog = ({
                 >
                   Cancel
                 </Button>
-                <Button variant="contained" style = {{background: '#67A6FC'}} type="submit">
+                <Button variant="contained" style = {{background: '#67A6FC', color: 'white'}} type="submit">
                   Submit Bid
                 </Button>
               </DialogActions>
