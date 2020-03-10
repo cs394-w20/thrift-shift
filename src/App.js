@@ -68,7 +68,7 @@ const App = () => {
       }
       {
         page === 'bid' && userRole === 'buyer' ?
-          <YourBids /> : null
+          <YourBids setPage={setPage}/> : null
       }
     </Container>
   );

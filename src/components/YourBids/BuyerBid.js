@@ -12,10 +12,13 @@ import {
   Grid,
   Badge,
   Button,
-  ExpansionPanelActions
+  ExpansionPanelActions,
+  Dialog,
+  DialogActions
 } from "@material-ui/core";
-import { getUser, updateBidPrice, deleteBid } from "../../utils/FirebaseAuthUtils";
-import { isBidRead } from "../../utils/FirebaseDbUtils";
+import { getUser } from "../../utils/FirebaseAuthUtils";
+import { isBidRead, deleteBid } from "../../utils/FirebaseDbUtils";
+import ChangeBidDialog from './ChangeBidDialog';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,10 +57,6 @@ const BuyerBid = props => {
 
   const handleDeleteBid = () => {
     deleteBid(props.bidId, bid.productId, bid.buyerId);
-  }
-
-  const handleChangeBid = () => {
-    updateBidPrice(props.bidId, price); 
   }
 
   React.useEffect(() => {
@@ -104,7 +103,7 @@ const BuyerBid = props => {
           </ExpansionPanelSummary>
           {<ExpansionPanelActions>
           <Button color='secondary' onClick={handleDeleteBid}>Delete Bid</Button>
-          <Button color='primary' onClick={handleChangeBid}>Change Bid</Button>
+          <ChangeBidDialog user={getUser()} bidId={props.bidId} product={bid.product} productId={bid.productId} setPage={props.setPage} />
         </ExpansionPanelActions>}
         </ExpansionPanel>
       </Badge>

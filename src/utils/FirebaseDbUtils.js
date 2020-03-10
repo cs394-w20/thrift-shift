@@ -30,7 +30,7 @@ const getUserProductsInfo = (userId, setProductIds) => {
 
 const getBuyerBid = (userId, setBids) => {
     const productDb = db.ref(`Users/${userId}/buyerBid`);
-    productDb.once(
+    productDb.on(
         "value",
         snapshot => {
             if (snapshot.val()) {
@@ -159,17 +159,12 @@ const addBid = (userId, productId, product, bidAmount) => {
     return productId
 }
 
-const updateBidPrice = (bidId, price) => {
-    const updatePrice = {};
-    updatePrice[`/bid/${bidId}/price`] = Number(price);
-    db.ref().update(updatePrice);
-}
 
 const deleteBid = (bidId, productId, buyerId) => {
     const updateDeleteBid = {};
     updateDeleteBid[`/bid/${bidId}`] = null;
-    updateDeleteBid[`/Products/${productId}/bid/${bidId}`] = null;
-    updateDeleteBid[`/Users/${buyerId}/buyerBid/${bidId}`] = null;
+    db.ref(`/Products/${productId}/bid/${bidId}`).remove();
+    db.ref(`/Users/${buyerId}/buyerBid/${bidId}`).remove();
     db.ref().update(updateDeleteBid);
 }
 
@@ -283,7 +278,6 @@ const isBidRead = (bidId) => {
         snapshot => {
             if (snapshot.val()) {
                 status = snapshot.val().status
-                 console.log(status)
             }
         },
         error => alert(error));
@@ -292,4 +286,4 @@ const isBidRead = (bidId) => {
 
 export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount, 
     getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, 
-    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, updateBidPrice, deleteBid }
+    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, deleteBid }
