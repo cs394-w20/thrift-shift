@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
-    color: "red"
+    color: "#707070"
   },
   bid: {
     padding: 0
@@ -103,7 +103,7 @@ const BuyerBid = props => {
           {bid.status &&
           (bid.status === "Accepted" || bid.status === "Verified") ? null : (
             <ExpansionPanelActions>
-              <Button color="secondary">Delete Bid</Button>
+              <Button style = {{color:"#707070"}}>Delete Bid</Button>
               <ChangeBidDialog
                 user={getUser()}
                 bidId={props.bidId}

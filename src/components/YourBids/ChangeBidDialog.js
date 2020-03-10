@@ -82,7 +82,7 @@ const ChangeBidDialog = ({
     return (
       <div>
         <Button
-          color='primary'
+          style = {{color : '#67A6FC'}}
           onClick={handleClickOpen}
           aria-label="edit"
         >
