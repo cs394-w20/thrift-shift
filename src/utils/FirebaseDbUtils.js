@@ -109,10 +109,11 @@ const getBidInfoWithProduct = (bidId, setBid) => {
     )
 }
 
-const addProduct = (userId, product) => {
+const addProduct = (userId, product, price) => {
     const productId = db.ref().child('Products').push().key;
     const updateProduct = {};
     const updateUser = {};
+    product['price'] = Number(price);
     updateProduct['/Products/' + productId] = product;
     updateUser[`/Users/${userId}/Products/` + productId] = true;
     db.ref().update(updateProduct);
