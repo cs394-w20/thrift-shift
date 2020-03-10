@@ -128,10 +128,10 @@ const MakeBidDialog = ({
                 {bidSubmitted ? null : (
                   <Grid item xs={12} sm={12} container>
                     <Grid item xs>
-                      Current Highest Bid
+                      {product.bid ? "Current Highest Bid" : "Product Price"}
                     </Grid>
                     <Grid item xs>
-                      $ {product.bid ? product.bid.highestBid : "--"}
+                      $ {product.bid ? product.bid.highestBid : product.price}
                     </Grid>
                   </Grid>
                 )}
