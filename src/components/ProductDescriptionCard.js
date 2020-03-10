@@ -70,10 +70,13 @@ const ProductDescriptionCard = props => {
               <ArrowBackIcon />
             </IconButton>
             <Typography >
-            <h1 style = {{textAlign: 'center'}}> <div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontWeight: 'bolder', color:'white', letterSpacing:'4px'}}>
-          				THRIFT
-          				</div>
-          				<div style={{display: 'inline-block', fontFamily:'Gill Sans Nova', fontStyle: 'italic', color:'white', letterSpacing:'4px', fontWeight: "100"}}> SHIFT</div>
+            <h1 style = {{textAlign: 'center'}}> 
+              <div style={{display: 'inline-block', fontFamily:'Gill Sans', fontWeight: '600', color:'white', letterSpacing:'4px'}}>
+          			THRIFT
+          		</div>
+          		<div style={{display: 'inline-block', fontFamily:'Gill Sans', fontStyle: 'italic', color:'white', letterSpacing:'4px', fontWeight: "300"}}>
+                SHIFT
+              </div>
           				</h1>
             </Typography>
           </Toolbar>

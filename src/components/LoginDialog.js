@@ -23,6 +23,24 @@ const useStyles = makeStyles({
     background: 'linear-gradient(153deg, #67A6FC 30%, #D4FFE8 90%)',
     boxShadow: '0',
   },
+  titleText: {
+    textAlign: 'center'
+  },
+  thriftText: {
+    display: 'inline-block', 
+    fontFamily: 'Gill Sans', 
+    fontWeight: '600', 
+    color: 'white', 
+    letterSpacing: '4px'
+  },
+  shiftText: {
+    display: 'inline-block', 
+    fontFamily: 'Gill Sans', 
+    fontStyle: 'italic', 
+    color: 'white', 
+    letterSpacing: '4px', 
+    fontWeight: "300"
+  }
 });
 
 const LoginDialog = ({ user, setUserRole }) => {
@@ -82,10 +100,9 @@ const LoginDialog = ({ user, setUserRole }) => {
       >
         <DialogTitle id="simple-dialog-title">
           <div>
-            <h1 style={{ textAlign: 'center' }}> <div style={{ display: 'inline-block', fontFamily: 'Gill Sans Nova', fontWeight: 'bolder', color: 'white', letterSpacing: '4px' }}>
-              THRIFT
-          </div>
-              <div style={{ display: 'inline-block', fontFamily: 'Gill Sans Nova', fontStyle: 'italic', color: 'white', letterSpacing: '4px', fontWeight: "100" }}> SHIFT</div>
+            <h1 className={classes.titleText}> 
+              <div className={classes.thriftText}>THRIFT</div>
+              <div className={classes.shiftText}> SHIFT</div>
             </h1>
           </div>
         </DialogTitle>
