@@ -103,7 +103,7 @@ const BuyerBid = props => {
           {bid.status &&
           (bid.status === "Accepted" || bid.status === "Verified") ? null : (
             <ExpansionPanelActions>
-              <Button style = {{color:"#707070"}}>Delete Bid</Button>
+              {/* <Button style = {{color:"#707070"}}>Delete Bid</Button> */}
               <ChangeBidDialog
                 user={getUser()}
                 bidId={props.bidId}
