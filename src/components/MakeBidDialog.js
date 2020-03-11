@@ -187,7 +187,7 @@ const MakeBidDialog = ({
                         keepShopping();
                       }}
                       variant="contained"
-                      style = {{background: '#67A6FC'}}
+                      style = {{background: '#67A6FC', color: 'white'}}
                     >
                       Keep Shopping
                     </Button>

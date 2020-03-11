@@ -78,6 +78,10 @@ const ChangeBidDialog = ({
     setPage("bid");
   };
 
+  const keepShopping = () => {
+    setOpen(false);
+    setPage("product");
+  };
 
     return (
       <div>
@@ -169,6 +173,15 @@ const ChangeBidDialog = ({
                     container
                     className={classes.submittedButtons}
                   >
+                    <Button
+                      onClick={() => {
+                        keepShopping();
+                      }}
+                      variant="contained"
+                      style = {{background: '#67A6FC', color: 'white'}}
+                    >
+                      Keep Shopping
+                    </Button>
                   </Grid>
                   <Grid
                     item
