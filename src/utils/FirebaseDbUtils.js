@@ -189,17 +189,7 @@ const getRole = (userId, setUserRole) => {
         error => alert(error)
     );
 }
-const getAddress = (userId, setAddress) => {
-    const productDb = db.ref("Users/" + userId + "/address");
-    productDb.once(
-        "value",
-        snapshot => {
-            setAddress(snapshot.val());
-        },
-        error => alert(error)
-    );
 
-}
 
 const getAllProductInfo = (setAllProductId) => {
     const getProductInfo = snapshot => {

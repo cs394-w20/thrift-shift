@@ -5,7 +5,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { getProductBidInfo, getProductInfo, acceptBid, alterBuyerNotificationCount } from '../../utils/FirebaseDbUtils'
+import { getProductBidInfo, getProductInfo, acceptBid, alterBuyerNotificationCount, getBuyerInfo } from '../../utils/FirebaseDbUtils'
 import { Divider, Grid, List, ExpansionPanelActions, Button, Fade} from '@material-ui/core';
 import Bid from './Bid';
 
@@ -28,17 +28,17 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const BuyerInfo = () => {
+const BuyerInfo = props => {
 	return (
 		<div>
 			<Typography>
-				My Store
+				{props.buyerName}
 			</Typography>
 			<Typography>
-				2331 Sherman Road
+				{props.buyerAdrress}
 			</Typography>
 			<Typography>
-				Tel: 7756371234
+				{props.buyerEmail}
 			</Typography>
 		</div>
 	)
@@ -49,10 +49,14 @@ const BidItem = props => {
 	const [bids, setBids] = React.useState(null)
 	const [product, setProduct] = React.useState(null)
 	const [selected, setSelected] = React.useState(null)
+	const [buyerName, setBuyerName] = React.useState(null)
+	const [buyerEmail, setBuyerEmail] = React.useState(null)
+	const [buyerAdrress, setBuyerAdrress] = React.useState(null)
 
 	const handleAccept = () => {
 		acceptBid(selected.bidId, props.productId)
 		alterBuyerNotificationCount(selected.buyerId, true)
+		getBuyerInfo(selected, setBuyerName, setBuyerEmail, setBuyerAdrress)
 	}
 
 	const handleChange = () => {
@@ -108,7 +112,13 @@ const BidItem = props => {
 										)
 								}
 							</List>
-						</ExpansionPanelDetails> : <ExpansionPanelDetails><BuyerInfo /></ExpansionPanelDetails>
+						</ExpansionPanelDetails> : <ExpansionPanelDetails>
+																				<BuyerInfo 
+																				bid={selected} 
+																				buyerName={buyerName} 
+																				buyerEmail={buyerEmail}
+																				buyerAdrress={buyerAdrress}/>
+																			</ExpansionPanelDetails>
 				}
 				{
 					!accepted ?
