@@ -76,7 +76,7 @@ const AppDrawer = props => {
 			<List>
 				<ListItem button onClick={() => { props.setPage("product") }}>
 					<ListItemIcon><ViewListIcon /></ListItemIcon>
-					<ListItemText primary={"Your Items"} />
+					<ListItemText primary={props.userRole === 'seller'?"Your Items":"Market"} />
 				</ListItem>
 				<ListItem button onClick={() => { props.setPage("bid") }}>
 					<ListItemIcon>
