@@ -5,7 +5,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { getProductBidInfo, getProductInfo, acceptBid, alterBuyerNotificationCount, getBuyerInfo } from '../../utils/FirebaseDbUtils'
+import { getProductBidInfo, getProductInfo, acceptBid, alterBuyerNotificationCount, getBuyerInfo, getBid} from '../../utils/FirebaseDbUtils'
 import { Divider, Grid, List, ExpansionPanelActions, Button, Fade} from '@material-ui/core';
 import Bid from './Bid';
 
@@ -52,6 +52,7 @@ const BidItem = props => {
 	const [buyerName, setBuyerName] = React.useState(null)
 	const [buyerEmail, setBuyerEmail] = React.useState(null)
 	const [buyerAdrress, setBuyerAdrress] = React.useState(null)
+	const [bid, setBid] = React.useState(null)
 
 	const handleAccept = () => {
 		acceptBid(selected.bidId, props.productId)
@@ -73,6 +74,14 @@ const BidItem = props => {
 
 	if (!bids){
 		getProductBidInfo(props.productId, setBids)
+	}
+
+	React.useEffect(() => {
+		getBid(product.acceptBidId, setBid)
+	}, [product])
+
+	if(bid && !selected) {
+		getBuyerInfo(bid, setBuyerName, setBuyerEmail, setBuyerAdrress)
 	}
 
 	if (product && bids) {
@@ -114,7 +123,6 @@ const BidItem = props => {
 							</List>
 						</ExpansionPanelDetails> : <ExpansionPanelDetails>
 																				<BuyerInfo 
-																				bid={selected} 
 																				buyerName={buyerName} 
 																				buyerEmail={buyerEmail}
 																				buyerAdrress={buyerAdrress}/>

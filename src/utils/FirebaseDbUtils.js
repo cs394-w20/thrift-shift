@@ -16,6 +16,18 @@ const getUserInfo = (userId, setUserInfo) => {
     )
 }
 
+const getBid = (bidId, setBid) => {
+    const biddb = db.ref(`/bid/${bidId}`)
+    biddb.once(
+        "value",
+        snapshot => {
+            setBid(snapshot.val())
+        },
+        error => alert(error)
+    )
+}
+
+
 const getUserProductsInfo = (userId, setProductIds) => {
     const getProductInfo = snapshot => {
         if (snapshot.val()) {
@@ -215,7 +227,7 @@ const setUserProfile = (userId, profile) => {
 const getBuyerInfo = (bid, setBuyerName, setBuyerEmail, setBuyerAdrress) => {
     var buyerId = bid.buyerId;
     const userDb = db.ref(`Users/${buyerId}`);
-    userDb.on(
+    userDb.once(
         "value",
         snapshot => {
             if (snapshot.val()) {
@@ -287,4 +299,4 @@ const isBidRead = (bidId) => {
 
 export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount,
     getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo,
-    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, deleteBid, changeBid }
+    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, deleteBid, changeBid, getBid }
