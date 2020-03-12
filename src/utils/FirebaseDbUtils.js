@@ -244,6 +244,7 @@ const acceptBid = (bidId, productId) => {
     const updateBidAccept = {};
     updateBidAccept[`/bid/${bidId}/status`] = "Accepted";
     updateBidAccept[`/Products/${productId}/sold`] = true;
+    updateBidAccept[`/Products/${productId}/acceptBidId`] = bidId;
     db.ref().update(updateBidAccept);
 }
 
