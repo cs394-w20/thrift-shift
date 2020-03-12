@@ -5,7 +5,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { getProductBidInfo, getProductInfo, acceptBid, alterBuyerNotificationCount } from '../../utils/FirebaseDbUtils'
+import { getProductBidInfo, getProductInfo, acceptBid, alterBuyerNotificationCount, getBuyerInfo, getBid} from '../../utils/FirebaseDbUtils'
 import { Divider, Grid, List, ExpansionPanelActions, Button, Fade} from '@material-ui/core';
 import Bid from './Bid';
 
@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	secondaryHeading: {
 		fontSize: theme.typography.pxToRem(15),
-		color: "red"
+		color: "#707070"
 	},
 	bid: {
 		padding: 0
@@ -24,21 +24,21 @@ const useStyles = makeStyles(theme => ({
 		padding: 0
 	},
 	accept: {
-		color: "green"
+		color: "#67A6FC"
 	}
 }));
 
-const BuyerInfo = () => {
+const BuyerInfo = props => {
 	return (
 		<div>
 			<Typography>
-				My Store
+				{props.buyerName}
 			</Typography>
 			<Typography>
-				2331 Sherman Road
+				{props.buyerAdrress}
 			</Typography>
 			<Typography>
-				Tel: 7756371234
+				{props.buyerEmail}
 			</Typography>
 		</div>
 	)
@@ -49,10 +49,15 @@ const BidItem = props => {
 	const [bids, setBids] = React.useState(null)
 	const [product, setProduct] = React.useState(null)
 	const [selected, setSelected] = React.useState(null)
+	const [buyerName, setBuyerName] = React.useState(null)
+	const [buyerEmail, setBuyerEmail] = React.useState(null)
+	const [buyerAdrress, setBuyerAdrress] = React.useState(null)
+	const [bid, setBid] = React.useState(null)
 
 	const handleAccept = () => {
 		acceptBid(selected.bidId, props.productId)
 		alterBuyerNotificationCount(selected.buyerId, true)
+		getBuyerInfo(selected, setBuyerName, setBuyerEmail, setBuyerAdrress)
 	}
 
 	const handleChange = () => {
@@ -71,7 +76,13 @@ const BidItem = props => {
 		getProductBidInfo(props.productId, setBids)
 	}
 
-	console.log(selected)
+	React.useEffect(() => {
+		getBid(product.acceptBidId, setBid)
+	}, [product])
+
+	if(bid && !selected) {
+		getBuyerInfo(bid, setBuyerName, setBuyerEmail, setBuyerAdrress)
+	}
 
 	if (product && bids) {
 		let accepted = product.sold
@@ -110,7 +121,12 @@ const BidItem = props => {
 										)
 								}
 							</List>
-						</ExpansionPanelDetails> : <ExpansionPanelDetails><BuyerInfo /></ExpansionPanelDetails>
+						</ExpansionPanelDetails> : <ExpansionPanelDetails>
+																				<BuyerInfo 
+																				buyerName={buyerName} 
+																				buyerEmail={buyerEmail}
+																				buyerAdrress={buyerAdrress}/>
+																			</ExpansionPanelDetails>
 				}
 				{
 					!accepted ?

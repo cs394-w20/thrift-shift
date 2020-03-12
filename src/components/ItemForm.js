@@ -58,12 +58,13 @@ const ItemForm = ({userRole}) => {
 	const [open, setOpen] = useState(false);
 	const [product, setProduct] = useState({
 		name: '',
-		price: '',
 		imageId: '',
 		description: ''
 	});
+  const [price, setPrice] = useState(null);
 	const [image, setImage] = useState(null);
-	const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -75,7 +76,9 @@ const ItemForm = ({userRole}) => {
 	};
 
 	const initialState = () => {
-		setProgress(0);
+    setProgress(null);
+    setDisabled(false);
+    setPrice(null);
 		setProduct({
 			name: '',
 			price: '',
@@ -85,22 +88,23 @@ const ItemForm = ({userRole}) => {
 	}
 
 	const handleChange = prop => event => {
-		if (prop === "price") {
-			setProduct({ ...product, [prop]: Number(event.target.value) })
-		} else {
-			setProduct({ ...product, [prop]: event.target.value });
-		}
+		setProduct({ ...product, [prop]: event.target.value });
 	};
+
+  const handleChangePrice = event => {
+    setPrice(event.target.value);
+  }
 
 	const handleImageUpload = (pictureFiles, pictureDataURLs) => {
 		const uuidv4 = require('uuid/v4');
 		const imageId = uuidv4();
 		setProduct({ ...product, imageId: imageId });
-		setImage(pictureFiles[0]);
+    setImage(pictureFiles[0]);
+    console.log(pictureFiles[0])
 	};
 
 	const addItem = () => {
-		uploadLQImage(image, product.imageId, setProgress, () => { handleClose() }, () => { addProduct(getUser().uid, product) });
+		uploadLQImage(image, product.imageId, setProgress, () => { handleClose() }, () => { addProduct(getUser().uid, product, price) });
 	};
 
 	return (
@@ -111,7 +115,7 @@ const ItemForm = ({userRole}) => {
             variant="extended"
             onClick={handleClickOpen}
             className={classes.fab}
-            color="secondary"
+            style = {{backgroundColor:'#67A6FC', color: "white"}}
             aria-label="edit"
           >
             <AddIcon className={classes.extendedIcon} />
@@ -130,6 +134,7 @@ const ItemForm = ({userRole}) => {
         <ValidatorForm
           onSubmit={() => {
             addItem();
+            setDisabled(true);
           }}
         >
           <DialogContent>
@@ -151,15 +156,18 @@ const ItemForm = ({userRole}) => {
                     variant="outlined"
                     id="standard-number"
                     min={0}
-                    value={product.price}
-                    onChange={handleChange("price")}
+                    value={price}
+                    onChange={handleChangePrice}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">$</InputAdornment>
 					            ),
 					            labelWidth: 60
                     }}
-                    validators={["required", "matchRegexp:^[1-9]\\d*$"]}
+                    validators={[
+                      "required",
+                      "matchRegexp:^[0-9]*$"
+                    ]}
                     errorMessages={[
                       "This field is required",
                       "Price must be a positive number"
@@ -203,9 +211,9 @@ const ItemForm = ({userRole}) => {
             </Button>
             <Button
               variant="contained"
-              color="secondary"
+              style = {{backgroundColor:'#67A6FC'}}
               type="submit"
-              disabled={!image}
+              disabled={!image || disabled}
             >
               Submit
             </Button>

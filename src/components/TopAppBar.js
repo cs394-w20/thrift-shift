@@ -1,10 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AppBar, Toolbar, Typography, useScrollTrigger, CssBaseline, Avatar, Button, Grid } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, useScrollTrigger, CssBaseline, Grid } from '@material-ui/core';
 import { signInWithGoogle, getUser } from '../utils/FirebaseAuthUtils';
-import LogoutPopover from './LogoutPopover';
 import AppDrawer from './AppDrawer';
+import { makeStyles } from "@material-ui/core/styles";
 
+const useStyles = makeStyles({
+  appBar: {
+    background: 'linear-gradient(153deg, #67A6FC 30%, #D4FFE8 90%)'
+  },
+  titleText: {
+    textAlign: 'center'
+  },
+  thriftText: {
+		display: 'inline-block', 
+		fontFamily:'Gill Sans', 
+		fontWeight: '600', 
+		color:'white', 
+		letterSpacing:'4px'
+	},
+	shiftText: {
+		display: 'inline-block',
+		fontStyle: 'italic',
+		color:'white',
+		letterSpacing:'4px', 
+		fontWeight: "300",
+		fontFamily:'Gill Sans'
+	}
+});
 
 const ElevationScroll = props => {
 	const { children, window } = props;
@@ -26,24 +49,23 @@ ElevationScroll.propTypes = {
 
 // App bar at the top of the application, example from Material UI
 const TopAppBar = (props) => {
+	const classes = useStyles();
+
 	return (
 		<React.Fragment>
 			<CssBaseline />
 			<ElevationScroll {...props}>
-				<AppBar>
+				<AppBar className={classes.appBar} >
 					<Toolbar>
-						<AppDrawer user={props.user} userRole={props.userRole} setPage={props.setPage} />
+						<AppDrawer setUser={props.setUser} user={props.user} userRole={props.userRole} setPage={props.setPage} />
 						<Grid container alignItems="center" justify="space-between">
 							<Grid item>
-								<Typography variant="h6">
-									Thrift Shift
+								<Typography>
+								<h1 className={classes.titleText} >
+									<div className={classes.thriftText}>THRIFT</div>
+          				<div className={classes.shiftText}> SHIFT</div>
+          				</h1>
 								</Typography>
-							</Grid>
-							<Grid item >
-								{
-									props.user ? <LogoutPopover setUser={props.setUser}><Avatar src={props.user.photoURL} /></LogoutPopover>
-										: <Button onClick={signInWithGoogle}>Sign In</Button>
-								}
 							</Grid>
 						</Grid>
 					</Toolbar>

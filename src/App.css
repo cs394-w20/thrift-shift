@@ -53,3 +53,18 @@
 body {
   height: 100vh;
 }
+
+.thrift {
+  font-family: 'Gill Sans'; 
+  font-weight: 600;
+  color: white;
+  letter-spacing: '4px'
+}
+
+.shift {
+  font-family: 'Gill Sans'; 
+  font-weight: 300;
+  color: white;
+  letter-spacing: '4px';
+  font-style: italic;
+}

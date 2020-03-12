@@ -16,6 +16,18 @@ const getUserInfo = (userId, setUserInfo) => {
     )
 }
 
+const getBid = (bidId, setBid) => {
+    const biddb = db.ref(`/bid/${bidId}`)
+    biddb.once(
+        "value",
+        snapshot => {
+            setBid(snapshot.val())
+        },
+        error => alert(error)
+    )
+}
+
+
 const getUserProductsInfo = (userId, setProductIds) => {
     const getProductInfo = snapshot => {
         if (snapshot.val()) {
@@ -30,7 +42,7 @@ const getUserProductsInfo = (userId, setProductIds) => {
 
 const getBuyerBid = (userId, setBids) => {
     const productDb = db.ref(`Users/${userId}/buyerBid`);
-    productDb.once(
+    productDb.on(
         "value",
         snapshot => {
             if (snapshot.val()) {
@@ -61,19 +73,6 @@ const getProductBidInfo = (productId, setProductBids) => {
         snapshot => {
             if (snapshot.val()) {
                 setProductBids(snapshot.val());
-            }
-        },
-        error => alert(error)
-    );
-}
-
-const getBuyerBids = (buyerId, setBuyerBids) => {
-    const buyerBidDb = db.ref(`/Users/${buyerId}/buyerBid`);
-    buyerBidDb.on(
-        "value",
-        snapshot => {
-            if(snapshot.val()) {
-                setBuyerBids(snapshot.val());
             }
         },
         error => alert(error)
@@ -122,10 +121,11 @@ const getBidInfoWithProduct = (bidId, setBid) => {
     )
 }
 
-const addProduct = (userId, product) => {
+const addProduct = (userId, product, price) => {
     const productId = db.ref().child('Products').push().key;
     const updateProduct = {};
     const updateUser = {};
+    product['price'] = Number(price);
     updateProduct['/Products/' + productId] = product;
     updateUser[`/Users/${userId}/Products/` + productId] = true;
     db.ref().update(updateProduct);
@@ -172,10 +172,23 @@ const addBid = (userId, productId, product, bidAmount) => {
     return productId
 }
 
-const updateBidPrice = (bidId, price) => {
-    const updatePrice = {};
-    updatePrice[`/bid/${bidId}/price`] = Number(price);
-    db.ref().update(updatePrice);
+
+const deleteBid = (bidId, productId, buyerId) => {
+    const updateDeleteBid = {};
+    updateDeleteBid[`/bid/${bidId}`] = null;
+    db.ref(`/Products/${productId}/bid/${bidId}`).remove();
+    db.ref(`/Users/${buyerId}/buyerBid/${bidId}`).remove();
+    db.ref().update(updateDeleteBid);
+}
+
+const changeBid = (bidId, bidAmount, productId) => {
+    const updateBid = {};
+    updateBid[`/bid/${bidId}/price`] = Number(bidAmount);
+    db.ref().update(updateBid);
+
+    const updateProduct = {};
+    updateProduct[`/Products/${productId}/bid/highestBid`] = bidAmount;
+    db.ref().update(updateProduct);
 }
 
 const getRole = (userId, setUserRole) => {
@@ -189,11 +202,6 @@ const getRole = (userId, setUserRole) => {
     );
 }
 
-const addRole = (userId, role) => {
-    const updateUser = {};
-    updateUser[`/Users/${userId}/role`] = role;
-    db.ref().update(updateUser);
-}
 
 const getAllProductInfo = (setAllProductId) => {
     const getProductInfo = snapshot => {
@@ -207,20 +215,19 @@ const getAllProductInfo = (setAllProductId) => {
     ProductDb.on("value", getProductInfo, error => alert(error));
 }
 
-const addUserInfo = (user) => {
-    var name = user.displayName;
-    var email = user.email;
-    var userId = user.uid;
+const setUserProfile = (userId, profile) => {
     const updateUserInfo = {};
-    updateUserInfo[`/Users/${userId}/name`] = name;
-    updateUserInfo[`/Users/${userId}/email`] = email;
+    updateUserInfo[`/Users/${userId}/name`] = profile.name;
+    updateUserInfo[`/Users/${userId}/email`] = profile.email;
+    updateUserInfo[`/Users/${userId}/address`] = profile.address;
+    updateUserInfo[`/Users/${userId}/role`] = profile.role;
     db.ref().update(updateUserInfo);
 }
 
 const getBuyerInfo = (bid, setBuyerName, setBuyerEmail, setBuyerAdrress) => {
     var buyerId = bid.buyerId;
     const userDb = db.ref(`Users/${buyerId}`);
-    userDb.on(
+    userDb.once(
         "value",
         snapshot => {
             if (snapshot.val()) {
@@ -237,6 +244,7 @@ const acceptBid = (bidId, productId) => {
     const updateBidAccept = {};
     updateBidAccept[`/bid/${bidId}/status`] = "Accepted";
     updateBidAccept[`/Products/${productId}/sold`] = true;
+    updateBidAccept[`/Products/${productId}/acceptBidId`] = bidId;
     db.ref().update(updateBidAccept);
 }
 
@@ -276,4 +284,20 @@ const alterSellerNotificationCount = (userId, increase) => {
     })
 }
 
-export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount, getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo, addRole, getRole, addBid, getProductBidInfo, getBidInfo, addUserInfo, getBuyerInfo }
+const isBidRead = (bidId) => {
+    const bidDb = db.ref(`bid/${bidId}`);
+    var status;
+    bidDb.on(
+        "value",
+        snapshot => {
+            if (snapshot.val()) {
+                status = snapshot.val().status
+            }
+        },
+        error => alert(error));
+    return status !== 'Accepted';
+}
+
+export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount,
+    getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo,
+    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, deleteBid, changeBid, getBid }

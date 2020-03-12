@@ -8,8 +8,8 @@ import {
   InputAdornment,
   DialogTitle
 } from "@material-ui/core";
-import "../App.css";
-import { getProductInfo, addBid } from "../utils/FirebaseDbUtils";
+import "../../App.css";
+import { changeBid } from "../../utils/FirebaseDbUtils";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -25,24 +25,18 @@ const useStyles = makeStyles({
   }
 });
 
-const MakeBidDialog = ({
+const ChangeBidDialog = ({
   user,
-  userRole,
+  bidId,
+  product,
   productId,
-  setProductDescriptonCardOpen,
   setPage
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [product, setProduct] = useState(null);
   const [bidAmount, setBidAmount] = useState("");
   const [bidSubmitted, setBidSubmitted] = useState(false);
 
-  useEffect(() => {
-    if (productId) {
-      getProductInfo(productId, setProduct);
-    }
-  }, []);
 
   const handleClickOpen = () => {
     setBidSubmitted(false);
@@ -75,31 +69,28 @@ const MakeBidDialog = ({
   };
 
   const submitBid = () => {
-    addBid(user.uid, productId, product, bidAmount);
+    changeBid(bidId, bidAmount, productId)
     setBidSubmitted(true);
-  };
-
-  const keepShopping = () => {
-    setOpen(false);
-    setProductDescriptonCardOpen(false);
   };
 
   const viewBidListings = () => {
     setOpen(false);
-    setProductDescriptonCardOpen(false);
     setPage("bid");
   };
 
-  if (product && user && userRole === "buyer") {
+  const keepShopping = () => {
+    setOpen(false);
+    setPage("product");
+  };
+
     return (
       <div>
         <Button
-          variant="contained"
+          style = {{color : '#67A6FC'}}
           onClick={handleClickOpen}
-          style = {{background: '#67A6FC', color: 'white'}}
           aria-label="edit"
         >
-          Make Bid
+          Change Bid
         </Button>
         <Dialog
           open={open}
@@ -128,10 +119,10 @@ const MakeBidDialog = ({
                 {bidSubmitted ? null : (
                   <Grid item xs={12} sm={12} container>
                     <Grid item xs>
-                      {product.bid ? "Current Highest Bid" : "Product Price"}
+                      Current Highest Bid
                     </Grid>
                     <Grid item xs>
-                      $ {product.bid ? product.bid.highestBid : product.price}
+                      $ {product.bid ? product.bid.highestBid : "--"}
                     </Grid>
                   </Grid>
                 )}
@@ -229,9 +220,6 @@ const MakeBidDialog = ({
         </Dialog>
       </div>
     );
-  } else {
-    return null;
-  }
 };
 
-export default MakeBidDialog;
+export default ChangeBidDialog;

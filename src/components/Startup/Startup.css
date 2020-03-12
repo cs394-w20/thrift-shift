@@ -1,0 +1,8 @@
+.startup-background {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(153deg, #67A6FC 30%, #D4FFE8 90%);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}

@@ -12,9 +12,7 @@ const ProductList = ({ productIds, user, userRole, setPage }) => {
           {
             productIds.map(productId => {
               return (
-                
-                  <ProductCard productId={productId} user={user} userRole={userRole} setPage={setPage} />
-                
+                <ProductCard productId={productId} user={user} userRole={userRole} setPage={setPage} />
               );
             })
           }
@@ -23,12 +21,15 @@ const ProductList = ({ productIds, user, userRole, setPage }) => {
     );
   } else {
     return (
-      <div style={{ textAlign: 'center', height: '100vh', width: '100vw', alignItems: 'center' }}>
-        <img src='bookshelf.png' style={{ height: '200px', left: '50%', top: '50%' }}></img>
-        <br />
-        There is nothing here<br />
-        Add an item to start
-      </div>
+      <Container>
+        <div style={{ textAlign: 'center', height: '100vh', width: '100%', alignItems: 'center' }}>
+          <h2 style={{ color: '#707070', fontSize: '20px', textAlign: 'center', fontFamily: 'Proxima Nova, sans-serif', marginTop: '25%' }}>Looks like theres nothing here! </h2>
+          <img src='closet.png' style={{ height: '20%', left: '50%', marginTop: '10%' }}></img>
+          {userRole == 'seller' ?
+            <h2 style={{ color: '#707070', fontSize: '20px', textAlign: 'center', fontFamily: 'Proxima Nova, sans-serif', marginTop: '10%' }}>Add a new item by hitting the upload button below. </h2>
+            : null}
+        </div>
+      </Container>
     );
   }
 };

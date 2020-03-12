@@ -6,7 +6,7 @@ import { getBidInfo } from '../../utils/FirebaseDbUtils'
 const useStyles = makeStyles(theme => ({
 	secondaryHeading: {
 		fontSize: theme.typography.pxToRem(15),
-		color: "red"
+		color: "#707070"
 	},
 }));
 
@@ -24,7 +24,7 @@ const Bid = props => {
       <MenuItem selected={selected} button key={props.bidId} onClick={() => { props.setSelected({bidId:props.bidId, ...bid}) }}>
         <Grid container alignItems="center">
           <Grid item container alignItems="center" xs={9}>
-            <Grid item><Radio checked={selected} /></Grid>
+            <Grid item><Radio style = {{color: "#67A6FC"}} checked={selected} /></Grid>
             <Grid item xs><Typography className={classes.heading}>{bid.buyerName}</Typography></Grid>
           </Grid>
           <Grid item xs={3}>

@@ -31,6 +31,9 @@ const getUser = () => {
 const updateUserState = (setUser) => {
     firebase.auth().onAuthStateChanged(setUser);
 }
+const updateAddress = (setUser) => {
+    firebase.auth().onAuthStateChanged(setUser)
+}
 
 // Sign out the user
 const signOut = () => {
@@ -43,4 +46,4 @@ const signInWithGoogle = () => {
     firebase.auth().signInWithPopup(provider);
 }
 
-export { getUser, signOut, signInWithGoogle, updateUserState}
+export { getUser, signOut, signInWithGoogle, updateUserState, updateAddress}

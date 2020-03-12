@@ -25,15 +25,11 @@ const useStyles = makeStyles(theme => ({
     margin: "auto",
     maxWidth: 500
   },
-  image: {
-    width: 128,
-    height: 128
-  },
   img: {
     margin: "auto",
     display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%"
+    width: "auto",
+    height: "260px"
   },
   appBar: {
     position: "relative"
@@ -61,7 +57,7 @@ const ProductDescriptionCard = props => {
         }}
         TransitionComponent={Transition}
       >
-        <AppBar>
+        <AppBar style = {{background: 'linear-gradient(153deg, #67A6FC 30%, #D4FFE8 90%)'}}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -73,8 +69,15 @@ const ProductDescriptionCard = props => {
             >
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Thrift Shift
+            <Typography >
+            <h1 style = {{textAlign: 'center'}}> 
+              <div style={{display: 'inline-block', fontFamily:'Gill Sans', fontWeight: '600', color:'white', letterSpacing:'4px'}}>
+          			THRIFT
+          		</div>
+          		<div style={{display: 'inline-block', fontFamily:'Gill Sans', fontStyle: 'italic', color:'white', letterSpacing:'4px', fontWeight: "300"}}>
+                SHIFT
+              </div>
+          				</h1>
             </Typography>
           </Toolbar>
         </AppBar>
@@ -88,10 +91,10 @@ const ProductDescriptionCard = props => {
             style={{ padding: "15px 10px 15px 10px" }}
             spacing={2}
           >
-            <Grid container spacing={2}>
+            <Grid container direction="column" spacing={2}>
               <Grid item xs={12} sm={12} container>
-                <Grid xs item>
-                  <Typography variant="h5">{props.product.name}</Typography>
+                <Grid xs item >
+                  <Typography variant="h5" style = {{fontFamily: 'Proxima Nova, sans-serif', color: '#707070', fontSize: '30px', fontWeight:'900'}}>{props.product.name}</Typography>
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={12} container>
@@ -103,16 +106,16 @@ const ProductDescriptionCard = props => {
               </Grid>
               <Grid item xs={12} sm={12} container>
                 <Grid item xs container>
-                  <Typography gutterBottom variant="h5">
-                    Starting Price
+                  <Typography gutterBottom variant="h5" style = {{fontFamily: 'Proxima Nova, sans-serif', color: '#707070', fontSize: '28px', fontWeight:'600', opacity :'100%'}}>
+                    LIST PRICE
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography variant="h5">$ {props.product.price}</Typography>
+                  <Typography variant="h5" style = {{fontFamily: 'Proxima Nova, sans-serif', color: '#707070', fontSize: '36px', fontWeight:'900'}}>$ {props.product.price}</Typography>
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={12} container>
-                <Typography gutterBottom variant="body1">
+                <Typography gutterBottom variant="body1"  style = {{fontFamily: 'Proxima Nova, sans-serif', color: '#707070', fontSize: '24px'}}>
                   {props.product.description}
                 </Typography>
               </Grid>

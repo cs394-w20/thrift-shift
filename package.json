@@ -5,8 +5,10 @@
   "dependencies": {
     "@material-ui/core": "^4.9.2",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/styles": "^4.9.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/user-event": "^7.2.1",
+    "exif-js": "^2.3.0",
     "firebase": "^7.8.2",
     "rbx": "^2.2.0",
     "react": "^16.12.0",
