@@ -37,7 +37,7 @@ const AppDrawer = props => {
 	}, [getUser()])
 
 	const calculateBadgeContent = () => {
-		if (props.userRole == 'seller') {
+		if (props.userRole === 'seller') {
 			if (userInfo.sellerNotification) {
 				return userInfo.sellerNotification
 			} else {

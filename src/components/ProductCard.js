@@ -32,7 +32,7 @@ const ProductCard = props => {
   }
 
   if (product && imageURL) {
-    if (product.sold && props.userRole == 'buyer') {
+    if (product.sold && props.userRole === 'buyer') {
       return null;
     }
     return (

@@ -47,7 +47,6 @@ const LoginDialog = ({ user, setUserRole }) => {
   const classes = useStyles();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const [role, setRole] = useState('seller');
   const [open, setOpen] = useState(false);
   const [profile, setProfile] = useState({
     name: '',
@@ -109,7 +108,7 @@ const LoginDialog = ({ user, setUserRole }) => {
         <DialogContent>
           <ListItem>
             <div>
-              <img src='logo.png'></img>
+              <img src='logo.png' alt='logo'></img>
             </div>
           </ListItem>
           <ListItem>

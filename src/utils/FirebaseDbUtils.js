@@ -1,6 +1,5 @@
 import firebase from "firebase"
 import 'firebase/database';
-import { version } from "react";
 
 const db = firebase.database();
 
@@ -172,15 +171,6 @@ const addBid = (userId, productId, product, bidAmount) => {
     return productId
 }
 
-
-const deleteBid = (bidId, productId, buyerId) => {
-    const updateDeleteBid = {};
-    updateDeleteBid[`/bid/${bidId}`] = null;
-    db.ref(`/Products/${productId}/bid/${bidId}`).remove();
-    db.ref(`/Users/${buyerId}/buyerBid/${bidId}`).remove();
-    db.ref().update(updateDeleteBid);
-}
-
 const changeBid = (bidId, bidAmount, productId) => {
     const updateBid = {};
     updateBid[`/bid/${bidId}/price`] = Number(bidAmount);
@@ -300,4 +290,4 @@ const isBidRead = (bidId) => {
 
 export { getUserInfo, acceptBid, verifyBid, alterSellerNotificationCount, alterBuyerNotificationCount,
     getBidInfoWithProduct, getBuyerBid, getUserProductsInfo, getProductInfo, addProduct, getAllProductInfo,
-    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, deleteBid, changeBid, getBid }
+    setUserProfile, getRole, addBid, getProductBidInfo, getBidInfo, getBuyerInfo, isBidRead, changeBid, getBid }

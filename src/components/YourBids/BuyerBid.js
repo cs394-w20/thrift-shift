@@ -11,13 +11,10 @@ import {
 import {
   Grid,
   Badge,
-  Button,
   ExpansionPanelActions,
-  Dialog,
-  DialogActions
 } from "@material-ui/core";
 import { getUser } from "../../utils/FirebaseAuthUtils";
-import { isBidRead, deleteBid } from "../../utils/FirebaseDbUtils";
+import { isBidRead } from "../../utils/FirebaseDbUtils";
 import ChangeBidDialog from "./ChangeBidDialog";
 
 const useStyles = makeStyles(theme => ({
@@ -53,10 +50,6 @@ const BuyerBid = props => {
     } else {
       props.setOpen(props.bidId);
     }
-  };
-
-  const handleDeleteBid = () => {
-    deleteBid(props.bidId, bid.productId, bid.buyerId);
   };
 
   React.useEffect(() => {

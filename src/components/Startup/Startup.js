@@ -17,7 +17,7 @@ const Startup = () => {
         	</span>
 				</div>
 				<div>
-					<img src='logo.png' style={{ mixBlendMode: 'multiply' }}></img>
+					<img src='logo.png' alt='logo' style={{ mixBlendMode: 'multiply' }}></img>
 				</div>
 
 				<Button
