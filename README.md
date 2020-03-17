@@ -81,7 +81,7 @@ firebase init
 ```
 Choose hosting cloud firestore and the real-time database.
 For the following questions, you should do:
-1. What Firebase features do you want? Pick Database, and Hosting if you'd like to deploy your web app on Firebase
+1. What Firebase features do you want? Pick Database, Storage and Hosting if you'd like to deploy your web app on Firebase
 2. What Firebase project to connect to? Pick the one you created. 
 3. What is your public directory? Enter build. Do not accept the default value "public".
 
