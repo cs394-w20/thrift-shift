@@ -79,9 +79,9 @@ Switch into your local app directory and initialize your app's Firebase configur
 ```
 firebase init
 ```
-Choose hosting cloud firestore and the real-time database.
-For the following questions, you should do:
-1. What Firebase features do you want? Pick Database, Storage and Hosting if you'd like to deploy your web app on Firebase
+Choose hosting, cloud storage, and the real-time database.
+When setting up Firebase locally, answer the prompts as follows:
+1. What Firebase features do you want? Pick Database, Storage, and Hosting if you'd like to deploy your web app on Firebase.
 2. What Firebase project to connect to? Pick the one you created. 
 3. What is your public directory? Enter build. Do not accept the default value "public".
 
