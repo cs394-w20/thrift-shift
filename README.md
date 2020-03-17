@@ -3,9 +3,9 @@
 # Thrift Shift 
 Thrift Shift is an online marketplace for people to sell clothes to a thrift store and for thrift stores to buy clothes. Buyers can make a bid on an item and wait for the selller to accept the bid. 
 
-<p float="left"><img width="260" height="550" src="https://github.com/cs394-w20/thrift-shift/blob/master/images/inventory.png">
-<img width="260" height="550" src="https://github.com/cs394-w20/thrift-shift/blob/master/images/page.png">
-<img width="260" height="550" src="https://github.com/cs394-w20/thrift-shift/blob/master/images/bid.png">
+<p float="left"><img width="270" height="560" src="https://github.com/cs394-w20/thrift-shift/blob/master/images/inventory.png">
+<img width="270" height="560" src="https://github.com/cs394-w20/thrift-shift/blob/master/images/page.png">
+<img width="270" height="560" src="https://github.com/cs394-w20/thrift-shift/blob/master/images/bid.png">
 
 Link to the app: https://thriftshift-43243.firebaseapp.com/
 
